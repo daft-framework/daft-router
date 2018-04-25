@@ -70,7 +70,7 @@ class ImplementationTest extends Base
                 ));
             }
 
-            yield from static::YieldRoutesFromSource($source, ...$args);
+            yield from static::YieldRoutesFromSource($source);
         }
     }
 
