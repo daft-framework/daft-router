@@ -163,21 +163,13 @@ class Compiler
             return new Response('Method Not Allowed', Response::HTTP_METHOD_NOT_ALLOWED, [
                 'content-type' => 'text/plain',
             ]);
-        } elseif ( ! isset($routeInfo[1])) {
-            throw new RuntimeException(
-                'Dispatcher generated a found response with no handler data!'
-            );
-        } elseif ( ! is_array($routeInfo[1])) {
-            throw new RuntimeException(
-                'Dispatcher generated a found response with invalid handler data!'
-            );
         } elseif ( ! is_array($routeInfo[2])) {
             throw new RuntimeException(
                 'Dispatcher generated a found response with invalid variable data!'
             );
         }
 
-        $middlewares = array_values($routeInfo[1]);
+        $middlewares = array_values((array) ($routeInfo[1] ?? []));
         $route = array_pop($middlewares);
 
         if ( ! is_a($route, DaftRoute::class, true)) {
