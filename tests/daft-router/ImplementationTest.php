@@ -95,84 +95,10 @@ class ImplementationTest extends Base
         }
     }
 
-    protected function DataProviderHandler() : Generator
-    {
-        yield from [
-            [
-                [
-                    Fixtures\Config::class,
-                ],
-                '',
-                200,
-                '',
-                'https://example.com/?loggedin',
-            ],
-            [
-                [
-                    Fixtures\Config::class,
-                ],
-                '/',
-                200,
-                '',
-                'https://example.com/?loggedin',
-            ],
-            [
-                [
-                    Fixtures\Config::class,
-                ],
-                '/foo/',
-                200,
-                '',
-                'https://example.com/foo/?loggedin',
-            ],
-            [
-                [
-                    Fixtures\Config::class,
-                ],
-                '',
-                302,
-                (
-                    '<!DOCTYPE html>' . "\n" .
-                    '<html>' . "\n" .
-                    '    <head>' . "\n" .
-                    '        <meta charset="UTF-8" />' . "\n" .
-                    '        <meta http-equiv="refresh" content="0;url=/login" />' . "\n" .
-                    '' . "\n" .
-                    '        <title>Redirecting to /login</title>' . "\n" .
-                    '    </head>' . "\n" .
-                    '    <body>' . "\n" .
-                    '        Redirecting to <a href="/login">/login</a>.' . "\n" .
-                    '    </body>' . "\n" .
-                    '</html>'
-                ),
-                'https://example.com/',
-            ],
-            [
-                [
-                    Fixtures\Config::class,
-                ],
-                '',
-                404,
-                '404 Not Found',
-                'https://example.com/not-here',
-            ],
-            [
-                [
-                    Fixtures\Config::class,
-                ],
-                '',
-                405,
-                'Method Not Allowed',
-                'https://example.com/?loggedin',
-                'POST',
-            ],
-        ];
-    }
-
     public function DataProviderVerifyHandler() : Generator
     {
         foreach ($this->DataProviderHandler() as $args) {
-            list ($sources, $prefix, $expectedStatus, $expectedContent, $uri) = $args;
+            list($sources, $prefix, $expectedStatus, $expectedContent, $uri) = $args;
 
             $yield = [
                 $sources,
@@ -185,12 +111,12 @@ class ImplementationTest extends Base
                 [],
                 [],
                 [],
-                null
+                null,
             ];
 
             $j = count($args);
 
-            for ($i = 5; $i < $j; $i += 1) {
+            for ($i = 5; $i < $j; ++$i) {
                 $yield[$i] = $args[$i];
             }
 
@@ -419,6 +345,8 @@ class ImplementationTest extends Base
     * @depends testCompilerExcludesMiddleware
     *
     * @dataProvider DataProviderVerifyHandler
+    *
+    * @param null|mixed $content
     */
     public function testHandler(
         array $sources,
@@ -452,6 +380,80 @@ class ImplementationTest extends Base
 
         $this->assertSame($expectedStatus, $response->getStatusCode());
         $this->assertSame($expectedContent, $response->getContent());
+    }
+
+    protected function DataProviderHandler() : Generator
+    {
+        yield from [
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '',
+                200,
+                '',
+                'https://example.com/?loggedin',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '/',
+                200,
+                '',
+                'https://example.com/?loggedin',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '/foo/',
+                200,
+                '',
+                'https://example.com/foo/?loggedin',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '',
+                302,
+                (
+                    '<!DOCTYPE html>' . "\n" .
+                    '<html>' . "\n" .
+                    '    <head>' . "\n" .
+                    '        <meta charset="UTF-8" />' . "\n" .
+                    '        <meta http-equiv="refresh" content="0;url=/login" />' . "\n" .
+                    '' . "\n" .
+                    '        <title>Redirecting to /login</title>' . "\n" .
+                    '    </head>' . "\n" .
+                    '    <body>' . "\n" .
+                    '        Redirecting to <a href="/login">/login</a>.' . "\n" .
+                    '    </body>' . "\n" .
+                    '</html>'
+                ),
+                'https://example.com/',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '',
+                404,
+                '404 Not Found',
+                'https://example.com/not-here',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '',
+                405,
+                'Method Not Allowed',
+                'https://example.com/?loggedin',
+                'POST',
+            ],
+        ];
     }
 
     protected static function YieldRoutesFromSource(string $source) : Generator
