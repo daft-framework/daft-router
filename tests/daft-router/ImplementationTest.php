@@ -11,6 +11,7 @@ use FastRoute\RouteParser\Std;
 use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase as Base;
+use RuntimeException;
 use SignpostMarv\DaftRouter\{
     DaftMiddleware,
     DaftRoute,
@@ -70,8 +71,32 @@ class ImplementationTest extends Base
 
     public function DataProviderRoutes() : Generator
     {
-        foreach ($this->DataProviderGoodSources() as $source) {
-            yield from static::YieldRoutesFromSource(...$source);
+        foreach ($this->DataProviderGoodSources() as $i => $args) {
+            if ( ! is_array($args)) {
+                throw new RuntimeException(sprintf(
+                    'Non-array result yielded from %s::DataProviderGoodSources() at index %s',
+                    static::class,
+                    $i
+                ));
+            } elseif (count($args) < 1) {
+                throw new RuntimeException(sprintf(
+                    'Empty result yielded from %s::DataProviderGoodSources() at index %s',
+                    static::class,
+                    $i
+                ));
+            }
+
+            $source = array_shift($args);
+
+            if ( ! is_string($source)) {
+                throw new RuntimeException(sprintf(
+                    'Non-string result yielded from %s::DataProviderGoodSources() at index %s',
+                    static::class,
+                    $i
+                ));
+            }
+
+            yield from static::YieldRoutesFromSource($source, ...$args);
         }
     }
 
