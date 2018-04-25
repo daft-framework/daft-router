@@ -22,7 +22,7 @@ class Handler
         $out = null;
 
         foreach ($maybeMiddleware as $i => $maybe) {
-            if ( ! is_a($maybeMiddleware, DaftMiddleware::class, true)) {
+            if ( ! is_a($maybe, DaftMiddleware::class, true)) {
                 throw new InvalidArgumentException(sprintf(
                     'Argument %s passed to %s must be an implementation of %s',
                     $i + 1,
