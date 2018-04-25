@@ -16,6 +16,7 @@ use SignpostMarv\DaftRouter\DaftMiddleware;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\Router\Compiler as BaseCompiler;
+use Symfony\Component\HttpFoundation\Request;
 
 class ImplementationTest extends Base
 {
@@ -91,6 +92,109 @@ class ImplementationTest extends Base
                     yield [$route, $method];
                 }
             }
+        }
+    }
+
+    protected function DataProviderHandler() : Generator
+    {
+        yield from [
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '',
+                200,
+                '',
+                'https://example.com/?loggedin',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '/',
+                200,
+                '',
+                'https://example.com/?loggedin',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '/foo/',
+                200,
+                '',
+                'https://example.com/foo/?loggedin',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '',
+                302,
+                (
+                    '<!DOCTYPE html>' . "\n" .
+                    '<html>' . "\n" .
+                    '    <head>' . "\n" .
+                    '        <meta charset="UTF-8" />' . "\n" .
+                    '        <meta http-equiv="refresh" content="0;url=/login" />' . "\n" .
+                    '' . "\n" .
+                    '        <title>Redirecting to /login</title>' . "\n" .
+                    '    </head>' . "\n" .
+                    '    <body>' . "\n" .
+                    '        Redirecting to <a href="/login">/login</a>.' . "\n" .
+                    '    </body>' . "\n" .
+                    '</html>'
+                ),
+                'https://example.com/',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '',
+                404,
+                '404 Not Found',
+                'https://example.com/not-here',
+            ],
+            [
+                [
+                    Fixtures\Config::class,
+                ],
+                '',
+                405,
+                'Method Not Allowed',
+                'https://example.com/?loggedin',
+                'POST',
+            ],
+        ];
+    }
+
+    public function DataProviderVerifyHandler() : Generator
+    {
+        foreach ($this->DataProviderHandler() as $args) {
+            list ($sources, $prefix, $expectedStatus, $expectedContent, $uri) = $args;
+
+            $yield = [
+                $sources,
+                $prefix,
+                $expectedStatus,
+                $expectedContent,
+                $uri,
+                'GET',
+                [],
+                [],
+                [],
+                [],
+                null
+            ];
+
+            $j = count($args);
+
+            for ($i = 5; $i < $j; $i += 1) {
+                $yield[$i] = $args[$i];
+            }
+
+            yield $yield;
         }
     }
 
@@ -307,6 +411,47 @@ class ImplementationTest extends Base
             ],
             $notPresent[1]
         );
+    }
+
+    /**
+    * @depends testCompilerVerifyAddRouteAddsRoutes
+    * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
+    * @depends testCompilerExcludesMiddleware
+    *
+    * @dataProvider DataProviderVerifyHandler
+    */
+    public function testHandler(
+        array $sources,
+        string $prefix,
+        int $expectedStatus,
+        string $expectedContent,
+        string $uri,
+        string $method = 'GET',
+        array $parameters = [],
+        array $cookies = [],
+        array $files = [],
+        array $server = [],
+        $content = null
+    ) : void {
+        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainSimpleDispatcher(
+            [],
+            ...$sources
+        );
+
+        $request = Request::create(
+            $uri,
+            $method,
+            $parameters,
+            $cookies,
+            $files,
+            $server,
+            $content
+        );
+
+        $response = BaseCompiler::Handle($dispatcher, $request, $prefix);
+
+        $this->assertSame($expectedStatus, $response->getStatusCode());
+        $this->assertSame($expectedContent, $response->getContent());
     }
 
     protected static function YieldRoutesFromSource(string $source) : Generator

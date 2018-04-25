@@ -17,7 +17,7 @@ class NotLoggedIn implements DaftMiddleware
         Request $request,
         ? Response $response
     ) : ? Response {
-        if ( ! ($response instanceof Response)) {
+        if ( ! ($response instanceof Response) && ! $request->query->has('loggedin')) {
             return new RedirectResponse('/login');
         }
 
