@@ -98,7 +98,7 @@ class ImplementationTest extends Base
     /**
     * @dataProvider DataProviderGoodSources
     */
-    public function testSources(string $className, ...$args) : void
+    public function testSources(string $className) : void
     {
         $this->assertTrue(
             is_a($className, DaftSource::class, true),
@@ -178,7 +178,7 @@ class ImplementationTest extends Base
     *
     * @dataProvider DataProviderGoodSources
     */
-    public function testCompilerVerifyAddRouteAddsRoutes(string $className, ...$args) : void
+    public function testCompilerVerifyAddRouteAddsRoutes(string $className) : void
     {
         $routes = [];
         $compiler = Fixtures\Compiler::ObtainCompiler();
