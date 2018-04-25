@@ -163,10 +163,6 @@ class Compiler
             return new Response('Method Not Allowed', Response::HTTP_METHOD_NOT_ALLOWED, [
                 'content-type' => 'text/plain',
             ]);
-        } elseif ( ! is_array($routeInfo[2])) {
-            throw new RuntimeException(
-                'Dispatcher generated a found response with invalid variable data!'
-            );
         }
 
         $middlewares = array_values((array) ($routeInfo[1] ?? []));
@@ -194,7 +190,7 @@ class Compiler
             return $resp;
         }
 
-        return $route::DaftRouterHandleRequest($request, $routeInfo[2]);
+        return $route::DaftRouterHandleRequest($request, (array) ($routeInfo[2] ?? []));
     }
 
     final public function ObtainRoutes() : array
