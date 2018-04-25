@@ -134,21 +134,21 @@ class Compiler
         $routeInfo = $dispatcher->dispatch($request->getMethod(), $uri);
 
         if (
-                ! isset($routeInfo[0]) ||
+            ! isset($routeInfo[0]) ||
+            (
+                Dispatcher::FOUND === $routeInfo[0] &&
                 (
-                    Dispatcher::FOUND === $routeInfo[0] &&
-                    (
-                        ! isset($routeInfo[1], $routeInfo[2]) ||
-                        ! is_array($routeInfo[1]) ||
-                        ! is_array($routeInfo[2]) ||
-                        count($routeInfo[1]) < 1
-                    )
-                ) ||
-                (
-                    Dispatcher::NOT_FOUND !== $routeInfo[0] &&
-                    Dispatcher::METHOD_NOT_ALLOWED !== $routeInfo[0] &&
-                    Dispatcher::FOUND !== $routeInfo[0]
+                    ! isset($routeInfo[1], $routeInfo[2]) ||
+                    ! is_array($routeInfo[1]) ||
+                    ! is_array($routeInfo[2]) ||
+                    count($routeInfo[1]) < 1
                 )
+            ) ||
+            (
+                Dispatcher::NOT_FOUND !== $routeInfo[0] &&
+                Dispatcher::METHOD_NOT_ALLOWED !== $routeInfo[0] &&
+                Dispatcher::FOUND !== $routeInfo[0]
+            )
         ) {
             return new Response('Unknown error', Response::HTTP_INTERNAL_SERVER_ERROR, [
                 'content-type' => 'text/plain',
