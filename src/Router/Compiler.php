@@ -134,8 +134,6 @@ class Compiler
         $routeInfo = $dispatcher->dispatch($request->getMethod(), $uri);
 
         if (
-            ! is_array($routeInfo) ||
-            (
                 ! isset($routeInfo[0]) ||
                 (
                     Dispatcher::FOUND === $routeInfo[0] &&
@@ -151,7 +149,6 @@ class Compiler
                     Dispatcher::METHOD_NOT_ALLOWED !== $routeInfo[0] &&
                     Dispatcher::FOUND !== $routeInfo[0]
                 )
-            )
         ) {
             return new Response('Unknown error', Response::HTTP_INTERNAL_SERVER_ERROR, [
                 'content-type' => 'text/plain',
