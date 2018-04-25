@@ -171,10 +171,6 @@ class Compiler
             throw new RuntimeException(
                 'Dispatcher generated a found response with invalid handler data!'
             );
-        } elseif (count($routeInfo[1]) < 1) {
-            throw new RuntimeException(
-                'Dispatcher generated a found response with empty handler data!'
-            );
         } elseif ( ! is_array($routeInfo[2])) {
             throw new RuntimeException(
                 'Dispatcher generated a found response with invalid variable data!'
