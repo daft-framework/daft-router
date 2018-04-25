@@ -12,12 +12,10 @@ use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase as Base;
 use RuntimeException;
-use SignpostMarv\DaftRouter\{
-    DaftMiddleware,
-    DaftRoute,
-    DaftSource,
-    Router\Compiler as BaseCompiler
-};
+use SignpostMarv\DaftRouter\DaftMiddleware;
+use SignpostMarv\DaftRouter\DaftRoute;
+use SignpostMarv\DaftRouter\DaftSource;
+use SignpostMarv\DaftRouter\Router\Compiler as BaseCompiler;
 
 class ImplementationTest extends Base
 {
@@ -43,30 +41,6 @@ class ImplementationTest extends Base
                 '/login',
             ],
         ];
-    }
-
-    protected static function YieldRoutesFromSource(string $source) : Generator
-    {
-        if (is_a($source, DaftRoute::class, true)) {
-            yield $source;
-        }
-        if (is_a($source, DaftSource::class, true)) {
-            foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
-                yield from static::YieldRoutesFromSource($otherSource);
-            }
-        }
-    }
-
-    protected static function YieldMiddlewareFromSource(string $source) : Generator
-    {
-        if (is_a($source, DaftMiddleware::class, true)) {
-            yield $source;
-        }
-        if (is_a($source, DaftSource::class, true)) {
-            foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
-                yield from static::YieldMiddlewareFromSource($otherSource);
-            }
-        }
     }
 
     public function DataProviderRoutes() : Generator
@@ -102,7 +76,7 @@ class ImplementationTest extends Base
 
     public function DataProviderRoutesWithNoArgs() : Generator
     {
-        $parser = new Std;
+        $parser = new Std();
         foreach ($this->DataProviderRoutes() as $route) {
             foreach ($route::DaftRouterRoutes() as $method => $uris) {
                 $hasNoArgs = true;
@@ -317,8 +291,8 @@ class ImplementationTest extends Base
             $notPresentWithUri
         );
 
-        $this->assertTrue($present[0] === Dispatcher::FOUND);
-        $this->assertTrue($notPresent[0] === Dispatcher::FOUND);
+        $this->assertTrue(Dispatcher::FOUND === $present[0]);
+        $this->assertTrue(Dispatcher::FOUND === $notPresent[0]);
 
         $this->assertSame(
             [
@@ -333,5 +307,29 @@ class ImplementationTest extends Base
             ],
             $notPresent[1]
         );
+    }
+
+    protected static function YieldRoutesFromSource(string $source) : Generator
+    {
+        if (is_a($source, DaftRoute::class, true)) {
+            yield $source;
+        }
+        if (is_a($source, DaftSource::class, true)) {
+            foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
+                yield from static::YieldRoutesFromSource($otherSource);
+            }
+        }
+    }
+
+    protected static function YieldMiddlewareFromSource(string $source) : Generator
+    {
+        if (is_a($source, DaftMiddleware::class, true)) {
+            yield $source;
+        }
+        if (is_a($source, DaftSource::class, true)) {
+            foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
+                yield from static::YieldMiddlewareFromSource($otherSource);
+            }
+        }
     }
 }

@@ -7,11 +7,9 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use SignpostMarv\DaftRouter\DaftMiddleware;
-use Symfony\Component\HttpFoundation\{
-    RedirectResponse,
-    Request,
-    Response
-};
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class NotLoggedIn implements DaftMiddleware
 {

@@ -8,10 +8,8 @@ namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRoute;
-use Symfony\Component\HttpFoundation\{
-    Request,
-    Response
-};
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class Home implements DaftRoute
 {
