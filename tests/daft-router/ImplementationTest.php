@@ -337,6 +337,32 @@ class ImplementationTest extends Base
             ],
             $notPresent[1]
         );
+
+        $route = array_pop($present[1]);
+
+        $this->assertInternalType(
+            'string',
+            $route,
+            'Last entry from a dispatcher should be a string'
+        );
+        $this->assertTrue(is_a($route, DaftRoute::class, true), sprintf(
+            'Last entry from a dispatcher should be %s',
+            DaftRoute::class
+        ));
+
+        if (count($present[1]) > 0) {
+            foreach ($present[1] as $middleware) {
+                $this->assertInternalType(
+                    'string',
+                    $middleware,
+                    'Leading entries from a dispatcher should be a string'
+                );
+                $this->assertTrue(is_a($middleware, DaftMiddleware::class, true), sprintf(
+                    'Leading entries from a dispatcher should be %s',
+                    DaftMiddleware::class
+                ));
+            }
+        }
     }
 
     /**

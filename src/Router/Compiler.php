@@ -159,12 +159,6 @@ class Compiler
         $resp = null;
 
         foreach ($middlewares as $middleware) {
-            if ( ! is_a($middleware, DaftMiddleware::class, true)) {
-                throw new RuntimeException(
-                    'Dispatcher generated a found response with invalid middlware data!'
-                );
-            }
-
             $resp = $middleware::DaftRouterMiddlewareHandler($request, $resp);
         }
 
