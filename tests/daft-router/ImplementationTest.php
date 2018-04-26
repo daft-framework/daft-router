@@ -71,14 +71,50 @@ class ImplementationTest extends Base
                 ));
             }
 
-            yield from static::YieldRoutesFromSource($source);
+            foreach (static::YieldRoutesFromSource($source) as $route) {
+                yield [$route];
+            }
+        }
+    }
+
+    public function DataProviderMiddleware() : Generator
+    {
+        foreach ($this->DataProviderGoodSources() as $i => $args) {
+            if ( ! is_array($args)) {
+                throw new RuntimeException(sprintf(
+                    'Non-array result yielded from %s::DataProviderGoodSources() at index %s',
+                    static::class,
+                    $i
+                ));
+            } elseif (count($args) < 1) {
+                throw new RuntimeException(sprintf(
+                    'Empty result yielded from %s::DataProviderGoodSources() at index %s',
+                    static::class,
+                    $i
+                ));
+            }
+
+            $source = array_shift($args);
+
+            if ( ! is_string($source)) {
+                throw new RuntimeException(sprintf(
+                    'Non-string result yielded from %s::DataProviderGoodSources() at index %s',
+                    static::class,
+                    $i
+                ));
+            }
+
+            foreach(static::YieldMiddlewareFromSource($source) as $middleware) {
+                yield [$middleware];
+            }
         }
     }
 
     public function DataProviderRoutesWithNoArgs() : Generator
     {
         $parser = new Std();
-        foreach ($this->DataProviderRoutes() as $route) {
+        foreach ($this->DataProviderRoutes() as $args) {
+            list ($route) = $args;
             foreach ($route::DaftRouterRoutes() as $method => $uris) {
                 $hasNoArgs = true;
                 foreach ($uris as $uri) {
@@ -179,6 +215,42 @@ class ImplementationTest extends Base
     /**
     * @depends testSources
     *
+    * @dataProvider DataProviderRoutes
+    */
+    public function testRoutes(string $className) : void
+    {
+        $routes = $className::DaftRouterRoutes();
+
+        foreach (array_keys($routes) as $uri) {
+            $this->assertSame(
+                '/',
+                mb_substr($uri, 0, 1),
+                'All route uris must begin with a forward slash!'
+            );
+            $this->assertInternalType(
+                'array',
+                $routes[$uri],
+                'All route uris must be specified with an array of HTTP methods!'
+            );
+
+            foreach ($routes[$uri] as $k => $v) {
+                $this->assertInternalType(
+                    'integer',
+                    $k,
+                    'All http methods must be specified with numeric indices!'
+                );
+                $this->assertInternalType(
+                    'string',
+                    $v,
+                    'All http methods must be specified as an array of strings!'
+                );
+            }
+        }
+    }
+
+    /**
+    * @depends testRoutes
+    *
     * @dataProvider DataProviderRoutesWithNoArgs
     */
     public function testRoutesWithNoArgs(string $className, string $method) : void
@@ -233,6 +305,22 @@ class ImplementationTest extends Base
         ));
 
         $compiler->AddMiddleware('stdClass');
+    }
+
+    /**
+    * @depends testSources
+    *
+    * @dataProvider DataProviderMiddleware
+    */
+    public function testMiddlware(string $className) : void
+    {
+        foreach (array_values($className::DaftRouterRoutePrefixExceptions()) as $uriPrefix) {
+            $this->assertSame(
+                '/',
+                mb_substr($uriPrefix, 0, 1),
+                'All middleware uri prefixes must begin with a forward slash!'
+            );
+        }
     }
 
     /**

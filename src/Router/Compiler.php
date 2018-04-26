@@ -183,40 +183,9 @@ class Compiler
     {
         foreach ($sources as $source) {
             if (is_a($source, DaftRoute::class, true)) {
-                $routes = $source::DaftRouterRoutes();
-                foreach (array_keys($routes) as $uri) {
-                    if ('/' !== mb_substr($uri, 0, 1)) {
-                        throw new InvalidArgumentException(
-                            'All route uris must begin with a forward slash!'
-                        );
-                    } elseif ( ! is_array($routes[$uri])) {
-                        throw new InvalidArgumentException(
-                            'All route uris must be specified with an array of HTTP methods!'
-                        );
-                    }
-
-                    foreach ($routes[$uri] as $k => $v) {
-                        if ( ! is_int($k)) {
-                            throw new InvalidArgumentException(
-                                'All http methods must be specified with numeric indices!'
-                            );
-                        } elseif ( ! is_string($v)) {
-                            throw new InvalidArgumentException(
-                                'All http methods must be specified as an array of strings!'
-                            );
-                        }
-                    }
-                }
                 $this->AddRoute($source);
             }
             if (is_a($source, DaftMiddleware::class, true)) {
-                foreach (array_values($source::DaftRouterRoutePrefixExceptions()) as $uriPrefix) {
-                    if ('/' !== mb_substr($uriPrefix, 0, 1)) {
-                        throw new InvalidArgumentException(
-                            'All middleware uri prefixes must begin with a forward slash!'
-                        );
-                    }
-                }
                 $this->AddMiddleware($source);
             }
             if (
