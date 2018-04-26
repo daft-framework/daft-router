@@ -104,7 +104,7 @@ class ImplementationTest extends Base
                 ));
             }
 
-            foreach(static::YieldMiddlewareFromSource($source) as $middleware) {
+            foreach (static::YieldMiddlewareFromSource($source) as $middleware) {
                 yield [$middleware];
             }
         }
@@ -114,7 +114,7 @@ class ImplementationTest extends Base
     {
         $parser = new Std();
         foreach ($this->DataProviderRoutes() as $args) {
-            list ($route) = $args;
+            list($route) = $args;
             foreach ($route::DaftRouterRoutes() as $method => $uris) {
                 $hasNoArgs = true;
                 foreach ($uris as $uri) {
