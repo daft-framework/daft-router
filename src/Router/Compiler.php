@@ -125,10 +125,6 @@ class Compiler
         foreach ($this->routes as $route) {
             foreach ($route::DaftRouterRoutes() as $uri => $methods) {
                 foreach ($methods as $method) {
-                    if ( ! isset($out[$method])) {
-                        $out[$method] = [];
-                    }
-
                     $out[$method][$uri] = $this->MiddlewareNotExcludedFromUri($uri);
 
                     $out[$method][$uri][] = $route;
