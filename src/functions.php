@@ -38,12 +38,6 @@ function handle(Dispatcher $dispatcher, Request $request, string $prefix = '') :
     $middlewares = array_values((array) ($routeInfo[1] ?? []));
     $route = array_pop($middlewares);
 
-    if ( ! is_a($route, DaftRoute::class, true)) {
-        throw new RuntimeException(
-            'Dispatcher generated a found response without a route handler!'
-        );
-    }
-
     $resp = null;
 
     foreach ($middlewares as $middleware) {
@@ -52,6 +46,10 @@ function handle(Dispatcher $dispatcher, Request $request, string $prefix = '') :
 
     if ($resp instanceof Response) {
         return $resp;
+    } elseif ( ! is_a($route, DaftRoute::class, true)) {
+        throw new RuntimeException(
+            'Dispatcher generated a found response without a route handler!'
+        );
     }
 
     return $route::DaftRouterHandleRequest($request, (array) ($routeInfo[2] ?? []));
