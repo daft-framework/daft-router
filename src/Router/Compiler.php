@@ -116,22 +116,18 @@ class Compiler
                         $out[$method] = [];
                     }
 
-                    $out[$method][$uri] = [];
-
-                    foreach ($this->middleware as $middleware) {
-                        $addMiddleware = true;
-
+                    $out[$method][$uri] = array_filter(
+                        $this->middleware,
+                        function (string $middleware) use ($uri) : bool {
                         foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
                             if (0 === mb_strpos($uri, $exception)) {
-                                $addMiddleware = false;
-                                break;
+                                return false;
                             }
                         }
 
-                        if ($addMiddleware) {
-                            $out[$method][$uri][] = $middleware;
+                            return true;
                         }
-                    }
+                    );
 
                     $out[$method][$uri][] = $route;
                 }
