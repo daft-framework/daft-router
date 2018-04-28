@@ -28,8 +28,6 @@ function handle(Dispatcher $dispatcher, Request $request, string $prefix = '') :
         throw new ResponseException('Dispatcher was not able to generate a response!', 404);
     } elseif (Dispatcher::METHOD_NOT_ALLOWED === $routeInfo[0]) {
         throw new ResponseException('Dispatcher was not able to generate a response!', 405);
-    } elseif (Dispatcher::FOUND !== $routeInfo[0]) {
-        throw new ResponseException('Dispatcher generated an unsupported response!', 500);
     }
 
     $middlewares = array_values((array) ($routeInfo[1] ?? []));
