@@ -105,18 +105,9 @@ class Compiler
         return $this->middleware;
     }
 
-    final protected function CompileDispatcherArray() : array
+    final protected function MiddlewareNotExcludedFromUri(string $uri) : array
     {
-        $out = [];
-
-        foreach ($this->routes as $route) {
-            foreach ($route::DaftRouterRoutes() as $uri => $methods) {
-                foreach ($methods as $method) {
-                    if ( ! isset($out[$method])) {
-                        $out[$method] = [];
-                    }
-
-                    $out[$method][$uri] = array_filter(
+        return array_filter(
                         $this->middleware,
                         function (string $middleware) use ($uri) : bool {
                             foreach (
@@ -129,7 +120,21 @@ class Compiler
 
                             return true;
                         }
-                    );
+        );
+    }
+
+    final protected function CompileDispatcherArray() : array
+    {
+        $out = [];
+
+        foreach ($this->routes as $route) {
+            foreach ($route::DaftRouterRoutes() as $uri => $methods) {
+                foreach ($methods as $method) {
+                    if ( ! isset($out[$method])) {
+                        $out[$method] = [];
+                    }
+
+                    $out[$method][$uri] = $this->MiddlewareNotExcludedFromUri($uri);
 
                     $out[$method][$uri][] = $route;
                 }
