@@ -22,17 +22,11 @@ function handle(Dispatcher $dispatcher, Request $request, string $prefix = '') :
     $routeInfo = $dispatcher->dispatch($request->getMethod(), $uri);
 
     if (Dispatcher::NOT_FOUND === $routeInfo[0]) {
-        return new Response('404 Not Found', Response::HTTP_NOT_FOUND, [
-            'content-type' => 'text/plain',
-        ]);
+        throw new ResponseException('Dispatcher was not able to generate a response!', 404);
     } elseif (Dispatcher::METHOD_NOT_ALLOWED === $routeInfo[0]) {
-        return new Response('Method Not Allowed', Response::HTTP_METHOD_NOT_ALLOWED, [
-            'content-type' => 'text/plain',
-        ]);
+        throw new ResponseException('Dispatcher was not able to generate a response!', 405);
     } elseif (Dispatcher::FOUND !== $routeInfo[0]) {
-        return new Response('Unknown error', Response::HTTP_INTERNAL_SERVER_ERROR, [
-            'content-type' => 'text/plain',
-        ]);
+        throw new ResponseException('Dispatcher generated an unsupported response!', 500);
     }
 
     $middlewares = array_values((array) ($routeInfo[1] ?? []));
@@ -47,8 +41,9 @@ function handle(Dispatcher $dispatcher, Request $request, string $prefix = '') :
     if ($resp instanceof Response) {
         return $resp;
     } elseif ( ! is_a($route, DaftRoute::class, true)) {
-        throw new RuntimeException(
-            'Dispatcher generated a found response without a route handler!'
+        throw new ResponseException(
+            'Dispatcher generated a found response without a route handler!',
+            500
         );
     }
 

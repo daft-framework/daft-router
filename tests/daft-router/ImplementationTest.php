@@ -15,6 +15,7 @@ use RuntimeException;
 use SignpostMarv\DaftRouter\DaftMiddleware;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftSource;
+use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler as BaseCompiler;
 use Symfony\Component\HttpFoundation\Request;
 use function SignpostMarv\DaftRouter\handle;
@@ -132,9 +133,10 @@ class ImplementationTest extends Base
         }
     }
 
-    public function DataProviderVerifyHandler() : Generator
+    protected function DataProviderVerifyHandler(bool $good=true) : Generator
     {
-        foreach ($this->DataProviderHandler() as $args) {
+        $argsSource = $good ? $this->DataProviderGoodHandler() : $this->DataProviderBadHandler();
+        foreach ($argsSource as $args) {
             list($sources, $prefix, $expectedStatus, $expectedContent, $uri) = $args;
 
             $yield = [
@@ -159,6 +161,16 @@ class ImplementationTest extends Base
 
             yield $yield;
         }
+    }
+
+    public function DataProviderVerifyHandlerGood() : Generator
+    {
+        yield from $this->DataProviderVerifyHandler(true);
+    }
+
+    public function DataProviderVerifyHandlerBad() : Generator
+    {
+        yield from $this->DataProviderVerifyHandler(false);
     }
 
     /**
@@ -459,11 +471,11 @@ class ImplementationTest extends Base
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     * @depends testCompilerExcludesMiddleware
     *
-    * @dataProvider DataProviderVerifyHandler
+    * @dataProvider DataProviderVerifyHandlerGood
     *
     * @param null|mixed $content
     */
-    public function testHandler(
+    public function testHandlerGood(
         array $sources,
         string $prefix,
         int $expectedStatus,
@@ -497,7 +509,51 @@ class ImplementationTest extends Base
         $this->assertSame($expectedContent, $response->getContent());
     }
 
-    protected function DataProviderHandler() : Generator
+    /**
+    * @depends testCompilerVerifyAddRouteAddsRoutes
+    * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
+    * @depends testCompilerExcludesMiddleware
+    *
+    * @dataProvider DataProviderVerifyHandlerBad
+    *
+    * @param null|mixed $content
+    */
+    public function testHandlerBad(
+        array $sources,
+        string $prefix,
+        int $expectedStatus,
+        string $expectedContent,
+        string $uri,
+        string $method = 'GET',
+        array $parameters = [],
+        array $cookies = [],
+        array $files = [],
+        array $server = [],
+        $content = null
+    ) : void {
+        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainSimpleDispatcher(
+            [],
+            ...$sources
+        );
+
+        $request = Request::create(
+            $uri,
+            $method,
+            $parameters,
+            $cookies,
+            $files,
+            $server,
+            $content
+        );
+
+        $this->expectException(ResponseException::class);
+        $this->expectExceptionCode($expectedStatus);
+        $this->expectExceptionMessage($expectedContent);
+
+        $response = handle($dispatcher, $request, $prefix);
+    }
+
+    protected function DataProviderGoodHandler() : Generator
     {
         yield from [
             [
@@ -549,13 +605,19 @@ class ImplementationTest extends Base
                 ),
                 'https://example.com/',
             ],
+        ];
+    }
+
+    protected function DataProviderBadHandler() : Generator
+    {
+        yield from  [
             [
                 [
                     Fixtures\Config::class,
                 ],
                 '',
                 404,
-                '404 Not Found',
+                'Dispatcher was not able to generate a response!',
                 'https://example.com/not-here',
             ],
             [
@@ -564,7 +626,7 @@ class ImplementationTest extends Base
                 ],
                 '',
                 405,
-                'Method Not Allowed',
+                'Dispatcher was not able to generate a response!',
                 'https://example.com/?loggedin',
                 'POST',
             ],
