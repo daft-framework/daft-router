@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter\Tests;
 
-use FastRoute\Dispatcher;
 use FastRoute\RouteParser\Std;
 use Generator;
 use InvalidArgumentException;
@@ -17,6 +16,7 @@ use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler as BaseCompiler;
+use SignpostMarv\DaftRouter\Router\Dispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use function SignpostMarv\DaftRouter\handle;
 
@@ -423,7 +423,9 @@ class ImplementationTest extends Base
         $this->assertTrue(is_a($notPresentWith, DaftRoute::class, true));
 
         $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainSimpleDispatcher(
-            [],
+            [
+                'dispatcher' => Dispatcher::class,
+            ],
             $middleware,
             $presentWith,
             $notPresentWith
@@ -501,10 +503,17 @@ class ImplementationTest extends Base
         array $server = [],
         $content = null
     ) : void {
+        /**
+        * @var Dispatcher $dispatcher
+        */
         $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainSimpleDispatcher(
-            [],
+            [
+                'dispatcher' => Dispatcher::class,
+            ],
             ...$sources
         );
+
+        $this->assertInstanceOf(Dispatcher::class, $dispatcher);
 
         $request = Request::create(
             $uri,
@@ -544,10 +553,17 @@ class ImplementationTest extends Base
         array $server = [],
         $content = null
     ) : void {
+        /**
+        * @var Dispatcher $dispatcher
+        */
         $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainSimpleDispatcher(
-            [],
+            [
+                'dispatcher' => Dispatcher::class,
+            ],
             ...$sources
         );
+
+        $this->assertInstanceOf(Dispatcher::class, $dispatcher);
 
         $request = Request::create(
             $uri,

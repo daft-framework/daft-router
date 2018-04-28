@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use Closure;
-use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use Generator;
 use InvalidArgumentException;
@@ -91,8 +90,14 @@ class Compiler
     public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher
     {
         $compiler = new self();
+        $options['dispatcher'] = Dispatcher::class;
 
-        return cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options);
+        /**
+        * @var Dispatcher $out
+        */
+        $out = cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options);
+
+        return $out;
     }
 
     final public function ObtainRoutes() : array
