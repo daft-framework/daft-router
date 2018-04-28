@@ -17,7 +17,6 @@ use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\Router\Compiler as BaseCompiler;
 use Symfony\Component\HttpFoundation\Request;
-
 use function SignpostMarv\DaftRouter\handle;
 
 class ImplementationTest extends Base

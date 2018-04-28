@@ -11,12 +11,9 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use Generator;
 use InvalidArgumentException;
-use RuntimeException;
 use SignpostMarv\DaftRouter\DaftMiddleware;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftSource;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use function FastRoute\cachedDispatcher;
 
 class Compiler
