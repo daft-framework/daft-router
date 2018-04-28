@@ -75,10 +75,8 @@ class Compiler
         }
     }
 
-    final public function CompileDispatcherArray(string ...$sources) : array
+    final protected function CompileDispatcherArray(string ...$sources) : array
     {
-        $this->NudgeCompilerWithSources(...$sources);
-
         $out = [];
 
         foreach ($this->routes as $route) {
@@ -115,8 +113,10 @@ class Compiler
 
     final public function CompileDispatcherClosure(string ...$sources) : Closure
     {
-        return function (RouteCollector $collector) use ($sources) : void {
-            foreach ($this->CompileDispatcherArray(...$sources) as $method => $uris) {
+        $this->NudgeCompilerWithSources(...$sources);
+
+        return function (RouteCollector $collector) : void {
+            foreach ($this->CompileDispatcherArray() as $method => $uris) {
                 foreach ($uris as $uri => $handlers) {
                     $collector->addRoute($method, $uri, $handlers);
                 }
