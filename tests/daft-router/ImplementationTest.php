@@ -133,36 +133,6 @@ class ImplementationTest extends Base
         }
     }
 
-    protected function DataProviderVerifyHandler(bool $good=true) : Generator
-    {
-        $argsSource = $good ? $this->DataProviderGoodHandler() : $this->DataProviderBadHandler();
-        foreach ($argsSource as $args) {
-            list($sources, $prefix, $expectedStatus, $expectedContent, $uri) = $args;
-
-            $yield = [
-                $sources,
-                $prefix,
-                $expectedStatus,
-                $expectedContent,
-                $uri,
-                'GET',
-                [],
-                [],
-                [],
-                [],
-                null,
-            ];
-
-            $j = count($args);
-
-            for ($i = 5; $i < $j; ++$i) {
-                $yield[$i] = $args[$i];
-            }
-
-            yield $yield;
-        }
-    }
-
     public function DataProviderVerifyHandlerGood() : Generator
     {
         yield from $this->DataProviderVerifyHandler(true);
@@ -190,7 +160,7 @@ class ImplementationTest extends Base
                 '/asdf//asdf/asdfasdf//asdf//',
                 '',
                 '/asdf/asdf/asdfasdf/asdf/',
-            ]
+            ],
         ];
     }
 
@@ -594,6 +564,36 @@ class ImplementationTest extends Base
         $this->expectExceptionMessage($expectedContent);
 
         $response = handle($dispatcher, $request, $prefix);
+    }
+
+    protected function DataProviderVerifyHandler(bool $good = true) : Generator
+    {
+        $argsSource = $good ? $this->DataProviderGoodHandler() : $this->DataProviderBadHandler();
+        foreach ($argsSource as $args) {
+            list($sources, $prefix, $expectedStatus, $expectedContent, $uri) = $args;
+
+            $yield = [
+                $sources,
+                $prefix,
+                $expectedStatus,
+                $expectedContent,
+                $uri,
+                'GET',
+                [],
+                [],
+                [],
+                [],
+                null,
+            ];
+
+            $j = count($args);
+
+            for ($i = 5; $i < $j; ++$i) {
+                $yield[$i] = $args[$i];
+            }
+
+            yield $yield;
+        }
     }
 
     protected function DataProviderGoodHandler() : Generator
