@@ -119,11 +119,13 @@ class Compiler
                     $out[$method][$uri] = array_filter(
                         $this->middleware,
                         function (string $middleware) use ($uri) : bool {
-                        foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
-                            if (0 === mb_strpos($uri, $exception)) {
-                                return false;
+                            foreach (
+                                $middleware::DaftRouterRoutePrefixExceptions() as $exception
+                            ) {
+                                if (0 === mb_strpos($uri, $exception)) {
+                                    return false;
+                                }
                             }
-                        }
 
                             return true;
                         }
