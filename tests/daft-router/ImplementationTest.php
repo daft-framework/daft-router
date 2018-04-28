@@ -173,6 +173,49 @@ class ImplementationTest extends Base
         yield from $this->DataProviderVerifyHandler(false);
     }
 
+    public function DataProviderUriReplacement() : array
+    {
+        return [
+            [
+                'asdf',
+                '',
+                '/asdf',
+            ],
+            [
+                '/asdf',
+                '',
+                '/asdf',
+            ],
+            [
+                '/asdf//asdf/asdfasdf//asdf//',
+                '',
+                '/asdf/asdf/asdfasdf/asdf/',
+            ]
+        ];
+    }
+
+    /**
+    * @dataProvider DataProviderUriReplacement
+    */
+    public function testUriReplacement(
+        string $uri,
+        string $prefix,
+        string $expected
+    ) : void {
+        $this->assertSame(
+            $expected,
+            str_replace(
+                '//',
+                '/',
+                '/' . preg_replace(
+                    ('/^' . preg_quote($prefix, '/') . '/'),
+                    '',
+                    parse_url($uri, PHP_URL_PATH)
+                )
+            )
+        );
+    }
+
     /**
     * @dataProvider DataProviderGoodSources
     */

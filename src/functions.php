@@ -13,13 +13,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 function handle(Dispatcher $dispatcher, Request $request, string $prefix = '') : Response
 {
-    $uri = parse_url($request->getUri(), PHP_URL_PATH);
-
-    if ('' !== $prefix) {
-        $uri = preg_replace('/^' . preg_quote($prefix, '/') . '/', '', $uri);
-    }
-
-    $uri = str_replace('//', '/', ('/' . $uri));
+    $uri = str_replace(
+        '//',
+        '/',
+        '/' . preg_replace(
+            ('/^' . preg_quote($prefix, '/') . '/'),
+            '',
+            parse_url($request->getUri(), PHP_URL_PATH)
+        )
+    );
 
     $routeInfo = $dispatcher->dispatch($request->getMethod(), $uri);
 
