@@ -107,20 +107,15 @@ class Compiler
 
     final protected function MiddlewareNotExcludedFromUri(string $uri) : array
     {
-        return array_filter(
-                        $this->middleware,
-                        function (string $middleware) use ($uri) : bool {
-                            foreach (
-                                $middleware::DaftRouterRoutePrefixExceptions() as $exception
-                            ) {
-                                if (0 === mb_strpos($uri, $exception)) {
-                                    return false;
-                                }
-                            }
+        return array_filter($this->middleware, function (string $middleware) use ($uri) : bool {
+            foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
+                if (0 === mb_strpos($uri, $exception)) {
+                    return false;
+                }
+            }
 
-                            return true;
-                        }
-        );
+            return true;
+        });
     }
 
     final protected function CompileDispatcherArray() : array
