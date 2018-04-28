@@ -17,11 +17,6 @@ class Compiler extends Base
         return new self();
     }
 
-    public function NudgeCompilerWithSources(string ...$sources) : void
-    {
-        $this->CompileFromSources(...$sources);
-    }
-
     public function ObtainSimpleDispatcher(array $options, string ...$sources) : Dispatcher
     {
         $compiler = new self();

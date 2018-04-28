@@ -9,6 +9,7 @@ namespace SignpostMarv\DaftRouter\Router;
 use Closure;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use Generator;
 use InvalidArgumentException;
 use RuntimeException;
 use SignpostMarv\DaftRouter\DaftMiddleware;
@@ -65,9 +66,21 @@ class Compiler
         $this->middleware[] = $middleware;
     }
 
+    public function NudgeCompilerWithSources(string ...$sources) : void
+    {
+        foreach ($this->RoutesAndMiddleware(...$sources) as $thing) {
+            if (is_a($thing, DaftRoute::class, true)) {
+                $this->AddRoute((string) $thing);
+            }
+            if (is_a($thing, DaftMiddleware::class, true)) {
+                $this->AddMiddleware((string) $thing);
+            }
+        }
+    }
+
     final public function CompileDispatcherClosure(string ...$sources) : Closure
     {
-        $this->CompileFromSources(...$sources);
+        $this->NudgeCompilerWithSources(...$sources);
 
         $out = [];
 
@@ -179,21 +192,18 @@ class Compiler
         return $this->middleware;
     }
 
-    protected function CompileFromSources(string ...$sources) : void
+    protected function RoutesAndMiddleware(string ...$sources) : Generator
     {
         foreach ($sources as $source) {
-            if (is_a($source, DaftRoute::class, true)) {
-                $this->AddRoute($source);
-            }
-            if (is_a($source, DaftMiddleware::class, true)) {
-                $this->AddMiddleware($source);
-            }
+            yield $source;
             if (
                 is_a($source, DaftSource::class, true) &&
                 ! in_array($source, $this->processedSources, true)
             ) {
                 $this->processedSources[] = $source;
-                $this->CompileFromSources(...$source::DaftRouterRouteAndMiddlewareSources());
+                yield from $this->RoutesAndMiddleware(
+                    ...$source::DaftRouterRouteAndMiddlewareSources()
+                );
             }
         }
     }
