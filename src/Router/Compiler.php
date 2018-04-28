@@ -75,6 +75,36 @@ class Compiler
         }
     }
 
+    final public function CompileDispatcherClosure(string ...$sources) : Closure
+    {
+        $this->NudgeCompilerWithSources(...$sources);
+
+        return function (RouteCollector $collector) : void {
+            foreach ($this->CompileDispatcherArray() as $method => $uris) {
+                foreach ($uris as $uri => $handlers) {
+                    $collector->addRoute($method, $uri, $handlers);
+                }
+            }
+        };
+    }
+
+    public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher
+    {
+        $compiler = new self();
+
+        return cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options);
+    }
+
+    final public function ObtainRoutes() : array
+    {
+        return $this->routes;
+    }
+
+    final public function ObtainMiddleware() : array
+    {
+        return $this->middleware;
+    }
+
     final protected function CompileDispatcherArray(string ...$sources) : array
     {
         $out = [];
@@ -109,36 +139,6 @@ class Compiler
         }
 
         return $out;
-    }
-
-    final public function CompileDispatcherClosure(string ...$sources) : Closure
-    {
-        $this->NudgeCompilerWithSources(...$sources);
-
-        return function (RouteCollector $collector) : void {
-            foreach ($this->CompileDispatcherArray() as $method => $uris) {
-                foreach ($uris as $uri => $handlers) {
-                    $collector->addRoute($method, $uri, $handlers);
-                }
-            }
-        };
-    }
-
-    public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher
-    {
-        $compiler = new self();
-
-        return cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options);
-    }
-
-    final public function ObtainRoutes() : array
-    {
-        return $this->routes;
-    }
-
-    final public function ObtainMiddleware() : array
-    {
-        return $this->middleware;
     }
 
     protected function RoutesAndMiddleware(string ...$sources) : Generator
