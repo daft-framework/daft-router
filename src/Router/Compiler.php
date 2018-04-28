@@ -105,7 +105,7 @@ class Compiler
         return $this->middleware;
     }
 
-    final protected function CompileDispatcherArray(string ...$sources) : array
+    final protected function CompileDispatcherArray() : array
     {
         $out = [];
 
