@@ -18,6 +18,8 @@ use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\Router\Compiler as BaseCompiler;
 use Symfony\Component\HttpFoundation\Request;
 
+use function SignpostMarv\DaftRouter\handle;
+
 class ImplementationTest extends Base
 {
     public function DataProviderGoodSources() : Generator
@@ -490,7 +492,7 @@ class ImplementationTest extends Base
             $content
         );
 
-        $response = BaseCompiler::Handle($dispatcher, $request, $prefix);
+        $response = handle($dispatcher, $request, $prefix);
 
         $this->assertSame($expectedStatus, $response->getStatusCode());
         $this->assertSame($expectedContent, $response->getContent());
