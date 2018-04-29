@@ -28,13 +28,14 @@ class Dispatcher extends Base
 
     public function handle(Request $request, string $prefix = '') : Response
     {
-        $uri = str_replace(
-            '//',
+        $path = parse_url($request->getUri(), PHP_URL_PATH);
+        $regex = '/^' . preg_quote($prefix, '/') . '/';
+        $uri = str_replace('//',
             '/',
             '/' . preg_replace(
-                ('/^' . preg_quote($prefix, '/') . '/'),
+                $regex,
                 '',
-                parse_url($request->getUri(), PHP_URL_PATH)
+                $path
             )
         );
         $routeInfo = $this->dispatch($request->getMethod(), $uri);
