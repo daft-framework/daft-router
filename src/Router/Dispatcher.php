@@ -8,6 +8,8 @@ namespace SignpostMarv\DaftRouter\Router;
 
 use FastRoute\Dispatcher\GroupCountBased as Base;
 use SignpostMarv\DaftRouter\ResponseException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class Dispatcher extends Base
 {
@@ -22,5 +24,34 @@ class Dispatcher extends Base
         }
 
         return $routeInfo;
+    }
+
+    public function handle(Request $request, string $prefix = '') : Response
+    {
+        $uri = str_replace(
+            '//',
+            '/',
+            '/' . preg_replace(
+                ('/^' . preg_quote($prefix, '/') . '/'),
+                '',
+                parse_url($request->getUri(), PHP_URL_PATH)
+            )
+        );
+        $routeInfo = $this->dispatch($request->getMethod(), $uri);
+
+        $middlewares = $routeInfo[1];
+        $route = array_pop($middlewares);
+
+        $resp = null;
+
+        foreach ($middlewares as $middleware) {
+            $resp = $middleware::DaftRouterMiddlewareHandler($request, $resp);
+        }
+
+        if ($resp instanceof Response) {
+            return $resp;
+        }
+
+        return $route::DaftRouterHandleRequest($request, (array) ($routeInfo[2] ?? []));
     }
 }

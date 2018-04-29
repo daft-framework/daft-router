@@ -18,7 +18,6 @@ use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler as BaseCompiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
 use Symfony\Component\HttpFoundation\Request;
-use function SignpostMarv\DaftRouter\handle;
 
 class ImplementationTest extends Base
 {
@@ -529,7 +528,7 @@ class ImplementationTest extends Base
             $content
         );
 
-        $response = handle($dispatcher, $request, $prefix);
+        $response = $dispatcher->handle($request, $prefix);
 
         $this->assertSame($expectedStatus, $response->getStatusCode());
         $this->assertSame($expectedContent, $response->getContent());
@@ -585,7 +584,7 @@ class ImplementationTest extends Base
         $this->expectExceptionCode($expectedStatus);
         $this->expectExceptionMessage($expectedContent);
 
-        $response = handle($dispatcher, $request, $prefix);
+        $response = $dispatcher->handle($request, $prefix);
     }
 
     protected function DataProviderVerifyHandler(bool $good = true) : Generator
