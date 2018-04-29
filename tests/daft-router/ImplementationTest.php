@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Tests;
 
 use FastRoute\RouteParser\Std;
+use FastRoute\DataGenerator\GroupCountBased;
 use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase as Base;
@@ -17,6 +18,7 @@ use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler as BaseCompiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
+use SignpostMarv\DaftRouter\Router\RouteCollector;
 use Symfony\Component\HttpFoundation\Request;
 
 class ImplementationTest extends Base
@@ -585,6 +587,81 @@ class ImplementationTest extends Base
         $this->expectExceptionMessage($expectedContent);
 
         $response = $dispatcher->handle($request, $prefix);
+    }
+
+    public function DataProviderRouteCollectorAddRouteThrowsException() : Generator
+    {
+        yield from [
+            [
+                'GET',
+                '/',
+                [],
+                InvalidArgumentException::class,
+                sprintf(
+                    'Cannot call %s::%s without a trailing implementation of %s',
+                    RouteCollector::class,
+                    'addRouteStrict',
+                    DaftRoute::class
+                ),
+                null,
+            ],
+            [
+                'GET',
+                '/',
+                [
+                    InvalidArgumentException::class,
+                ],
+                InvalidArgumentException::class,
+                sprintf(
+                    'Cannot call %s::%s without a trailing implementation of %s',
+                    RouteCollector::class,
+                    'addRouteStrict',
+                    DaftRoute::class
+                ),
+                null,
+            ],
+            [
+                'GET',
+                '/',
+                [
+                    Fixtures\NotLoggedIn::class,
+                ],
+                InvalidArgumentException::class,
+                sprintf(
+                    'Cannot call %s::%s without a trailing implementation of %s',
+                    RouteCollector::class,
+                    'addRouteStrict',
+                    DaftRoute::class
+                ),
+                null,
+            ],
+        ];
+    }
+
+    /**
+    * @dataProvider DataProviderRouteCollectorAddRouteThrowsException
+    */
+    public function testRouteCollectorAddRouteThrowsException(
+        string $httpMethod,
+        string $route,
+        array $handler,
+        string $expectedExceptionClass,
+        ? string $expectedExceptionMessage,
+        ? int $expectedExceptionCode
+    ) : void {
+        $collector = new RouteCollector(new Std(), new GroupCountBased());
+
+        $this->expectException($expectedExceptionClass);
+
+        if ( ! is_null($expectedExceptionMessage)) {
+            $this->expectExceptionMessage($expectedExceptionMessage);
+        }
+
+        if ( ! is_null($expectedExceptionCode)) {
+            $this->expectExceptionCode($expectedExceptionCode);
+        }
+
+        $collector->addRoute($httpMethod, $route, $handler);
     }
 
     protected function DataProviderVerifyHandler(bool $good = true) : Generator
