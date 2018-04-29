@@ -16,11 +16,4 @@ class Compiler extends Base
     {
         return new self();
     }
-
-    public function ObtainSimpleDispatcher(array $options, string ...$sources) : Dispatcher
-    {
-        $compiler = new self();
-
-        return simpleDispatcher($compiler->CompileDispatcherClosure(...$sources), $options);
-    }
 }

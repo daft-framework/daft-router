@@ -422,8 +422,10 @@ class ImplementationTest extends Base
         $this->assertTrue(is_a($presentWith, DaftRoute::class, true));
         $this->assertTrue(is_a($notPresentWith, DaftRoute::class, true));
 
-        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainSimpleDispatcher(
+        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainDispatcher(
             [
+                'cacheDisabled' => true,
+                'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
                 'dispatcher' => Dispatcher::class,
             ],
             $middleware,
@@ -506,8 +508,10 @@ class ImplementationTest extends Base
         /**
         * @var Dispatcher $dispatcher
         */
-        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainSimpleDispatcher(
+        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainDispatcher(
             [
+                'cacheDisabled' => true,
+                'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
                 'dispatcher' => Dispatcher::class,
             ],
             ...$sources
@@ -556,8 +560,10 @@ class ImplementationTest extends Base
         /**
         * @var Dispatcher $dispatcher
         */
-        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainSimpleDispatcher(
+        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainDispatcher(
             [
+                'cacheDisabled' => true,
+                'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
                 'dispatcher' => Dispatcher::class,
             ],
             ...$sources
