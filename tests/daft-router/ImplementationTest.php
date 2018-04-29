@@ -16,7 +16,7 @@ use SignpostMarv\DaftRouter\DaftMiddleware;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\ResponseException;
-use SignpostMarv\DaftRouter\Router\Compiler as BaseCompiler;
+use SignpostMarv\DaftRouter\Router\Compiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
 use SignpostMarv\DaftRouter\Router\RouteCollector;
 use Symfony\Component\HttpFoundation\Request;
@@ -293,7 +293,7 @@ class ImplementationTest extends Base
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
             'Argument 1 passed to %s::%s must be an implementation of %s',
-            BaseCompiler::class,
+            Compiler::class,
             'AddRoute',
             DaftRoute::class
         ));
@@ -326,7 +326,7 @@ class ImplementationTest extends Base
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
             'Argument 1 passed to %s::%s must be an implementation of %s',
-            BaseCompiler::class,
+            Compiler::class,
             'AddMiddleware',
             DaftMiddleware::class
         ));
