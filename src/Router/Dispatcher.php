@@ -44,10 +44,10 @@ class Dispatcher extends Base
             $resp = $middleware::DaftRouterMiddlewareHandler($request, $resp);
         }
 
-        if ($resp instanceof Response) {
-            return $resp;
+        if ( ! ($resp instanceof Response)) {
+            $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
         }
 
-        return $route::DaftRouterHandleRequest($request, $routeInfo[2]);
+        return $resp;
     }
 }
