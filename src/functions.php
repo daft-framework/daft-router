@@ -23,7 +23,7 @@ function handle(Dispatcher $dispatcher, Request $request, string $prefix = '') :
     );
     $routeInfo = $dispatcher->dispatch($request->getMethod(), $uri);
 
-    $middlewares = array_values((array) ($routeInfo[1] ?? []));
+    $middlewares = $routeInfo[1];
     $route = array_pop($middlewares);
 
     $resp = null;
