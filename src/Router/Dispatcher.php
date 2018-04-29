@@ -52,6 +52,6 @@ class Dispatcher extends Base
             return $resp;
         }
 
-        return $route::DaftRouterHandleRequest($request, (array) ($routeInfo[2] ?? []));
+        return $route::DaftRouterHandleRequest($request, $routeInfo[2]);
     }
 }
