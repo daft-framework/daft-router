@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use Closure;
-use FastRoute\RouteCollector;
 use Generator;
 use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftMiddleware;
@@ -91,6 +90,7 @@ class Compiler
     {
         $compiler = new self();
         $options['dispatcher'] = Dispatcher::class;
+        $options['routeCollector'] = RouteCollector::class;
 
         /**
         * @var Dispatcher $out

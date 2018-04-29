@@ -20,11 +20,6 @@ class Dispatcher extends Base
             throw new ResponseException('Dispatcher was not able to generate a response!', 404);
         } elseif (Dispatcher::METHOD_NOT_ALLOWED === $routeInfo[0]) {
             throw new ResponseException('Dispatcher was not able to generate a response!', 405);
-        } elseif (! is_a($routeInfo[1][count($routeInfo[1]) - 1], DaftRoute::class, true)) {
-            throw new ResponseException(
-                'Dispatcher generated a found response without a route handler!',
-                500
-            );
         }
 
         return $routeInfo;
