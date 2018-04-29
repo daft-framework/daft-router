@@ -10,7 +10,6 @@ use FastRoute\RouteCollector as Base;
 use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftMiddleware;
 use SignpostMarv\DaftRouter\DaftRoute;
-use SignpostMarv\DaftRouter\ResponseException;
 
 final class RouteCollector extends Base
 {

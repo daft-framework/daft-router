@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use FastRoute\Dispatcher\GroupCountBased as Base;
-use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\ResponseException;
 
 class Dispatcher extends Base
