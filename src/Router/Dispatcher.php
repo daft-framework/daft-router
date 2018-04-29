@@ -30,15 +30,10 @@ class Dispatcher extends Base
     {
         $path = parse_url($request->getUri(), PHP_URL_PATH);
         $regex = '/^' . preg_quote($prefix, '/') . '/';
-        $uri = str_replace('//',
-            '/',
-            '/' . preg_replace(
-                $regex,
-                '',
-                $path
-            )
+        $routeInfo = $this->dispatch(
+            $request->getMethod(),
+            str_replace('//', '/', ('/' . preg_replace($regex, '', $path)))
         );
-        $routeInfo = $this->dispatch($request->getMethod(), $uri);
 
         $middlewares = $routeInfo[1];
         $route = array_pop($middlewares);
