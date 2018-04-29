@@ -13,7 +13,7 @@ use SignpostMarv\DaftRouter\DaftRoute;
 
 final class RouteCollector extends Base
 {
-    public function addRoute($httpMethod, $route, $handler)
+    public function addRoute($httpMethod, $route, $handler) : void
     {
         $this->addRouteStrict($httpMethod, $route, $handler);
     }
