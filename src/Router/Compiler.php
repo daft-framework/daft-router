@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use Closure;
-use Generator;
 use InvalidArgumentException;
 use SignpostMarv\DaftInterfaceCollector\StaticMethodCollector;
 use SignpostMarv\DaftRouter\DaftMiddleware;
@@ -17,21 +16,6 @@ use function FastRoute\cachedDispatcher;
 
 class Compiler
 {
-    /**
-    * @var array<int, string>
-    */
-    private $routes = [];
-
-    /**
-    * @var array<int, string>
-    */
-    private $middleware = [];
-
-    /**
-    * @var StaticMethodCollector
-    */
-    private $collector;
-
     const CollectorConfig = [
         DaftSource::class => [
             'DaftRouterRouteAndMiddlewareSources' => [
@@ -46,6 +30,20 @@ class Compiler
         DaftMiddleware::class,
         DaftRoute::class,
     ];
+    /**
+    * @var array<int, string>
+    */
+    private $routes = [];
+
+    /**
+    * @var array<int, string>
+    */
+    private $middleware = [];
+
+    /**
+    * @var StaticMethodCollector
+    */
+    private $collector;
 
     protected function __construct()
     {
