@@ -34,11 +34,11 @@ class Compiler
 
     const CollectorConfig = [
         DaftSource::class => [
-        'DaftRouterRouteAndMiddlewareSources' => [
-            DaftMiddleware::class,
-            DaftRoute::class,
-            DaftSource::class,
-        ],
+            'DaftRouterRouteAndMiddlewareSources' => [
+                DaftMiddleware::class,
+                DaftRoute::class,
+                DaftSource::class,
+            ],
         ],
     ];
 
@@ -64,8 +64,7 @@ class Compiler
                 DaftRoute::class
             ));
         } elseif ( ! in_array($route, $this->routes, true)) {
-
-        $this->routes[] = $route;
+            $this->routes[] = $route;
         }
     }
 
@@ -78,8 +77,7 @@ class Compiler
                 DaftMiddleware::class
             ));
         } elseif ( ! in_array($middleware, $this->middleware, true)) {
-
-        $this->middleware[] = $middleware;
+            $this->middleware[] = $middleware;
         }
     }
 
