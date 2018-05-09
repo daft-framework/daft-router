@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8f6c06872311a4f3bed66a678d0cdf7",
+    "content-hash": "9669b79602d3a629fd38191eb8e1372f",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -51,6 +51,54 @@
                 "routing"
             ],
             "time": "2018-02-13T20:26:39+00:00"
+        },
+        {
+            "name": "signpostmarv/daft-interface-collector",
+            "version": "v0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SignpostMarv/daft-interface-collector.git",
+                "reference": "01df2f3a80d619e8a936affd03f75e943763ac9a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-interface-collector/zipball/01df2f3a80d619e8a936affd03f75e943763ac9a",
+                "reference": "01df2f3a80d619e8a936affd03f75e943763ac9a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.9.2",
+                "phpstan/phpstan-phpunit": "^0.9.4",
+                "phpstan/phpstan-strict-rules": "^0.9.0",
+                "phpunit/phpunit": "^7.1",
+                "povils/phpmnd": "^2.0",
+                "roave/security-advisories": "dev-master",
+                "sebastian/phpcpd": "^4.0",
+                "signpostmarv/daft-router": "^0.1.0",
+                "signpostmarv/php-cs-fixer-config": "^0.5.0",
+                "vimeo/psalm": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SignpostMarv\\DaftInterfaceCollector\\": "./src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "SignpostMarv",
+                    "email": "me@signpostmarv.name"
+                }
+            ],
+            "description": "interface collector. daft reasons again.",
+            "time": "2018-05-09T01:04:36+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -3926,16 +3974,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "e26b46dc6ae7eb6d9170770df35150438e639a09"
+                "reference": "f9cb79d6fe212a1d2098a049d5e7d45b21c52d2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e26b46dc6ae7eb6d9170770df35150438e639a09",
-                "reference": "e26b46dc6ae7eb6d9170770df35150438e639a09",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f9cb79d6fe212a1d2098a049d5e7d45b21c52d2d",
+                "reference": "f9cb79d6fe212a1d2098a049d5e7d45b21c52d2d",
                 "shasum": ""
             },
             "require": {
@@ -3980,7 +4028,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2018-04-26T23:15:16+00:00"
+            "time": "2018-04-30T05:57:44+00:00"
         },
         {
             "name": "webmozart/assert",

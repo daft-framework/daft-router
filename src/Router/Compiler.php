@@ -9,6 +9,7 @@ namespace SignpostMarv\DaftRouter\Router;
 use Closure;
 use Generator;
 use InvalidArgumentException;
+use SignpostMarv\DaftInterfaceCollector\StaticMethodCollector;
 use SignpostMarv\DaftRouter\DaftMiddleware;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftSource;
@@ -27,12 +28,31 @@ class Compiler
     private $middleware = [];
 
     /**
-    * @var array<int, string>
+    * @var StaticMethodCollector
     */
-    private $processedSources = [];
+    private $collector;
+
+    const CollectorConfig = [
+        DaftSource::class => [
+        'DaftRouterRouteAndMiddlewareSources' => [
+            DaftMiddleware::class,
+            DaftRoute::class,
+            DaftSource::class,
+        ],
+        ],
+    ];
+
+    const CollectorInterfacesConfig = [
+        DaftMiddleware::class,
+        DaftRoute::class,
+    ];
 
     protected function __construct()
     {
+        $this->collector = new StaticMethodCollector(
+            self::CollectorConfig,
+            self::CollectorInterfacesConfig
+        );
     }
 
     public function AddRoute(string $route) : void
@@ -43,9 +63,10 @@ class Compiler
                 __METHOD__,
                 DaftRoute::class
             ));
-        }
+        } elseif ( ! in_array($route, $this->routes, true)) {
 
         $this->routes[] = $route;
+        }
     }
 
     public function AddMiddleware(string $middleware) : void
@@ -56,14 +77,15 @@ class Compiler
                 __METHOD__,
                 DaftMiddleware::class
             ));
-        }
+        } elseif ( ! in_array($middleware, $this->middleware, true)) {
 
         $this->middleware[] = $middleware;
+        }
     }
 
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
-        foreach ($this->RoutesAndMiddleware(...$sources) as $thing) {
+        foreach ($this->collector->Collect(...$sources) as $thing) {
             if (is_a($thing, DaftRoute::class, true)) {
                 $this->AddRoute((string) $thing);
             }
@@ -138,21 +160,5 @@ class Compiler
         }
 
         return $out;
-    }
-
-    protected function RoutesAndMiddleware(string ...$sources) : Generator
-    {
-        foreach ($sources as $source) {
-            yield $source;
-            if (
-                is_a($source, DaftSource::class, true) &&
-                ! in_array($source, $this->processedSources, true)
-            ) {
-                $this->processedSources[] = $source;
-                yield from $this->RoutesAndMiddleware(
-                    ...$source::DaftRouterRouteAndMiddlewareSources()
-                );
-            }
-        }
     }
 }
