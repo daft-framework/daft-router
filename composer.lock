@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3b81a721cef27d11f30547a5e3c7236",
+    "content-hash": "b49cab00b387fdafb75f5380554b629f",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -54,16 +54,16 @@
         },
         {
             "name": "signpostmarv/daft-interface-collector",
-            "version": "v0.4.0",
+            "version": "v0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-interface-collector.git",
-                "reference": "5b838c3bc2a04eacf0118a2d8b5bbac42cfaa7b4"
+                "reference": "e0487be4c0bfa237a339937dbaa950ba912820b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-interface-collector/zipball/5b838c3bc2a04eacf0118a2d8b5bbac42cfaa7b4",
-                "reference": "5b838c3bc2a04eacf0118a2d8b5bbac42cfaa7b4",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-interface-collector/zipball/e0487be4c0bfa237a339937dbaa950ba912820b2",
+                "reference": "e0487be4c0bfa237a339937dbaa950ba912820b2",
                 "shasum": ""
             },
             "require": {
@@ -98,7 +98,7 @@
                 }
             ],
             "description": "interface collector. daft reasons again.",
-            "time": "2018-05-10T03:20:20+00:00"
+            "time": "2018-05-10T04:51:35+00:00"
         },
         {
             "name": "symfony/http-foundation",
