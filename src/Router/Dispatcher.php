@@ -40,18 +40,39 @@ class Dispatcher extends Base
 
         $resp = null;
 
-        foreach ($middlewares as $middleware) {
-            $resp = $middleware::DaftRouterMiddlewareHandler($request, $resp);
-        }
+        $resp = $this->RunMiddlewareFirstPass($middlewares, $request, $resp);
 
         if ( ! ($resp instanceof Response)) {
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
+
+            $resp = $this->RunMiddlewareSecondPass($middlewares, $request, $resp);
         }
 
-        foreach ($middlewares as $middleware) {
-            $resp = $middleware::DaftRouterMiddlewareHandler($request, $resp);
-        }
 
         return $resp;
+    }
+
+    private function RunMiddlewareFirstPass(
+        array $middlewares,
+        Request $request,
+        ? Response $response
+    ) : ? Response {
+        foreach ($middlewares as $middleware) {
+            $response = $middleware::DaftRouterMiddlewareHandler($request, $response);
+        }
+
+        return $response;
+    }
+
+    private function RunMiddlewareSecondPass(
+        array $middlewares,
+        Request $request,
+        Response $response
+    ) : Response {
+        foreach ($middlewares as $middleware) {
+            $response = $middleware::DaftRouterMiddlewareHandler($request, $response);
+        }
+
+        return $response;
     }
 }
