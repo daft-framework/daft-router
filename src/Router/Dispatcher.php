@@ -48,7 +48,6 @@ class Dispatcher extends Base
             $resp = $this->RunMiddlewareSecondPass($middlewares, $request, $resp);
         }
 
-
         return $resp;
     }
 
