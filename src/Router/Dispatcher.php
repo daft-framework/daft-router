@@ -48,6 +48,10 @@ class Dispatcher extends Base
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
         }
 
+        foreach ($middlewares as $middleware) {
+            $resp = $middleware::DaftRouterMiddlewareHandler($request, $resp);
+        }
+
         return $resp;
     }
 }
