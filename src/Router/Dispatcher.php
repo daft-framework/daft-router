@@ -44,7 +44,7 @@ class Dispatcher extends Base
         /**
         * @var Response|null $resp
         */
-        $resp = $this->RunMiddlewareFirstPass($middlewares, $request);
+        $resp = $this->RunMiddlewareFirstPass($request, ...((array) $middlewares));
 
         if ( ! ($resp instanceof Response)) {
             /**
@@ -52,18 +52,15 @@ class Dispatcher extends Base
             */
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
 
-            $resp = $this->RunMiddlewareSecondPass($middlewares, $request, $resp);
+            $resp = $this->RunMiddlewareSecondPass($request, $resp, ...$middlewares);
         }
 
         return $resp;
     }
 
-    /**
-    * @var string[] $middlewares
-    */
     private function RunMiddlewareFirstPass(
-        array $middlewares,
-        Request $request
+        Request $request,
+        string ...$middlewares
     ) : ? Response {
         $response = null;
 
@@ -80,13 +77,10 @@ class Dispatcher extends Base
         return $response;
     }
 
-    /**
-    * @var string[] $middlewares
-    */
     private function RunMiddlewareSecondPass(
-        array $middlewares,
         Request $request,
-        Response $response
+        Response $response,
+        string ...$middlewares
     ) : Response {
         /**
         * @var string $middleware
