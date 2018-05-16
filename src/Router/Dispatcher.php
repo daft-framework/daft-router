@@ -30,15 +30,14 @@ class Dispatcher extends Base
     {
         $regex = '/^' . preg_quote($prefix, '/') . '/';
         $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
-        $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
 
         /**
-        * @var string[] $middlewares
+        * @var string[] $routeInfo[1]
         */
-        $middlewares = $routeInfo[1];
-        $route = array_pop($middlewares);
+        $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
+        $route = (string) array_pop($routeInfo[1]);
 
-        $resp = $this->RunMiddlewareFirstPass($request, ...((array) $middlewares));
+        $resp = $this->RunMiddlewareFirstPass($request, ...((array) $routeInfo[1]));
 
         if ( ! ($resp instanceof Response)) {
             /**
@@ -46,7 +45,7 @@ class Dispatcher extends Base
             */
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
 
-            $resp = $this->RunMiddlewareSecondPass($request, $resp, ...$middlewares);
+            $resp = $this->RunMiddlewareSecondPass($request, $resp, ...((array) $routeInfo[1]));
         }
 
         return $resp;
