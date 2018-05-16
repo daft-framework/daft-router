@@ -10,7 +10,6 @@ use FastRoute\DataGenerator\GroupCountBased;
 use FastRoute\RouteParser\Std;
 use Generator;
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase as Base;
 use RuntimeException;
 use SignpostMarv\DaftRouter\DaftMiddleware;
 use SignpostMarv\DaftRouter\DaftRoute;
@@ -49,6 +48,9 @@ class ImplementationTest extends Base
 
     public function DataProviderRoutes() : Generator
     {
+        /**
+        * @var string[]|null $args
+        */
         foreach ($this->DataProviderGoodSources() as $i => $args) {
             if ( ! is_array($args)) {
                 throw new RuntimeException(sprintf(
@@ -74,6 +76,9 @@ class ImplementationTest extends Base
                 ));
             }
 
+            /**
+            * @var string $route
+            */
             foreach (static::YieldRoutesFromSource($source) as $route) {
                 yield [$route];
             }
@@ -82,6 +87,9 @@ class ImplementationTest extends Base
 
     public function DataProviderMiddleware() : Generator
     {
+        /**
+        * @var string[]|null $args
+        */
         foreach ($this->DataProviderGoodSources() as $i => $args) {
             if ( ! is_array($args)) {
                 throw new RuntimeException(sprintf(
@@ -107,6 +115,9 @@ class ImplementationTest extends Base
                 ));
             }
 
+            /**
+            * @var string $middleware
+            */
             foreach (static::YieldMiddlewareFromSource($source) as $middleware) {
                 yield [$middleware];
             }
@@ -116,8 +127,15 @@ class ImplementationTest extends Base
     public function DataProviderRoutesWithNoArgs() : Generator
     {
         $parser = new Std();
+        /**
+        * @var string[] $args
+        */
         foreach ($this->DataProviderRoutes() as $args) {
             list($route) = $args;
+            /**
+            * @var string $method
+            * @var array<int, string> $uris
+            */
             foreach ($route::DaftRouterRoutes() as $method => $uris) {
                 $hasNoArgs = true;
                 foreach ($uris as $uri) {
@@ -181,7 +199,7 @@ class ImplementationTest extends Base
                 '/' . preg_replace(
                     ('/^' . preg_quote($prefix, '/') . '/'),
                     '',
-                    parse_url($uri, PHP_URL_PATH)
+                    (string) parse_url($uri, PHP_URL_PATH)
                 )
             )
         );
@@ -201,13 +219,22 @@ class ImplementationTest extends Base
             )
         );
 
+        /**
+        * @var array<int, string> $sources
+        */
         $sources = $className::DaftRouterRouteAndMiddlewareSources();
 
         if (empty($sources)) {
             $this->markTestSkipped('No sources to test!');
         } else {
+            /**
+            * @var int $prevKey
+            */
             $prevKey = key($sources);
 
+            /**
+            * @var int $k
+            */
             foreach (array_keys($sources) as $i => $k) {
                 $this->assertInternalType('int', $k, 'Sources must be listed with integer keys!');
                 if ($i > 0) {
@@ -223,6 +250,9 @@ class ImplementationTest extends Base
                     );
                 }
 
+                /**
+                * @var string $source
+                */
                 $source = $sources[$k];
                 $this->assertInternalType('string', $source);
                 $this->assertTrue(
@@ -246,6 +276,9 @@ class ImplementationTest extends Base
     */
     public function testRoutes(string $className) : void
     {
+        /**
+        * @var array<string, array<integer, string>> $routes
+        */
         $routes = $className::DaftRouterRoutes();
 
         foreach (array_keys($routes) as $uri) {
@@ -311,6 +344,9 @@ class ImplementationTest extends Base
         $routes = [];
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
+        /**
+        * @var string $route
+        */
         foreach (static::YieldRoutesFromSource($className) as $route) {
             $routes[] = $route;
             $compiler->AddRoute($route);
@@ -341,7 +377,11 @@ class ImplementationTest extends Base
     */
     public function testMiddlware(string $className) : void
     {
-        foreach (array_values($className::DaftRouterRoutePrefixExceptions()) as $uriPrefix) {
+        /**
+        * @var string $uriPrefix
+        */
+        foreach ($className::DaftRouterRoutePrefixExceptions() as $uriPrefix) {
+            $this->assertInternalType('string', $uriPrefix);
             $this->assertSame(
                 '/',
                 mb_substr($uriPrefix, 0, 1),
@@ -357,9 +397,15 @@ class ImplementationTest extends Base
     */
     public function testCompilerVerifyAddMiddlewareAddsMiddlewares(string $className) : void
     {
+        /**
+        * @var string[] $middlewares
+        */
         $middlewares = [];
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
+        /**
+        * @var string $middleware
+        */
         foreach (static::YieldMiddlewareFromSource($className) as $middleware) {
             $middlewares[] = $middleware;
             $compiler->AddMiddleware($middleware);
@@ -380,9 +426,15 @@ class ImplementationTest extends Base
         $routes = [];
         $middlewares = [];
 
+        /**
+        * @var string $route
+        */
         foreach (static::YieldRoutesFromSource($className) as $route) {
             $routes[] = $route;
         }
+        /**
+        * @var string $middleware
+        */
         foreach (static::YieldMiddlewareFromSource($className) as $middleware) {
             $middlewares[] = $middleware;
         }
@@ -435,6 +487,7 @@ class ImplementationTest extends Base
         );
 
         $present = $dispatcher->dispatch($presentWithMethod, $presentWithUri);
+
         $notPresent = $dispatcher->dispatch(
             $notPresentWithMethod,
             $notPresentWithUri
@@ -443,21 +496,34 @@ class ImplementationTest extends Base
         $this->assertTrue(Dispatcher::FOUND === $present[0]);
         $this->assertTrue(Dispatcher::FOUND === $notPresent[0]);
 
+        /**
+        * @var string[] $dispatchedPresent
+        */
+        $dispatchedPresent = $present[1];
+
+        /**
+        * @var string[] $dispatchedNotPresent
+        */
+        $dispatchedNotPresent = $notPresent[1];
+
         $this->assertSame(
             [
                 $middleware,
                 $presentWith,
             ],
-            $present[1]
+            $dispatchedPresent
         );
         $this->assertSame(
             [
                 $notPresentWith,
             ],
-            $notPresent[1]
+            $dispatchedNotPresent
         );
 
-        $route = array_pop($present[1]);
+        /**
+        * @var string $route
+        */
+        $route = array_pop($dispatchedPresent);
 
         $this->assertInternalType(
             'string',
@@ -469,8 +535,11 @@ class ImplementationTest extends Base
             DaftRoute::class
         ));
 
-        if (count($present[1]) > 0) {
-            foreach ($present[1] as $middleware) {
+        if (is_array($dispatchedPresent) && count($dispatchedPresent) > 0) {
+            /**
+            * @var string $middleware
+            */
+            foreach ($dispatchedPresent as $middleware) {
                 $this->assertInternalType(
                     'string',
                     $middleware,
@@ -490,6 +559,8 @@ class ImplementationTest extends Base
     * @depends testCompilerExcludesMiddleware
     *
     * @dataProvider DataProviderVerifyHandlerGood
+    *
+    * @param string[] $sources
     */
     public function testHandlerGood(
         array $sources,
@@ -512,9 +583,7 @@ class ImplementationTest extends Base
 
         $this->assertInstanceOf(Dispatcher::class, $dispatcher);
 
-        $request = Request::create(
-            ...$requestArgs
-        );
+        $request = static::ReqeuestFromArgs($requestArgs);
 
         $response = $dispatcher->handle($request, $prefix);
 
@@ -528,6 +597,8 @@ class ImplementationTest extends Base
     * @depends testCompilerExcludesMiddleware
     *
     * @dataProvider DataProviderVerifyHandlerBad
+    *
+    * @param string[] $sources
     */
     public function testHandlerBad(
         array $sources,
@@ -550,9 +621,7 @@ class ImplementationTest extends Base
 
         $this->assertInstanceOf(Dispatcher::class, $dispatcher);
 
-        $request = Request::create(
-            ...$requestArgs
-        );
+        $request = static::ReqeuestFromArgs($requestArgs);
 
         $this->expectException(ResponseException::class);
         $this->expectExceptionCode($expectedStatus);
@@ -636,9 +705,61 @@ class ImplementationTest extends Base
         $collector->addRoute($httpMethod, $route, $handler);
     }
 
+    protected static function ReqeuestFromArgs(array $requestArgs) : Request
+    {
+        $uri = (string) $requestArgs[0];
+        $method = 'GET';
+        $parameters = [];
+        $cookies = [];
+        $files = [];
+        $server = [];
+        /**
+        * @var null $content
+        */
+        $content = null;
+
+        if (isset($requestArgs[1]) && is_string($requestArgs[1])) {
+            $method = $requestArgs[1];
+        }
+        if (isset($requestArgs[2]) && is_array($requestArgs[2])) {
+            $parameters = $requestArgs[2];
+        }
+        if (isset($requestArgs[3]) && is_array($requestArgs[3])) {
+            $cookies = $requestArgs[3];
+        }
+        if (isset($requestArgs[4]) && is_array($requestArgs[4])) {
+            $files = $requestArgs[4];
+        }
+        if (isset($requestArgs[5]) && is_array($requestArgs[5])) {
+            $server = $requestArgs[5];
+        }
+        if (
+            isset($requestArgs[6]) &&
+            (is_string($requestArgs[6]) || is_resource($requestArgs[7]))
+        ) {
+            /**
+            * @var string|resource $content
+            */
+            $content = $requestArgs[6];
+        }
+
+        return Request::create(
+            $uri,
+            $method,
+            $parameters,
+            $cookies,
+            $files,
+            $server,
+            $content
+        );
+    }
+
     protected function DataProviderVerifyHandler(bool $good = true) : Generator
     {
         $argsSource = $good ? $this->DataProviderGoodHandler() : $this->DataProviderBadHandler();
+        /**
+        * @var mixed[] $args
+        */
         foreach ($argsSource as $args) {
             list($sources, $prefix, $expectedStatus, $expectedContent, $uri) = $args;
 
@@ -745,6 +866,9 @@ class ImplementationTest extends Base
             yield $source;
         }
         if (is_a($source, DaftSource::class, true)) {
+            /**
+            * @var string $otherSource
+            */
             foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
                 yield from static::YieldRoutesFromSource($otherSource);
             }
@@ -757,6 +881,9 @@ class ImplementationTest extends Base
             yield $source;
         }
         if (is_a($source, DaftSource::class, true)) {
+            /**
+            * @var string $otherSource
+            */
             foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
                 yield from static::YieldMiddlewareFromSource($otherSource);
             }

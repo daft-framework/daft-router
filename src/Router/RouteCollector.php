@@ -15,11 +15,14 @@ final class RouteCollector extends Base
 {
     public function addRoute($httpMethod, $route, $handler) : void
     {
-        $this->addRouteStrict($httpMethod, $route, $handler);
+        $this->addRouteStrict((string) $httpMethod, (string) $route, (array) $handler);
     }
 
     protected function addRouteStrict(string $httpMethod, string $route, array $handler) : void
     {
+        /**
+        * @var string $routeClass
+        */
         $routeClass = array_pop($handler);
 
         /**

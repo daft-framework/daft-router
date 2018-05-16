@@ -81,12 +81,15 @@ class Compiler
 
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
+        /**
+        * @var string $thing
+        */
         foreach ($this->collector->Collect(...$sources) as $thing) {
             if (is_a($thing, DaftRoute::class, true)) {
-                $this->AddRoute((string) $thing);
+                $this->AddRoute($thing);
             }
             if (is_a($thing, DaftMiddleware::class, true)) {
-                $this->AddMiddleware((string) $thing);
+                $this->AddMiddleware($thing);
             }
         }
     }
@@ -96,6 +99,10 @@ class Compiler
         $this->NudgeCompilerWithSources(...$sources);
 
         return function (RouteCollector $collector) : void {
+            /**
+            * @var string $method
+            * @var array<int, string> $uris
+            */
             foreach ($this->CompileDispatcherArray() as $method => $uris) {
                 foreach ($uris as $uri => $handlers) {
                     $collector->addRoute($method, $uri, $handlers);
@@ -131,6 +138,9 @@ class Compiler
     final protected function MiddlewareNotExcludedFromUri(string $uri) : array
     {
         return array_filter($this->middleware, function (string $middleware) use ($uri) : bool {
+            /**
+            * @var string $exception
+            */
             foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
                 if (0 === mb_strpos($uri, $exception)) {
                     return false;
@@ -146,6 +156,10 @@ class Compiler
         $out = [];
 
         foreach ($this->routes as $route) {
+            /**
+            * @var string $uri
+            * @var array<int, string> $methods
+            */
             foreach ($route::DaftRouterRoutes() as $uri => $methods) {
                 foreach ($methods as $method) {
                     $out[$method][$uri] = $this->MiddlewareNotExcludedFromUri($uri);

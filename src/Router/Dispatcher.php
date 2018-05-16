@@ -28,6 +28,9 @@ class Dispatcher extends Base
 
     public function handle(Request $request, string $prefix = '') : Response
     {
+        /**
+        * @var string $path
+        */
         $path = parse_url($request->getUri(), PHP_URL_PATH);
         $regex = '/^' . preg_quote($prefix, '/') . '/';
         $routeInfo = $this->dispatch(
@@ -35,14 +38,23 @@ class Dispatcher extends Base
             str_replace('//', '/', ('/' . preg_replace($regex, '', $path)))
         );
 
+        /**
+        * @var string[] $middlewares
+        */
         $middlewares = $routeInfo[1];
         $route = array_pop($middlewares);
 
         $resp = null;
 
+        /**
+        * @var Response|null $resp
+        */
         $resp = $this->RunMiddlewareFirstPass($middlewares, $request, $resp);
 
         if ( ! ($resp instanceof Response)) {
+            /**
+            * @var Response $resp
+            */
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
 
             $resp = $this->RunMiddlewareSecondPass($middlewares, $request, $resp);
@@ -51,24 +63,42 @@ class Dispatcher extends Base
         return $resp;
     }
 
+    /**
+    * @var string[] $middlewares
+    */
     private function RunMiddlewareFirstPass(
         array $middlewares,
         Request $request,
         ? Response $response
     ) : ? Response {
+        /**
+        * @var string $middleware
+        */
         foreach ($middlewares as $middleware) {
+            /**
+            * @var Response|null $response
+            */
             $response = $middleware::DaftRouterMiddlewareHandler($request, $response);
         }
 
         return $response;
     }
 
+    /**
+    * @var string[] $middlewares
+    */
     private function RunMiddlewareSecondPass(
         array $middlewares,
         Request $request,
         Response $response
     ) : Response {
+        /**
+        * @var string $middleware
+        */
         foreach ($middlewares as $middleware) {
+            /**
+            * @var Response $response
+            */
             $response = $middleware::DaftRouterMiddlewareHandler($request, $response);
         }
 
