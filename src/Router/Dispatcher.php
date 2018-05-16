@@ -56,9 +56,6 @@ class Dispatcher extends Base
     {
         $response = null;
 
-        /**
-        * @var string $middleware
-        */
         foreach ($middlewares as $middleware) {
             /**
             * @var Response|null $response
@@ -74,9 +71,6 @@ class Dispatcher extends Base
         Response $response,
         string ...$middlewares
     ) : Response {
-        /**
-        * @var string $middleware
-        */
         foreach ($middlewares as $middleware) {
             /**
             * @var Response $response
