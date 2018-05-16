@@ -649,7 +649,7 @@ class ImplementationTest extends Base
                 $expectedContent,
                 array_merge(
                     [
-                $uri,
+                        $uri,
                     ],
                     array_slice($args, 5)
                 ),
