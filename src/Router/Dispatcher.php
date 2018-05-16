@@ -41,9 +41,6 @@ class Dispatcher extends Base
         $middlewares = $routeInfo[1];
         $route = array_pop($middlewares);
 
-        /**
-        * @var Response|null $resp
-        */
         $resp = $this->RunMiddlewareFirstPass($request, ...((array) $middlewares));
 
         if ( ! ($resp instanceof Response)) {
