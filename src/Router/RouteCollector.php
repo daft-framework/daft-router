@@ -25,9 +25,6 @@ final class RouteCollector extends Base
         */
         $routeClass = array_pop($handler);
 
-        /**
-        * @var array<int, DaftMiddleware|DaftRoute|string>
-        */
         $handler = array_values(array_filter($handler, function (string $maybeMiddleware) : bool {
             return is_a($maybeMiddleware, DaftMiddleware::class, true);
         }));
