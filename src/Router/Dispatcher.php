@@ -30,10 +30,7 @@ class Dispatcher extends Base
     {
         $regex = '/^' . preg_quote($prefix, '/') . '/';
         $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
-        $routeInfo = $this->dispatch(
-            $request->getMethod(),
-            str_replace('//', '/', ('/' . $path))
-        );
+        $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
 
         /**
         * @var string[] $middlewares
