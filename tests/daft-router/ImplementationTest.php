@@ -490,21 +490,13 @@ class ImplementationTest extends Base
     * @depends testCompilerExcludesMiddleware
     *
     * @dataProvider DataProviderVerifyHandlerGood
-    *
-    * @param null|mixed $content
     */
     public function testHandlerGood(
         array $sources,
         string $prefix,
         int $expectedStatus,
         string $expectedContent,
-        string $uri,
-        string $method = 'GET',
-        array $parameters = [],
-        array $cookies = [],
-        array $files = [],
-        array $server = [],
-        $content = null
+        array $requestArgs
     ) : void {
         /**
         * @var Dispatcher $dispatcher
@@ -521,13 +513,7 @@ class ImplementationTest extends Base
         $this->assertInstanceOf(Dispatcher::class, $dispatcher);
 
         $request = Request::create(
-            $uri,
-            $method,
-            $parameters,
-            $cookies,
-            $files,
-            $server,
-            $content
+            ...$requestArgs
         );
 
         $response = $dispatcher->handle($request, $prefix);
@@ -542,21 +528,13 @@ class ImplementationTest extends Base
     * @depends testCompilerExcludesMiddleware
     *
     * @dataProvider DataProviderVerifyHandlerBad
-    *
-    * @param null|mixed $content
     */
     public function testHandlerBad(
         array $sources,
         string $prefix,
         int $expectedStatus,
         string $expectedContent,
-        string $uri,
-        string $method = 'GET',
-        array $parameters = [],
-        array $cookies = [],
-        array $files = [],
-        array $server = [],
-        $content = null
+        array $requestArgs
     ) : void {
         /**
         * @var Dispatcher $dispatcher
@@ -573,13 +551,7 @@ class ImplementationTest extends Base
         $this->assertInstanceOf(Dispatcher::class, $dispatcher);
 
         $request = Request::create(
-            $uri,
-            $method,
-            $parameters,
-            $cookies,
-            $files,
-            $server,
-            $content
+            ...$requestArgs
         );
 
         $this->expectException(ResponseException::class);
@@ -675,20 +647,13 @@ class ImplementationTest extends Base
                 $prefix,
                 $expectedStatus,
                 $expectedContent,
+                array_merge(
+                    [
                 $uri,
-                'GET',
-                [],
-                [],
-                [],
-                [],
-                null,
+                    ],
+                    array_slice($args, 5)
+                ),
             ];
-
-            $j = count($args);
-
-            for ($i = 5; $i < $j; ++$i) {
-                $yield[$i] = $args[$i];
-            }
 
             yield $yield;
         }
