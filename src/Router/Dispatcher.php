@@ -44,12 +44,10 @@ class Dispatcher extends Base
         $middlewares = $routeInfo[1];
         $route = array_pop($middlewares);
 
-        $resp = null;
-
         /**
         * @var Response|null $resp
         */
-        $resp = $this->RunMiddlewareFirstPass($middlewares, $request, $resp);
+        $resp = $this->RunMiddlewareFirstPass($middlewares, $request);
 
         if ( ! ($resp instanceof Response)) {
             /**
@@ -68,9 +66,10 @@ class Dispatcher extends Base
     */
     private function RunMiddlewareFirstPass(
         array $middlewares,
-        Request $request,
-        ? Response $response
+        Request $request
     ) : ? Response {
+        $response = null;
+
         /**
         * @var string $middleware
         */
