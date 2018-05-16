@@ -28,11 +28,11 @@ class Dispatcher extends Base
 
     public function handle(Request $request, string $prefix = '') : Response
     {
-        $path = (string) parse_url($request->getUri(), PHP_URL_PATH);
         $regex = '/^' . preg_quote($prefix, '/') . '/';
+        $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
         $routeInfo = $this->dispatch(
             $request->getMethod(),
-            str_replace('//', '/', ('/' . preg_replace($regex, '', $path)))
+            str_replace('//', '/', ('/' . $path))
         );
 
         /**
