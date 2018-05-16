@@ -28,10 +28,7 @@ class Dispatcher extends Base
 
     public function handle(Request $request, string $prefix = '') : Response
     {
-        /**
-        * @var string $path
-        */
-        $path = parse_url($request->getUri(), PHP_URL_PATH);
+        $path = (string) parse_url($request->getUri(), PHP_URL_PATH);
         $regex = '/^' . preg_quote($prefix, '/') . '/';
         $routeInfo = $this->dispatch(
             $request->getMethod(),
