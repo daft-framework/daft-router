@@ -220,7 +220,8 @@ class ImplementationTest extends Base
         );
 
         /**
-        * this is here just for vimeo/psalm
+        * this is here just for vimeo/psalm.
+        *
         * @var array|false
         */
         $sources = $className::DaftRouterRouteAndMiddlewareSources();
@@ -228,7 +229,8 @@ class ImplementationTest extends Base
         static::assertInternalType('array', $sources);
 
         /**
-        * this is here just for vimeo/psalm
+        * this is here just for vimeo/psalm.
+        *
         * @var array $sources
         */
         $sources = $sources;
@@ -242,7 +244,8 @@ class ImplementationTest extends Base
             $prevKey = key($sources);
 
             /**
-            * this is here just for vimeo/psalm
+            * this is here just for vimeo/psalm.
+            *
             * @var string|int $k
             */
             foreach (array_keys($sources) as $i => $k) {
@@ -256,7 +259,8 @@ class ImplementationTest extends Base
                 );
 
                 /**
-                * this is here just for vimeo/psalm
+                * this is here just for vimeo/psalm.
+                *
                 * @var int $prevKey
                 */
                 $prevKey = $prevKey;
@@ -264,7 +268,8 @@ class ImplementationTest extends Base
                 static::assertInternalType('int', $k, 'Sources must be listed with integer keys!');
 
                 /**
-                * this is here just for vimeo/psalm
+                * this is here just for vimeo/psalm.
+                *
                 * @var int $k
                 */
                 $k = $k;
@@ -285,7 +290,8 @@ class ImplementationTest extends Base
                 static::assertInternalType('string', $sources[$k]);
 
                 /**
-                * this is here just for vimeo/psalm
+                * this is here just for vimeo/psalm.
+                *
                 * @var string $source
                 */
                 $source = $sources[$k];
@@ -312,7 +318,8 @@ class ImplementationTest extends Base
     public function testRoutes(string $className) : void
     {
         /**
-        * this is here just for vimeo/psalm
+        * this is here just for vimeo/psalm.
+        *
         * @var array<string|int, array<string|int, string|false>|false> $routes
         */
         $routes = $className::DaftRouterRoutes();
@@ -321,7 +328,8 @@ class ImplementationTest extends Base
             static::assertInternalType('string', $uri, 'route keys must be strings!');
 
             /**
-            * this is here just for vimeo/psalm
+            * this is here just for vimeo/psalm.
+            *
             * @var string $uri
             */
             $uri = $uri;
@@ -341,14 +349,16 @@ class ImplementationTest extends Base
             );
 
             /**
-            * this is here just for vimeo/psalm
+            * this is here just for vimeo/psalm.
+            *
             * @var array $routesToCheck
             */
             $routesToCheck = $routesToCheck;
 
             /**
-            * this is here just for vimeo/psalm
-            * @var integer|string $k
+            * this is here just for vimeo/psalm.
+            *
+            * @var int|string $k
             * @var string|false $v
             */
             foreach ($routesToCheck as $k => $v) {
@@ -436,14 +446,16 @@ class ImplementationTest extends Base
     public function testMiddlware(string $className) : void
     {
         /**
-        * this is here just for vimeo/psalm
+        * this is here just for vimeo/psalm.
+        *
         * @var string|false $uriPrefix
         */
         foreach ($className::DaftRouterRoutePrefixExceptions() as $uriPrefix) {
             static::assertInternalType('string', $uriPrefix);
 
             /**
-            * this is here just for vimeo/psalm
+            * this is here just for vimeo/psalm.
+            *
             * @var string $uriPrefix
             */
             $uriPrefix = $uriPrefix;
@@ -553,13 +565,15 @@ class ImplementationTest extends Base
         );
 
         /**
-        * this is here just for vimeo/psalm
+        * this is here just for vimeo/psalm.
+        *
         * @var array|false $present
         */
         $present = $dispatcher->dispatch($presentWithMethod, $presentWithUri);
 
         /**
-        * this is here just for vimeo/psalm
+        * this is here just for vimeo/psalm.
+        *
         * @var array|false $notPresent
         */
         $notPresent = $dispatcher->dispatch(
@@ -571,13 +585,15 @@ class ImplementationTest extends Base
         static::assertInternalType('array', $notPresent); // this is here just for vimeo/psalm
 
         /**
-        * this is here just for vimeo/psalm
+        * this is here just for vimeo/psalm.
+        *
         * @var array $present
         */
         $present = $present;
 
         /**
-        * this is here just for vimeo/psalm
+        * this is here just for vimeo/psalm.
+        *
         * @var array $notPresent
         */
         $notPresent = $notPresent;
@@ -621,7 +637,8 @@ class ImplementationTest extends Base
         );
 
         /**
-        * this bit is here just for vimeo/psalm
+        * this bit is here just for vimeo/psalm.
+        *
         * @var string $route
         */
         $route = $route;

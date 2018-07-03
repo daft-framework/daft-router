@@ -38,7 +38,8 @@ class Dispatcher extends Base
         $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
 
         /**
-        * this is here just for vimeo/psalm
+        * this is here just for vimeo/psalm.
+        *
         * @var array $routeInfo
         * @var array $routeInfo[1]
         */
