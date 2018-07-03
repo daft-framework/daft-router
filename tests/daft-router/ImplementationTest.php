@@ -402,6 +402,22 @@ class ImplementationTest extends Base
         $compiler->AddRoute('stdClass');
     }
 
+    public function testCompilerVerifyAddRouteThrowsExceptionWithHandler() : void
+    {
+        $collector = new RouteCollector(new Std(), new GroupCountBased());
+
+        $collector->addRoute(['GET'], '/', [Fixtures\Home::class]);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf(
+            'Argument 3 passed to %s::%s must be an array!',
+            RouteCollector::class,
+            'addRoute'
+        ));
+
+        $collector->addRoute('GET', '', '');
+    }
+
     /**
     * @depends testCompilerVerifyAddRouteThrowsException
     *
