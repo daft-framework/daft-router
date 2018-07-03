@@ -101,7 +101,7 @@ class Compiler
         return function (RouteCollector $collector) : void {
             /**
             * @var string $method
-            * @var array<int, string> $uris
+            * @var array<string, array<int, string>> $uris
             */
             foreach ($this->CompileDispatcherArray() as $method => $uris) {
                 foreach ($uris as $uri => $handlers) {

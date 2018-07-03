@@ -13,6 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Dispatcher extends Base
 {
+    /**
+    * @param string $httpMethod
+    * @param string $uri
+    *
+    * @return array
+    */
     final public function dispatch($httpMethod, $uri)
     {
         $routeInfo = parent::dispatch($httpMethod, $uri);
@@ -32,12 +38,17 @@ class Dispatcher extends Base
         $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
 
         /**
-        * @var string[] $routeInfo[1]
+        * this is here just for vimeo/psalm
+        * @var array $routeInfo
+        * @var array $routeInfo[1]
         */
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
         $route = (string) array_pop($routeInfo[1]);
 
-        $resp = $this->RunMiddlewareFirstPass($request, ...((array) $routeInfo[1]));
+        $resp = $this->RunMiddlewareFirstPass(
+            $request,
+            ...array_map('strval', (array) $routeInfo[1]) // this is here just for vimeo/psalm
+        );
 
         if ( ! ($resp instanceof Response)) {
             /**
@@ -45,7 +56,11 @@ class Dispatcher extends Base
             */
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
 
-            $resp = $this->RunMiddlewareSecondPass($request, $resp, ...((array) $routeInfo[1]));
+            $resp = $this->RunMiddlewareSecondPass(
+                $request,
+                $resp,
+                ...array_map('strval', (array) $routeInfo[1]) // this is here just for vimeo/psalm
+            );
         }
 
         return $resp;

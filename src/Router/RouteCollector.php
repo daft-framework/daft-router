@@ -13,9 +13,30 @@ use SignpostMarv\DaftRouter\DaftRoute;
 
 final class RouteCollector extends Base
 {
+    /**
+    * @param string|string[] $httpMethod
+    * @param string $route
+    * @param mixed $handler
+    */
     public function addRoute($httpMethod, $route, $handler) : void
     {
-        $this->addRouteStrict((string) $httpMethod, (string) $route, (array) $handler);
+        if ( ! is_array($handler)) {
+            throw new InvalidArgumentException(sprintf(
+                'Argument %u passed to %s must be an array!',
+                3,
+                __METHOD__
+            ));
+        }
+
+        if (is_array($httpMethod)) {
+            foreach ($httpMethod as $method) {
+                $this->addRouteStrict($method, $route, $handler);
+            }
+
+            return;
+        }
+
+        $this->addRouteStrict($httpMethod, $route, $handler);
     }
 
     protected function addRouteStrict(string $httpMethod, string $route, array $handler) : void

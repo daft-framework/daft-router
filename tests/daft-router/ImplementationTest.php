@@ -191,7 +191,7 @@ class ImplementationTest extends Base
         string $prefix,
         string $expected
     ) : void {
-        $this->assertSame(
+        static::assertSame(
             $expected,
             str_replace(
                 '//',
@@ -210,7 +210,7 @@ class ImplementationTest extends Base
     */
     public function testSources(string $className) : void
     {
-        $this->assertTrue(
+        static::assertTrue(
             is_a($className, DaftSource::class, true),
             sprintf(
                 'Source must be an implementation of %s, "%s" given.',
@@ -220,42 +220,77 @@ class ImplementationTest extends Base
         );
 
         /**
-        * @var array<int, string> $sources
+        * this is here just for vimeo/psalm
+        * @var array|false
         */
         $sources = $className::DaftRouterRouteAndMiddlewareSources();
 
-        if (empty($sources)) {
-            $this->markTestSkipped('No sources to test!');
+        static::assertInternalType('array', $sources);
+
+        /**
+        * this is here just for vimeo/psalm
+        * @var array $sources
+        */
+        $sources = $sources;
+
+        if (count($sources) < 1) {
+            static::markTestSkipped('No sources to test!');
         } else {
             /**
-            * @var int $prevKey
+            * @var int|false $prevKey
             */
             $prevKey = key($sources);
 
             /**
-            * @var int $k
+            * this is here just for vimeo/psalm
+            * @var string|int $k
             */
             foreach (array_keys($sources) as $i => $k) {
-                $this->assertInternalType('int', $k, 'Sources must be listed with integer keys!');
+                /*
+                * this is inside here because of a bug in phpstan/phpstan or phpstan/phpstan-phpunit
+                */
+                static::assertInternalType(
+                    'int',
+                    $prevKey,
+                    'Sources must be listed with integer keys!'
+                );
+
+                /**
+                * this is here just for vimeo/psalm
+                * @var int $prevKey
+                */
+                $prevKey = $prevKey;
+
+                static::assertInternalType('int', $k, 'Sources must be listed with integer keys!');
+
+                /**
+                * this is here just for vimeo/psalm
+                * @var int $k
+                */
+                $k = $k;
+
                 if ($i > 0) {
-                    $this->assertGreaterThan(
+                    static::assertGreaterThan(
                         $prevKey,
                         $k,
                         'Sources must be listed with incremental keys!'
                     );
-                    $this->assertSame(
+                    static::assertSame(
                         $prevKey + 1,
                         $k,
                         'Sources must be listed with sequential keys!'
                     );
                 }
 
+                static::assertInternalType('string', $sources[$k]);
+
                 /**
+                * this is here just for vimeo/psalm
                 * @var string $source
                 */
                 $source = $sources[$k];
-                $this->assertInternalType('string', $source);
-                $this->assertTrue(
+
+                static::assertTrue(
                     (
                         is_a($source, DaftSource::class, true) ||
                         is_a($source, DaftRoute::class, true) ||
@@ -277,29 +312,52 @@ class ImplementationTest extends Base
     public function testRoutes(string $className) : void
     {
         /**
-        * @var array<string, array<integer, string>> $routes
+        * this is here just for vimeo/psalm
+        * @var array<string|int, array<string|int, string|false>|false> $routes
         */
         $routes = $className::DaftRouterRoutes();
 
         foreach (array_keys($routes) as $uri) {
-            $this->assertSame(
+            static::assertInternalType('string', $uri, 'route keys must be strings!');
+
+            /**
+            * this is here just for vimeo/psalm
+            * @var string $uri
+            */
+            $uri = $uri;
+
+            static::assertSame(
                 '/',
                 mb_substr($uri, 0, 1),
                 'All route uris must begin with a forward slash!'
             );
-            $this->assertInternalType(
+
+            $routesToCheck = $routes[$uri];
+
+            static::assertInternalType(
                 'array',
-                $routes[$uri],
+                $routesToCheck,
                 'All route uris must be specified with an array of HTTP methods!'
             );
 
-            foreach ($routes[$uri] as $k => $v) {
-                $this->assertInternalType(
+            /**
+            * this is here just for vimeo/psalm
+            * @var array $routesToCheck
+            */
+            $routesToCheck = $routesToCheck;
+
+            /**
+            * this is here just for vimeo/psalm
+            * @var integer|string $k
+            * @var string|false $v
+            */
+            foreach ($routesToCheck as $k => $v) {
+                static::assertInternalType(
                     'integer',
                     $k,
                     'All http methods must be specified with numeric indices!'
                 );
-                $this->assertInternalType(
+                static::assertInternalType(
                     'string',
                     $v,
                     'All http methods must be specified as an array of strings!'
@@ -352,7 +410,7 @@ class ImplementationTest extends Base
             $compiler->AddRoute($route);
         }
 
-        $this->assertSame($routes, $compiler->ObtainRoutes());
+        static::assertSame($routes, $compiler->ObtainRoutes());
     }
 
     public function testCompilerVerifyAddMiddlewareThrowsException() : void
@@ -378,11 +436,19 @@ class ImplementationTest extends Base
     public function testMiddlware(string $className) : void
     {
         /**
-        * @var string $uriPrefix
+        * this is here just for vimeo/psalm
+        * @var string|false $uriPrefix
         */
         foreach ($className::DaftRouterRoutePrefixExceptions() as $uriPrefix) {
-            $this->assertInternalType('string', $uriPrefix);
-            $this->assertSame(
+            static::assertInternalType('string', $uriPrefix);
+
+            /**
+            * this is here just for vimeo/psalm
+            * @var string $uriPrefix
+            */
+            $uriPrefix = $uriPrefix;
+
+            static::assertSame(
                 '/',
                 mb_substr($uriPrefix, 0, 1),
                 'All middleware uri prefixes must begin with a forward slash!'
@@ -411,7 +477,7 @@ class ImplementationTest extends Base
             $compiler->AddMiddleware($middleware);
         }
 
-        $this->assertSame($middlewares, $compiler->ObtainMiddleware());
+        static::assertSame($middlewares, $compiler->ObtainMiddleware());
     }
 
     /**
@@ -440,16 +506,16 @@ class ImplementationTest extends Base
         }
 
         $compiler->NudgeCompilerWithSources($className);
-        $this->assertSame($routes, $compiler->ObtainRoutes());
-        $this->assertSame($middlewares, $compiler->ObtainMiddleware());
+        static::assertSame($routes, $compiler->ObtainRoutes());
+        static::assertSame($middlewares, $compiler->ObtainMiddleware());
 
         $compiler->NudgeCompilerWithSources($className);
-        $this->assertSame(
+        static::assertSame(
             $routes,
             $compiler->ObtainRoutes(),
             'Routes must be identical after adding a source more than once!'
         );
-        $this->assertSame(
+        static::assertSame(
             $middlewares,
             $compiler->ObtainMiddleware(),
             'Middleware must be identical after adding a source more than once!'
@@ -471,11 +537,11 @@ class ImplementationTest extends Base
         string $notPresentWithMethod,
         string $notPresentWithUri
     ) : void {
-        $this->assertTrue(is_a($middleware, DaftMiddleware::class, true));
-        $this->assertTrue(is_a($presentWith, DaftRoute::class, true));
-        $this->assertTrue(is_a($notPresentWith, DaftRoute::class, true));
+        static::assertTrue(is_a($middleware, DaftMiddleware::class, true));
+        static::assertTrue(is_a($presentWith, DaftRoute::class, true));
+        static::assertTrue(is_a($notPresentWith, DaftRoute::class, true));
 
-        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainDispatcher(
+        $dispatcher = Fixtures\Compiler::ObtainCompiler()::ObtainDispatcher(
             [
                 'cacheDisabled' => true,
                 'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
@@ -486,15 +552,38 @@ class ImplementationTest extends Base
             $notPresentWith
         );
 
+        /**
+        * this is here just for vimeo/psalm
+        * @var array|false $present
+        */
         $present = $dispatcher->dispatch($presentWithMethod, $presentWithUri);
 
+        /**
+        * this is here just for vimeo/psalm
+        * @var array|false $notPresent
+        */
         $notPresent = $dispatcher->dispatch(
             $notPresentWithMethod,
             $notPresentWithUri
         );
 
-        $this->assertTrue(Dispatcher::FOUND === $present[0]);
-        $this->assertTrue(Dispatcher::FOUND === $notPresent[0]);
+        static::assertInternalType('array', $present); // this is here just for vimeo/psalm
+        static::assertInternalType('array', $notPresent); // this is here just for vimeo/psalm
+
+        /**
+        * this is here just for vimeo/psalm
+        * @var array $present
+        */
+        $present = $present;
+
+        /**
+        * this is here just for vimeo/psalm
+        * @var array $notPresent
+        */
+        $notPresent = $notPresent;
+
+        static::assertTrue(Dispatcher::FOUND === $present[0]);
+        static::assertTrue(Dispatcher::FOUND === $notPresent[0]);
 
         /**
         * @var string[] $dispatchedPresent
@@ -506,14 +595,14 @@ class ImplementationTest extends Base
         */
         $dispatchedNotPresent = $notPresent[1];
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $middleware,
                 $presentWith,
             ],
             $dispatchedPresent
         );
-        $this->assertSame(
+        static::assertSame(
             [
                 $notPresentWith,
             ],
@@ -521,31 +610,30 @@ class ImplementationTest extends Base
         );
 
         /**
-        * @var string $route
+        * @var string|false $route
         */
         $route = array_pop($dispatchedPresent);
 
-        $this->assertInternalType(
+        static::assertInternalType(
             'string',
             $route,
             'Last entry from a dispatcher should be a string'
         );
-        $this->assertTrue(is_a($route, DaftRoute::class, true), sprintf(
+
+        /**
+        * this bit is here just for vimeo/psalm
+        * @var string $route
+        */
+        $route = $route;
+
+        static::assertTrue(is_a($route, DaftRoute::class, true), sprintf(
             'Last entry from a dispatcher should be %s',
             DaftRoute::class
         ));
 
         if (is_array($dispatchedPresent) && count($dispatchedPresent) > 0) {
-            /**
-            * @var string $middleware
-            */
             foreach ($dispatchedPresent as $middleware) {
-                $this->assertInternalType(
-                    'string',
-                    $middleware,
-                    'Leading entries from a dispatcher should be a string'
-                );
-                $this->assertTrue(is_a($middleware, DaftMiddleware::class, true), sprintf(
+                static::assertTrue(is_a($middleware, DaftMiddleware::class, true), sprintf(
                     'Leading entries from a dispatcher should be %s',
                     DaftMiddleware::class
                 ));
@@ -572,7 +660,7 @@ class ImplementationTest extends Base
         /**
         * @var Dispatcher $dispatcher
         */
-        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainDispatcher(
+        $dispatcher = Fixtures\Compiler::ObtainCompiler()::ObtainDispatcher(
             [
                 'cacheDisabled' => true,
                 'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
@@ -581,14 +669,12 @@ class ImplementationTest extends Base
             ...$sources
         );
 
-        $this->assertInstanceOf(Dispatcher::class, $dispatcher);
-
         $request = static::ReqeuestFromArgs($requestArgs);
 
         $response = $dispatcher->handle($request, $prefix);
 
-        $this->assertSame($expectedStatus, $response->getStatusCode());
-        $this->assertSame($expectedContent, $response->getContent());
+        static::assertSame($expectedStatus, $response->getStatusCode());
+        static::assertSame($expectedContent, $response->getContent());
     }
 
     /**
@@ -607,10 +693,7 @@ class ImplementationTest extends Base
         string $expectedContent,
         array $requestArgs
     ) : void {
-        /**
-        * @var Dispatcher $dispatcher
-        */
-        $dispatcher = Fixtures\Compiler::ObtainCompiler()->ObtainDispatcher(
+        $dispatcher = Fixtures\Compiler::ObtainCompiler()::ObtainDispatcher(
             [
                 'cacheDisabled' => true,
                 'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
@@ -618,8 +701,6 @@ class ImplementationTest extends Base
             ],
             ...$sources
         );
-
-        $this->assertInstanceOf(Dispatcher::class, $dispatcher);
 
         $request = static::ReqeuestFromArgs($requestArgs);
 
