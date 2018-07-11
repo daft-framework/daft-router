@@ -7,9 +7,9 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use FastRoute\Dispatcher\GroupCountBased as Base;
-use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
+use SignpostMarv\DaftRouter\ResponseException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

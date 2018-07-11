@@ -8,8 +8,8 @@ namespace SignpostMarv\DaftRouter\Router;
 
 use FastRoute\RouteCollector as Base;
 use InvalidArgumentException;
-use SignpostMarv\DaftRouter\DaftRouteFilter;
 use SignpostMarv\DaftRouter\DaftRoute;
+use SignpostMarv\DaftRouter\DaftRouteFilter;
 
 final class RouteCollector extends Base
 {
