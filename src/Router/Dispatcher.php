@@ -72,11 +72,11 @@ class Dispatcher extends Base
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
         }
 
-            $resp = $this->RunMiddlewareSecondPass(
-                $request,
-                $resp,
-                ...$secondPass // this is here just for vimeo/psalm
-            );
+        $resp = $this->RunMiddlewareSecondPass(
+            $request,
+            $resp,
+            ...$secondPass // this is here just for vimeo/psalm
+        );
 
         return $resp;
     }
