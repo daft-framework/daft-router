@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "797d12b5e55f2d6d01479f017ac46027",
+    "content-hash": "a23cab1f4ad325d774d7e85ddf0fe1d4",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -4083,16 +4083,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "dev-master",
+            "version": "2.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "76a3fbbdf0b6194603670a0f5134fb6106d96199"
+                "reference": "ecf4ed65e3d878ec0f7b584b172ef294d5a60433"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/76a3fbbdf0b6194603670a0f5134fb6106d96199",
-                "reference": "76a3fbbdf0b6194603670a0f5134fb6106d96199",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/ecf4ed65e3d878ec0f7b584b172ef294d5a60433",
+                "reference": "ecf4ed65e3d878ec0f7b584b172ef294d5a60433",
                 "shasum": ""
             },
             "require": {
@@ -4102,6 +4102,9 @@
                 "openlss/lib-array2xml": "^0.0.10||^0.5.1",
                 "php": "^7.0",
                 "php-cs-fixer/diff": "^1.2"
+            },
+            "provide": {
+                "psalm/psalm": "self.version"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.2",
@@ -4118,6 +4121,12 @@
                 "psalter"
             ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev",
+                    "dev-1.x": "1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Psalm\\": "src/Psalm"
@@ -4138,7 +4147,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2018-07-03T21:22:04+00:00"
+            "time": "2018-07-10T15:39:38+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4195,8 +4204,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "maglnet/composer-require-checker": 20,
-        "roave/security-advisories": 20,
-        "vimeo/psalm": 20
+        "roave/security-advisories": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
