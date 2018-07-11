@@ -8,6 +8,8 @@ namespace SignpostMarv\DaftRouter\Router;
 
 use FastRoute\Dispatcher\GroupCountBased as Base;
 use SignpostMarv\DaftRouter\ResponseException;
+use SignpostMarv\DaftRouter\DaftRequestInterceptor;
+use SignpostMarv\DaftRouter\DaftResponseModifier;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,9 +48,21 @@ class Dispatcher extends Base
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
         $route = (string) array_pop($routeInfo[1]);
 
+        $firstPass = [];
+        $secondPass = [];
+
+        foreach (array_map('strval', (array) $routeInfo[1]) as $middleware) {
+            if (is_a($middleware, DaftRequestInterceptor::class, true)) {
+                $firstPass[] = $middleware;
+            }
+            if (is_a($middleware, DaftResponseModifier::class, true)) {
+                $secondPass[] = $middleware;
+            }
+        }
+
         $resp = $this->RunMiddlewareFirstPass(
             $request,
-            ...array_map('strval', (array) $routeInfo[1]) // this is here just for vimeo/psalm
+            ...$firstPass
         );
 
         if ( ! ($resp instanceof Response)) {
@@ -56,13 +70,13 @@ class Dispatcher extends Base
             * @var Response $resp
             */
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
+        }
 
             $resp = $this->RunMiddlewareSecondPass(
                 $request,
                 $resp,
-                ...array_map('strval', (array) $routeInfo[1]) // this is here just for vimeo/psalm
+                ...$secondPass // this is here just for vimeo/psalm
             );
-        }
 
         return $resp;
     }

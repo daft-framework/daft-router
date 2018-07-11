@@ -9,7 +9,9 @@ namespace SignpostMarv\DaftRouter\Router;
 use Closure;
 use InvalidArgumentException;
 use SignpostMarv\DaftInterfaceCollector\StaticMethodCollector;
-use SignpostMarv\DaftRouter\DaftMiddleware;
+use SignpostMarv\DaftRouter\DaftResponseModifier;
+use SignpostMarv\DaftRouter\DaftRequestInterceptor;
+use SignpostMarv\DaftRouter\DaftRouteFilter;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftSource;
 use function FastRoute\cachedDispatcher;
@@ -19,7 +21,8 @@ class Compiler
     const CollectorConfig = [
         DaftSource::class => [
             'DaftRouterRouteAndMiddlewareSources' => [
-                DaftMiddleware::class,
+                DaftRequestInterceptor::class,
+                DaftResponseModifier::class,
                 DaftRoute::class,
                 DaftSource::class,
             ],
@@ -27,7 +30,8 @@ class Compiler
     ];
 
     const CollectorInterfacesConfig = [
-        DaftMiddleware::class,
+        DaftRequestInterceptor::class,
+        DaftResponseModifier::class,
         DaftRoute::class,
     ];
     /**
@@ -68,11 +72,11 @@ class Compiler
 
     public function AddMiddleware(string $middleware) : void
     {
-        if ( ! is_a($middleware, DaftMiddleware::class, true)) {
+        if ( ! is_a($middleware, DaftRouteFilter::class, true)) {
             throw new InvalidArgumentException(sprintf(
                 'Argument 1 passed to %s must be an implementation of %s',
                 __METHOD__,
-                DaftMiddleware::class
+                DaftRouteFilter::class
             ));
         } elseif ( ! in_array($middleware, $this->middleware, true)) {
             $this->middleware[] = $middleware;
@@ -88,7 +92,7 @@ class Compiler
             if (is_a($thing, DaftRoute::class, true)) {
                 $this->AddRoute($thing);
             }
-            if (is_a($thing, DaftMiddleware::class, true)) {
+            if (is_a($thing, DaftRouteFilter::class, true)) {
                 $this->AddMiddleware($thing);
             }
         }
@@ -138,11 +142,28 @@ class Compiler
     final protected function MiddlewareNotExcludedFromUri(string $uri) : array
     {
         return array_filter($this->middleware, function (string $middleware) use ($uri) : bool {
+            if (
+                ! is_a($middleware, DaftRequestInterceptor::class, true) &&
+                ! is_a($middleware, DaftResponseModifier::class, true)
+            ) {
+                return false;
+            }
+
             /**
             * @var string $exception
             */
             foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
                 if (0 === mb_strpos($uri, $exception)) {
+                    return false;
+                }
+            }
+
+            /**
+            * @var string $requirement
+            */
+            foreach ($middleware::DaftRouterRoutePrefixRequirements() as $requirement) {
+                $pos = mb_strpos($uri, $requirement);
+                if (false === $pos || $pos > 0) {
                     return false;
                 }
             }

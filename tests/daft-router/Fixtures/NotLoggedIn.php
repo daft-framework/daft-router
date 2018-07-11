@@ -6,12 +6,12 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
-use SignpostMarv\DaftRouter\DaftMiddleware;
+use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class NotLoggedIn implements DaftMiddleware
+class NotLoggedIn implements DaftRequestInterceptor
 {
     public static function DaftRouterMiddlewareHandler(
         Request $request,
@@ -32,5 +32,13 @@ class NotLoggedIn implements DaftMiddleware
         return [
             '/login',
         ];
+    }
+
+    /**
+    * @return array<int, string> URI prefixes
+    */
+    public static function DaftRouterRoutePrefixRequirements() : array
+    {
+        return [];
     }
 }

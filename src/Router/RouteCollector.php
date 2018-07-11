@@ -8,7 +8,7 @@ namespace SignpostMarv\DaftRouter\Router;
 
 use FastRoute\RouteCollector as Base;
 use InvalidArgumentException;
-use SignpostMarv\DaftRouter\DaftMiddleware;
+use SignpostMarv\DaftRouter\DaftRouteFilter;
 use SignpostMarv\DaftRouter\DaftRoute;
 
 final class RouteCollector extends Base
@@ -47,7 +47,7 @@ final class RouteCollector extends Base
         $routeClass = array_pop($handler);
 
         $handler = array_values(array_filter($handler, function (string $maybeMiddleware) : bool {
-            return is_a($maybeMiddleware, DaftMiddleware::class, true);
+            return is_a($maybeMiddleware, DaftRouteFilter::class, true);
         }));
 
         if ( ! is_a($routeClass, DaftRoute::class, true)) {

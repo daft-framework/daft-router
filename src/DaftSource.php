@@ -9,7 +9,7 @@ namespace SignpostMarv\DaftRouter;
 interface DaftSource
 {
     /**
-    * Provides an array of DaftRoute, DaftMiddleware, or DaftSource implementations.
+    * Provides an array of DaftRoute, DaftRouteFilter, or DaftSource implementations.
     *
     * @return array<int, string>
     */

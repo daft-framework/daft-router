@@ -11,7 +11,7 @@ use FastRoute\RouteParser\Std;
 use Generator;
 use InvalidArgumentException;
 use RuntimeException;
-use SignpostMarv\DaftRouter\DaftMiddleware;
+use SignpostMarv\DaftRouter\DaftRouteFilter;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\ResponseException;
@@ -300,7 +300,7 @@ class ImplementationTest extends Base
                     (
                         is_a($source, DaftSource::class, true) ||
                         is_a($source, DaftRoute::class, true) ||
-                        is_a($source, DaftMiddleware::class, true)
+                        is_a($source, DaftRouteFilter::class, true)
                     ),
                     'Sources must only be listed as routes, middleware or sources!'
                 );
@@ -448,7 +448,7 @@ class ImplementationTest extends Base
             'Argument 1 passed to %s::%s must be an implementation of %s',
             Compiler::class,
             'AddMiddleware',
-            DaftMiddleware::class
+            DaftRouteFilter::class
         ));
 
         $compiler->AddMiddleware('stdClass');
@@ -565,7 +565,7 @@ class ImplementationTest extends Base
         string $notPresentWithMethod,
         string $notPresentWithUri
     ) : void {
-        static::assertTrue(is_a($middleware, DaftMiddleware::class, true));
+        static::assertTrue(is_a($middleware, DaftRouteFilter::class, true));
         static::assertTrue(is_a($presentWith, DaftRoute::class, true));
         static::assertTrue(is_a($notPresentWith, DaftRoute::class, true));
 
@@ -666,9 +666,9 @@ class ImplementationTest extends Base
 
         if (is_array($dispatchedPresent) && count($dispatchedPresent) > 0) {
             foreach ($dispatchedPresent as $middleware) {
-                static::assertTrue(is_a($middleware, DaftMiddleware::class, true), sprintf(
+                static::assertTrue(is_a($middleware, DaftRouteFilter::class, true), sprintf(
                     'Leading entries from a dispatcher should be %s',
-                    DaftMiddleware::class
+                    DaftRouteFilter::class
                 ));
             }
         }
@@ -991,7 +991,7 @@ class ImplementationTest extends Base
 
     protected static function YieldMiddlewareFromSource(string $source) : Generator
     {
-        if (is_a($source, DaftMiddleware::class, true)) {
+        if (is_a($source, DaftRouteFilter::class, true)) {
             yield $source;
         }
         if (is_a($source, DaftSource::class, true)) {
