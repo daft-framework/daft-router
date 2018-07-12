@@ -1009,7 +1009,7 @@ class ImplementationTest extends Base
                 [
                     'foo' => 'bar',
                 ],
-                'https://example.com/'
+                'https://example.com/',
             ],
         ];
     }
