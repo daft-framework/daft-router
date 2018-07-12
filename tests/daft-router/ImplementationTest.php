@@ -522,6 +522,13 @@ class ImplementationTest extends Base
             $compiler->AddMiddleware($middleware);
         }
 
+        $middlewares[] = DaftRouteFilter::class;
+        $middlewares = array_filter($middlewares, function (string $middleware) : bool {
+            return
+                is_a($middleware, DaftRequestInterceptor::class, true) ||
+                is_a($middleware, DaftResponseModifier::class, true);
+        });
+
         static::assertSame($middlewares, $compiler->ObtainMiddleware());
     }
 
