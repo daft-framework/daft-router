@@ -104,7 +104,7 @@ class Dispatcher extends Base
             /**
             * @var Response $response
             */
-            $response = $middleware::DaftRouterMiddlewareHandler($request, $response);
+            $response = $middleware::DaftRouterMiddlewareModifier($request, $response);
         }
 
         return $response;
