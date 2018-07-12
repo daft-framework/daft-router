@@ -12,6 +12,7 @@ class Login extends Home
     {
         return [
             '/login' => ['GET', 'POST'],
+            '/admin/login' => ['GET', 'POST'],
         ];
     }
 }

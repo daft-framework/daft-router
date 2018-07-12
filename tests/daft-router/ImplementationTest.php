@@ -46,6 +46,15 @@ class ImplementationTest extends Base
                 'GET',
                 '/login',
             ],
+            [
+                Fixtures\AdminNotLoggedIn::class,
+                Fixtures\AdminHome::class,
+                'GET',
+                '/admin',
+                Fixtures\Login::class,
+                'GET',
+                '/admin/login',
+            ],
         ];
     }
 
