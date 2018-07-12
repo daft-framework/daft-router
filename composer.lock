@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a23cab1f4ad325d774d7e85ddf0fe1d4",
+    "content-hash": "e6b5bddd2525f2640606f88958b66ce3",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -729,16 +729,16 @@
         },
         {
             "name": "maglnet/composer-require-checker",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maglnet/ComposerRequireChecker.git",
-                "reference": "9580aa6a81d97c02cbd9d17b9c8fb223f8a71b5e"
+                "reference": "dcd45242d2187a9aff7286a9d6d1764b8e829dd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/9580aa6a81d97c02cbd9d17b9c8fb223f8a71b5e",
-                "reference": "9580aa6a81d97c02cbd9d17b9c8fb223f8a71b5e",
+                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/dcd45242d2187a9aff7286a9d6d1764b8e829dd2",
+                "reference": "dcd45242d2187a9aff7286a9d6d1764b8e829dd2",
                 "shasum": ""
             },
             "require": {
@@ -793,7 +793,7 @@
                 "require",
                 "requirements"
             ],
-            "time": "2018-07-11T19:39:46+00:00"
+            "time": "2018-07-11T19:38:33+00:00"
         },
         {
             "name": "muglug/package-versions-56",
@@ -4205,7 +4205,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "maglnet/composer-require-checker": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
