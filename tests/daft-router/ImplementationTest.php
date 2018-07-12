@@ -688,6 +688,7 @@ class ImplementationTest extends Base
     * @dataProvider DataProviderVerifyHandlerGood
     *
     * @param string[] $sources
+    * @param array<string, scalar|null|array|object> $expectedHeaders
     */
     public function testHandlerGood(
         array $sources,
