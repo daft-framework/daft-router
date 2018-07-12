@@ -10,7 +10,7 @@ use SignpostMarv\DaftRouter\DaftSource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Config implements DaftSource
+class ConfigNoModify implements DaftSource
 {
     public static function DaftRouterRouteAndMiddlewareSources() : array
     {
@@ -18,7 +18,6 @@ class Config implements DaftSource
             Home::class,
             Login::class,
             NotLoggedIn::class,
-            AppendHeader::class,
         ];
     }
 }

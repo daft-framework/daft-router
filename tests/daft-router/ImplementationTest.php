@@ -26,6 +26,9 @@ class ImplementationTest extends Base
     {
         yield from [
             [
+                Fixtures\ConfigNoModify::class,
+            ],
+            [
                 Fixtures\Config::class,
             ],
         ];
@@ -302,7 +305,10 @@ class ImplementationTest extends Base
                         is_a($source, DaftRoute::class, true) ||
                         is_a($source, DaftRouteFilter::class, true)
                     ),
-                    'Sources must only be listed as routes, middleware or sources!'
+                    sprintf(
+                        'Sources must only be listed as routes, middleware or sources! (%s)',
+                        $source
+                    )
                 );
 
                 $prevKey = $k;
@@ -688,7 +694,8 @@ class ImplementationTest extends Base
         string $prefix,
         int $expectedStatus,
         string $expectedContent,
-        array $requestArgs
+        array $requestArgs,
+        array $expectedHeaders = []
     ) : void {
         /**
         * @var Dispatcher $dispatcher
@@ -708,6 +715,10 @@ class ImplementationTest extends Base
 
         static::assertSame($expectedStatus, $response->getStatusCode());
         static::assertSame($expectedContent, $response->getContent());
+
+        foreach ($expectedHeaders as $header => $value) {
+            static::assertSame($response->headers->get($header), $value);
+        }
     }
 
     /**
@@ -875,7 +886,7 @@ class ImplementationTest extends Base
         * @var mixed[] $args
         */
         foreach ($argsSource as $args) {
-            list($sources, $prefix, $expectedStatus, $expectedContent, $uri) = $args;
+            list($sources, $prefix, $expectedStatus, $expectedContent, $headers, $uri) = $args;
 
             $yield = [
                 $sources,
@@ -886,8 +897,9 @@ class ImplementationTest extends Base
                     [
                         $uri,
                     ],
-                    array_slice($args, 5)
+                    array_slice($args, 6)
                 ),
+                $headers,
             ];
 
             yield $yield;
@@ -899,30 +911,79 @@ class ImplementationTest extends Base
         yield from [
             [
                 [
-                    Fixtures\Config::class,
+                    Fixtures\ConfigNoModify::class,
                 ],
                 '',
                 200,
                 '',
+                [],
                 'https://example.com/?loggedin',
             ],
             [
                 [
-                    Fixtures\Config::class,
+                    Fixtures\ConfigNoModify::class,
                 ],
                 '/',
                 200,
                 '',
+                [],
                 'https://example.com/?loggedin',
             ],
             [
                 [
-                    Fixtures\Config::class,
+                    Fixtures\ConfigNoModify::class,
                 ],
                 '/foo/',
                 200,
                 '',
+                [],
                 'https://example.com/foo/?loggedin',
+            ],
+            [
+                [
+                    Fixtures\ConfigNoModify::class,
+                ],
+                '',
+                302,
+                (
+                    '<!DOCTYPE html>' . "\n" .
+                    '<html>' . "\n" .
+                    '    <head>' . "\n" .
+                    '        <meta charset="UTF-8" />' . "\n" .
+                    '        <meta http-equiv="refresh" content="0;url=/login" />' . "\n" .
+                    '' . "\n" .
+                    '        <title>Redirecting to /login</title>' . "\n" .
+                    '    </head>' . "\n" .
+                    '    <body>' . "\n" .
+                    '        Redirecting to <a href="/login">/login</a>.' . "\n" .
+                    '    </body>' . "\n" .
+                    '</html>'
+                ),
+                [],
+                'https://example.com/',
+            ],
+            [
+                [
+                    Fixtures\ConfigNoModify::class,
+                ],
+                '',
+                302,
+                (
+                    '<!DOCTYPE html>' . "\n" .
+                    '<html>' . "\n" .
+                    '    <head>' . "\n" .
+                    '        <meta charset="UTF-8" />' . "\n" .
+                    '        <meta http-equiv="refresh" content="0;url=/login" />' . "\n" .
+                    '' . "\n" .
+                    '        <title>Redirecting to /login</title>' . "\n" .
+                    '    </head>' . "\n" .
+                    '    <body>' . "\n" .
+                    '        Redirecting to <a href="/login">/login</a>.' . "\n" .
+                    '    </body>' . "\n" .
+                    '</html>'
+                ),
+                [],
+                'https://example.com/',
             ],
             [
                 [
@@ -944,7 +1005,10 @@ class ImplementationTest extends Base
                     '    </body>' . "\n" .
                     '</html>'
                 ),
-                'https://example.com/',
+                [
+                    'foo' => 'bar',
+                ],
+                'https://example.com/'
             ],
         ];
     }
@@ -959,6 +1023,7 @@ class ImplementationTest extends Base
                 '',
                 404,
                 'Dispatcher was not able to generate a response!',
+                [],
                 'https://example.com/not-here',
             ],
             [
@@ -968,6 +1033,7 @@ class ImplementationTest extends Base
                 '',
                 405,
                 'Dispatcher was not able to generate a response!',
+                [],
                 'https://example.com/?loggedin',
                 'POST',
             ],
