@@ -11,6 +11,8 @@ use FastRoute\RouteParser\Std;
 use Generator;
 use InvalidArgumentException;
 use RuntimeException;
+use SignpostMarv\DaftRouter\DaftRequestInterceptor;
+use SignpostMarv\DaftRouter\DaftResponseModifier;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouteFilter;
 use SignpostMarv\DaftRouter\DaftSource;
@@ -1067,7 +1069,10 @@ class ImplementationTest extends Base
 
     protected static function YieldMiddlewareFromSource(string $source) : Generator
     {
-        if (is_a($source, DaftRouteFilter::class, true)) {
+        if (
+            is_a($source, DaftRequestInterceptor::class, true) ||
+            is_a($source, DaftResponseModifier::class, true)
+        ) {
             yield $source;
         }
         if (is_a($source, DaftSource::class, true)) {

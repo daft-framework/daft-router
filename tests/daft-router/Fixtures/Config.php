@@ -19,6 +19,7 @@ class Config implements DaftSource
             Login::class,
             NotLoggedIn::class,
             AppendHeader::class,
+            DoesNothing::class,
         ];
     }
 }
