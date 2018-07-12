@@ -42,7 +42,7 @@ class Compiler
     /**
     * @var array<int, string>
     */
-    private $middleware = [];
+    private $middleware = [DaftRouteFilter::class];
 
     /**
     * @var StaticMethodCollector
@@ -136,19 +136,16 @@ class Compiler
 
     final public function ObtainMiddleware() : array
     {
-        return $this->middleware;
+        return array_values(array_filter($this->middleware, function (string $middleware) : bool {
+            return
+                is_a($middleware, DaftRequestInterceptor::class, true) ||
+                is_a($middleware, DaftResponseModifier::class, true);
+        }));
     }
 
     final protected function MiddlewareNotExcludedFromUri(string $uri) : array
     {
-        return array_filter($this->middleware, function (string $middleware) use ($uri) : bool {
-            if (
-                ! is_a($middleware, DaftRequestInterceptor::class, true) &&
-                ! is_a($middleware, DaftResponseModifier::class, true)
-            ) {
-                return false;
-            }
-
+        return array_filter($this->ObtainMiddleware(), function (string $middleware) use ($uri) : bool {
             /**
             * @var string $exception
             */
