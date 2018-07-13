@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6b5bddd2525f2640606f88958b66ce3",
+    "content-hash": "8f6a00d5cebe4a705493806f5ca5926e",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -54,23 +54,23 @@
         },
         {
             "name": "signpostmarv/daft-interface-collector",
-            "version": "v0.4.5",
+            "version": "v0.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-interface-collector.git",
-                "reference": "012797a87751b4e216ec9f21d8e0f939fe0948a4"
+                "reference": "239587250682ee76b21ce69d730110986bdf502d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-interface-collector/zipball/012797a87751b4e216ec9f21d8e0f939fe0948a4",
-                "reference": "012797a87751b4e216ec9f21d8e0f939fe0948a4",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-interface-collector/zipball/239587250682ee76b21ce69d730110986bdf502d",
+                "reference": "239587250682ee76b21ce69d730110986bdf502d",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
             },
             "require-dev": {
-                "maglnet/composer-require-checker": "dev-master",
+                "maglnet/composer-require-checker": "^1.0",
                 "phpstan/phpstan": "^0.10.1",
                 "phpstan/phpstan-phpunit": "^0.10.0",
                 "phpstan/phpstan-strict-rules": "^0.10.0",
@@ -80,7 +80,7 @@
                 "sebastian/phpcpd": "^4.0",
                 "signpostmarv/daft-router": "^0.1",
                 "signpostmarv/php-cs-fixer-config": "^0.5.1",
-                "vimeo/psalm": "dev-master"
+                "vimeo/psalm": "^2.0"
             },
             "type": "library",
             "autoload": {
@@ -99,7 +99,7 @@
                 }
             ],
             "description": "interface collector. daft reasons again.",
-            "time": "2018-07-03T22:06:49+00:00"
+            "time": "2018-07-13T19:07:03+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -4211,7 +4211,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1",
-        "ext-mbstring": "^7.1"
+        "ext-mbstring": "*"
     },
     "platform-dev": []
 }
