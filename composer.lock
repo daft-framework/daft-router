@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f6a00d5cebe4a705493806f5ca5926e",
+    "content-hash": "713c2df5eebafc6a35c464e965952841",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -54,16 +54,16 @@
         },
         {
             "name": "signpostmarv/daft-interface-collector",
-            "version": "v0.4.6",
+            "version": "v0.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-interface-collector.git",
-                "reference": "239587250682ee76b21ce69d730110986bdf502d"
+                "reference": "5fe7633ecbe64bcbdaa124770ec4074a0991919a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-interface-collector/zipball/239587250682ee76b21ce69d730110986bdf502d",
-                "reference": "239587250682ee76b21ce69d730110986bdf502d",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-interface-collector/zipball/5fe7633ecbe64bcbdaa124770ec4074a0991919a",
+                "reference": "5fe7633ecbe64bcbdaa124770ec4074a0991919a",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,6 @@
                 "povils/phpmnd": "^2.0",
                 "roave/security-advisories": "dev-master",
                 "sebastian/phpcpd": "^4.0",
-                "signpostmarv/daft-router": "^0.1",
                 "signpostmarv/php-cs-fixer-config": "^0.5.1",
                 "vimeo/psalm": "^2.0"
             },
@@ -99,7 +98,7 @@
                 }
             ],
             "description": "interface collector. daft reasons again.",
-            "time": "2018-07-13T19:07:03+00:00"
+            "time": "2018-07-19T20:22:23+00:00"
         },
         {
             "name": "symfony/http-foundation",
