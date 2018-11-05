@@ -148,12 +148,17 @@ class Compiler
         return array_filter(
             $this->ObtainMiddleware(),
             function (string $middleware) use ($uri) : bool {
+                $any = false;
                 /**
                 * @var string $exception
                 */
                 foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
                     if (0 === mb_strpos($uri, $exception)) {
+                        if ( ! $any) {
                         return false;
+                        }
+                    } else {
+                        $any = true;
                     }
                 }
 
@@ -167,7 +172,7 @@ class Compiler
                     }
                 }
 
-                return true;
+                return $any;
             }
         );
     }
