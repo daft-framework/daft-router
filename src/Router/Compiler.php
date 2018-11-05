@@ -155,7 +155,7 @@ class Compiler
                 foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
                     if (0 === mb_strpos($uri, $exception)) {
                         if ( ! $any) {
-                        return false;
+                            return false;
                         }
                     } else {
                         $any = true;
