@@ -143,11 +143,10 @@ class Compiler
         }));
     }
 
-    final protected function MiddlewareNotExcludedFromUri(string $uri) : array
-    {
-        return array_filter(
-            $this->ObtainMiddleware(),
-            function (string $middleware) use ($uri) : bool {
+    final protected function MiddlewareNotExcludedFromUriExceptions(
+        string $middleware,
+        string $uri
+    ) : bool {
                 $any = false;
                 /**
                 * @var string $exception
@@ -161,6 +160,16 @@ class Compiler
                         $any = true;
                     }
                 }
+
+        return $any;
+    }
+
+    final protected function MiddlewareNotExcludedFromUri(string $uri) : array
+    {
+        return array_filter(
+            $this->ObtainMiddleware(),
+            function (string $middleware) use ($uri) : bool {
+                $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
 
                 /**
                 * @var string $requirement
