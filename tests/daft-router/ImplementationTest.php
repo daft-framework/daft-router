@@ -240,7 +240,7 @@ class ImplementationTest extends Base
         */
         $sources = $className::DaftRouterRouteAndMiddlewareSources();
 
-        static::assertInternalType('array', $sources);
+        static::assertIsArray($sources);
 
         /**
         * this is here just for vimeo/psalm.
@@ -266,8 +266,7 @@ class ImplementationTest extends Base
                 /*
                 * this is inside here because of a bug in phpstan/phpstan or phpstan/phpstan-phpunit
                 */
-                static::assertInternalType(
-                    'int',
+                static::assertIsInt(
                     $prevKey,
                     'Sources must be listed with integer keys!'
                 );
@@ -279,7 +278,7 @@ class ImplementationTest extends Base
                 */
                 $prevKey = $prevKey;
 
-                static::assertInternalType('int', $k, 'Sources must be listed with integer keys!');
+                static::assertIsInt($k, 'Sources must be listed with integer keys!');
 
                 /**
                 * this is here just for vimeo/psalm.
@@ -301,7 +300,7 @@ class ImplementationTest extends Base
                     );
                 }
 
-                static::assertInternalType('string', $sources[$k]);
+                static::assertIsString($sources[$k]);
 
                 /**
                 * this is here just for vimeo/psalm.
@@ -342,7 +341,7 @@ class ImplementationTest extends Base
         $routes = $className::DaftRouterRoutes();
 
         foreach (array_keys($routes) as $uri) {
-            static::assertInternalType('string', $uri, 'route keys must be strings!');
+            static::assertIsString($uri, 'route keys must be strings!');
 
             /**
             * this is here just for vimeo/psalm.
@@ -359,8 +358,7 @@ class ImplementationTest extends Base
 
             $routesToCheck = $routes[$uri];
 
-            static::assertInternalType(
-                'array',
+            static::assertIsArray(
                 $routesToCheck,
                 'All route uris must be specified with an array of HTTP methods!'
             );
@@ -379,13 +377,11 @@ class ImplementationTest extends Base
             * @var string|false $v
             */
             foreach ($routesToCheck as $k => $v) {
-                static::assertInternalType(
-                    'integer',
+                static::assertIsInt(
                     $k,
                     'All http methods must be specified with numeric indices!'
                 );
-                static::assertInternalType(
-                    'string',
+                static::assertIsString(
                     $v,
                     'All http methods must be specified as an array of strings!'
                 );
@@ -484,7 +480,7 @@ class ImplementationTest extends Base
         * @var string|false $uriPrefix
         */
         foreach ($className::DaftRouterRoutePrefixExceptions() as $uriPrefix) {
-            static::assertInternalType('string', $uriPrefix);
+            static::assertIsString($uriPrefix);
 
             /**
             * this is here just for vimeo/psalm.
@@ -621,8 +617,8 @@ class ImplementationTest extends Base
             $notPresentWithUri
         );
 
-        static::assertInternalType('array', $present); // this is here just for vimeo/psalm
-        static::assertInternalType('array', $notPresent); // this is here just for vimeo/psalm
+        static::assertIsArray($present); // this is here just for vimeo/psalm
+        static::assertIsArray($notPresent); // this is here just for vimeo/psalm
 
         /**
         * this is here just for vimeo/psalm.
@@ -670,8 +666,7 @@ class ImplementationTest extends Base
         */
         $route = array_pop($dispatchedPresent);
 
-        static::assertInternalType(
-            'string',
+        static::assertIsString(
             $route,
             'Last entry from a dispatcher should be a string'
         );
