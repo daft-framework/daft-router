@@ -63,7 +63,7 @@ class ImplementationTest extends Base
     public function DataProviderRoutes() : Generator
     {
         /**
-        * @var string[]|null $args
+        * @var string[]|null
         */
         foreach ($this->DataProviderGoodSources() as $i => $args) {
             if ( ! is_array($args)) {
@@ -91,7 +91,7 @@ class ImplementationTest extends Base
             }
 
             /**
-            * @var string $route
+            * @var string
             */
             foreach (static::YieldRoutesFromSource($source) as $route) {
                 yield [$route];
@@ -102,7 +102,7 @@ class ImplementationTest extends Base
     public function DataProviderMiddleware() : Generator
     {
         /**
-        * @var string[]|null $args
+        * @var string[]|null
         */
         foreach ($this->DataProviderGoodSources() as $i => $args) {
             if ( ! is_array($args)) {
@@ -130,7 +130,7 @@ class ImplementationTest extends Base
             }
 
             /**
-            * @var string $middleware
+            * @var string
             */
             foreach (static::YieldMiddlewareFromSource($source) as $middleware) {
                 yield [$middleware];
@@ -142,7 +142,7 @@ class ImplementationTest extends Base
     {
         $parser = new Std();
         /**
-        * @var string[] $args
+        * @var string[]
         */
         foreach ($this->DataProviderRoutes() as $args) {
             list($route) = $args;
@@ -159,7 +159,7 @@ class ImplementationTest extends Base
             }
 
             /**
-            * @var string $method
+            * @var string
             * @var array<int, string> $uris
             */
             foreach ($route::DaftRouterRoutes() as $method => $uris) {
@@ -259,7 +259,7 @@ class ImplementationTest extends Base
         /**
         * this is here just for vimeo/psalm.
         *
-        * @var array $sources
+        * @var array
         */
         $sources = $sources;
 
@@ -267,14 +267,14 @@ class ImplementationTest extends Base
             static::markTestSkipped('No sources to test!');
         } else {
             /**
-            * @var int|false $prevKey
+            * @var int|false
             */
             $prevKey = key($sources);
 
             /**
             * this is here just for vimeo/psalm.
             *
-            * @var string|int $k
+            * @var string|int
             */
             foreach (array_keys($sources) as $i => $k) {
                 /*
@@ -288,7 +288,7 @@ class ImplementationTest extends Base
                 /**
                 * this is here just for vimeo/psalm.
                 *
-                * @var int $prevKey
+                * @var int
                 */
                 $prevKey = $prevKey;
 
@@ -297,7 +297,7 @@ class ImplementationTest extends Base
                 /**
                 * this is here just for vimeo/psalm.
                 *
-                * @var int $k
+                * @var int
                 */
                 $k = $k;
 
@@ -319,7 +319,7 @@ class ImplementationTest extends Base
                 /**
                 * this is here just for vimeo/psalm.
                 *
-                * @var string $source
+                * @var string
                 */
                 $source = $sources[$k];
 
@@ -361,7 +361,7 @@ class ImplementationTest extends Base
         /**
         * this is here just for vimeo/psalm.
         *
-        * @var array<string|int, array<string|int, string|false>|false> $routes
+        * @var array<string|int, array<string|int, string|false>|false>
         */
         $routes = $className::DaftRouterRoutes();
 
@@ -371,7 +371,7 @@ class ImplementationTest extends Base
             /**
             * this is here just for vimeo/psalm.
             *
-            * @var string $uri
+            * @var string
             */
             $uri = $uri;
 
@@ -391,14 +391,14 @@ class ImplementationTest extends Base
             /**
             * this is here just for vimeo/psalm.
             *
-            * @var array $routesToCheck
+            * @var array
             */
             $routesToCheck = $routesToCheck;
 
             /**
             * this is here just for vimeo/psalm.
             *
-            * @var int|string $k
+            * @var int|string
             * @var string|false $v
             */
             foreach ($routesToCheck as $k => $v) {
@@ -478,7 +478,7 @@ class ImplementationTest extends Base
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
         /**
-        * @var string $route
+        * @var string
         */
         foreach (static::YieldRoutesFromSource($className) as $route) {
             $routes[] = $route;
@@ -524,7 +524,7 @@ class ImplementationTest extends Base
         /**
         * this is here just for vimeo/psalm.
         *
-        * @var string|false $uriPrefix
+        * @var string|false
         */
         foreach ($className::DaftRouterRoutePrefixExceptions() as $uriPrefix) {
             static::assertIsString($uriPrefix);
@@ -532,7 +532,7 @@ class ImplementationTest extends Base
             /**
             * this is here just for vimeo/psalm.
             *
-            * @var string $uriPrefix
+            * @var string
             */
             $uriPrefix = $uriPrefix;
 
@@ -552,13 +552,13 @@ class ImplementationTest extends Base
     public function testCompilerVerifyAddMiddlewareAddsMiddlewares(string $className) : void
     {
         /**
-        * @var string[] $middlewares
+        * @var string[]
         */
         $middlewares = [];
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
         /**
-        * @var string $middleware
+        * @var string
         */
         foreach (static::YieldMiddlewareFromSource($className) as $middleware) {
             $middlewares[] = $middleware;
@@ -588,13 +588,13 @@ class ImplementationTest extends Base
         $middlewares = [];
 
         /**
-        * @var string $route
+        * @var string
         */
         foreach (static::YieldRoutesFromSource($className) as $route) {
             $routes[] = $route;
         }
         /**
-        * @var string $middleware
+        * @var string
         */
         foreach (static::YieldMiddlewareFromSource($className) as $middleware) {
             $middlewares[] = $middleware;
@@ -650,14 +650,14 @@ class ImplementationTest extends Base
         /**
         * this is here just for vimeo/psalm.
         *
-        * @var array|false $present
+        * @var array|false
         */
         $present = $dispatcher->dispatch($presentWithMethod, $presentWithUri);
 
         /**
         * this is here just for vimeo/psalm.
         *
-        * @var array|false $notPresent
+        * @var array|false
         */
         $notPresent = $dispatcher->dispatch(
             $notPresentWithMethod,
@@ -670,14 +670,14 @@ class ImplementationTest extends Base
         /**
         * this is here just for vimeo/psalm.
         *
-        * @var array $present
+        * @var array
         */
         $present = $present;
 
         /**
         * this is here just for vimeo/psalm.
         *
-        * @var array $notPresent
+        * @var array
         */
         $notPresent = $notPresent;
 
@@ -685,12 +685,12 @@ class ImplementationTest extends Base
         static::assertTrue(Dispatcher::FOUND === $notPresent[0]);
 
         /**
-        * @var string[] $dispatchedPresent
+        * @var string[]
         */
         $dispatchedPresent = $present[1];
 
         /**
-        * @var string[] $dispatchedNotPresent
+        * @var string[]
         */
         $dispatchedNotPresent = $notPresent[1];
 
@@ -709,7 +709,7 @@ class ImplementationTest extends Base
         );
 
         /**
-        * @var string|false $route
+        * @var string|false
         */
         $route = array_pop($dispatchedPresent);
 
@@ -721,7 +721,7 @@ class ImplementationTest extends Base
         /**
         * this bit is here just for vimeo/psalm.
         *
-        * @var string $route
+        * @var string
         */
         $route = $route;
 
@@ -759,7 +759,7 @@ class ImplementationTest extends Base
         array $expectedHeaders = []
     ) : void {
         /**
-        * @var Dispatcher $dispatcher
+        * @var Dispatcher
         */
         $dispatcher = Fixtures\Compiler::ObtainCompiler()::ObtainDispatcher(
             [
@@ -900,7 +900,7 @@ class ImplementationTest extends Base
         $files = [];
         $server = [];
         /**
-        * @var null $content
+        * @var null
         */
         $content = null;
 
@@ -924,7 +924,7 @@ class ImplementationTest extends Base
             (is_string($requestArgs[6]) || is_resource($requestArgs[7]))
         ) {
             /**
-            * @var string|resource $content
+            * @var string|resource
             */
             $content = $requestArgs[6];
         }
@@ -944,7 +944,7 @@ class ImplementationTest extends Base
     {
         $argsSource = $good ? $this->DataProviderGoodHandler() : $this->DataProviderBadHandler();
         /**
-        * @var mixed[] $args
+        * @var mixed[]
         */
         foreach ($argsSource as $args) {
             list($sources, $prefix, $expectedStatus, $expectedContent, $headers, $uri) = $args;
@@ -1108,7 +1108,7 @@ class ImplementationTest extends Base
         }
         if (is_a($source, DaftSource::class, true)) {
             /**
-            * @var string $otherSource
+            * @var string
             */
             foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
                 yield from static::YieldRoutesFromSource($otherSource);
@@ -1126,7 +1126,7 @@ class ImplementationTest extends Base
         }
         if (is_a($source, DaftSource::class, true)) {
             /**
-            * @var string $otherSource
+            * @var string
             */
             foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
                 yield from static::YieldMiddlewareFromSource($otherSource);

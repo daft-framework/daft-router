@@ -86,7 +86,7 @@ class Compiler
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
         /**
-        * @var string $thing
+        * @var string
         */
         foreach ($this->collector->Collect(...$sources) as $thing) {
             if (is_a($thing, DaftRoute::class, true)) {
@@ -104,7 +104,7 @@ class Compiler
 
         return function (RouteCollector $collector) : void {
             /**
-            * @var string $method
+            * @var string
             * @var array<string, array<int, string>> $uris
             */
             foreach ($this->CompileDispatcherArray() as $method => $uris) {
@@ -122,7 +122,7 @@ class Compiler
         $options['routeCollector'] = RouteCollector::class;
 
         /**
-        * @var Dispatcher $out
+        * @var Dispatcher
         */
         $out = cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options);
 
@@ -152,7 +152,7 @@ class Compiler
     ) : bool {
         $any = false;
         /**
-        * @var string $exception
+        * @var string
         */
         foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
             if (0 === mb_strpos($uri, $exception)) {
@@ -179,7 +179,7 @@ class Compiler
                 $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
 
                 /**
-                * @var string $requirement
+                * @var string
                 */
                 foreach ($middleware::DaftRouterRoutePrefixRequirements() as $requirement) {
                     $pos = mb_strpos($uri, $requirement);
@@ -202,7 +202,7 @@ class Compiler
 
         foreach ($this->routes as $route) {
             /**
-            * @var string $uri
+            * @var string
             * @var array<int, string> $methods
             */
             foreach ($route::DaftRouterRoutes() as $uri => $methods) {

@@ -45,7 +45,7 @@ class Dispatcher extends Base
         /**
         * this is here just for vimeo/psalm.
         *
-        * @var array $routeInfo
+        * @var array
         * @var array $routeInfo[1]
         */
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
@@ -70,7 +70,7 @@ class Dispatcher extends Base
 
         if ( ! ($resp instanceof Response)) {
             /**
-            * @var Response $resp
+            * @var Response
             */
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
         }
@@ -93,7 +93,7 @@ class Dispatcher extends Base
 
         foreach ($middlewares as $middleware) {
             /**
-            * @var Response|null $response
+            * @var Response|null
             */
             $response = $middleware::DaftRouterMiddlewareHandler($request, $response);
         }
@@ -111,7 +111,7 @@ class Dispatcher extends Base
     ) : Response {
         foreach ($middlewares as $middleware) {
             /**
-            * @var Response $response
+            * @var Response
             */
             $response = $middleware::DaftRouterMiddlewareModifier($request, $response);
         }

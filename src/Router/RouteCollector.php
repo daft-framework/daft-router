@@ -42,7 +42,7 @@ final class RouteCollector extends Base
     protected function addRouteStrict(string $httpMethod, string $route, array $handler) : void
     {
         /**
-        * @var string $routeClass
+        * @var string
         */
         $routeClass = array_pop($handler);
 
