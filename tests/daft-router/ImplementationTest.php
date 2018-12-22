@@ -260,7 +260,7 @@ class ImplementationTest extends Base
             static::markTestSkipped('No sources to test!');
         } else {
             /**
-            * @var int|false $prevKey
+            * @var int|false
             */
             $prevKey = key($sources);
 
