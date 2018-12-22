@@ -237,14 +237,14 @@ class ImplementationTest extends Base
     public function testSources(string $className) : void
     {
         if ( ! is_a($className, DaftSource::class, true)) {
-        static::assertTrue(
-            is_a($className, DaftSource::class, true),
-            sprintf(
-                'Source must be an implementation of %s, "%s" given.',
-                DaftSource::class,
-                $className
-            )
-        );
+            static::assertTrue(
+                is_a($className, DaftSource::class, true),
+                sprintf(
+                    'Source must be an implementation of %s, "%s" given.',
+                    DaftSource::class,
+                    $className
+                )
+            );
         }
 
         /**
