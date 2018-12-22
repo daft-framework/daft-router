@@ -34,6 +34,7 @@ class Compiler
         DaftResponseModifier::class,
         DaftRoute::class,
     ];
+
     /**
     * @var array<int, string>
     */
@@ -86,9 +87,10 @@ class Compiler
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
         /**
-        * @var string
+        * @var string[]
         */
-        foreach ($this->collector->Collect(...$sources) as $thing) {
+        $things = $this->collector->Collect(...$sources);
+        foreach ($things as $thing) {
             if (is_a($thing, DaftRoute::class, true)) {
                 $this->AddRoute($thing);
             }
@@ -103,10 +105,6 @@ class Compiler
         $this->NudgeCompilerWithSources(...$sources);
 
         return function (RouteCollector $collector) : void {
-            /**
-            * @var string
-            * @var array<string, array<int, string>> $uris
-            */
             foreach ($this->CompileDispatcherArray() as $method => $uris) {
                 foreach ($uris as $uri => $handlers) {
                     $collector->addRoute($method, $uri, $handlers);
@@ -167,9 +165,15 @@ class Compiler
         return $any;
     }
 
+    /**
+    * @return array<int, string>
+    */
     final protected function MiddlewareNotExcludedFromUri(string $uri) : array
     {
-        return array_filter(
+        /**
+        * @var array<int, string>
+        */
+        $out = array_filter(
             $this->ObtainMiddleware(),
 
             /**
@@ -191,21 +195,29 @@ class Compiler
                 return $any;
             }
         );
+
+        return $out;
     }
 
     /**
     * @psalm-suppress InvalidStringClass
+    *
+    * @return array<string, array<string, array<int, string>>>
     */
     final protected function CompileDispatcherArray() : array
     {
+        /**
+        * @var array<string, array<string, array<int, string>>>
+        */
         $out = [];
 
         foreach ($this->routes as $route) {
             /**
-            * @var string
-            * @var array<int, string> $methods
+            * @var array<string, array<int, string>>
             */
-            foreach ($route::DaftRouterRoutes() as $uri => $methods) {
+            $routes = $route::DaftRouterRoutes();
+
+            foreach ($routes as $uri => $methods) {
                 foreach ($methods as $method) {
                     $out[$method][$uri] = $this->MiddlewareNotExcludedFromUri($uri);
 
