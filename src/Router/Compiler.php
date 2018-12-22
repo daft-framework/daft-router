@@ -143,6 +143,9 @@ class Compiler
         }));
     }
 
+    /**
+    * @psalm-suppress InvalidStringClass
+    */
     final protected function MiddlewareNotExcludedFromUriExceptions(
         string $middleware,
         string $uri
@@ -168,6 +171,10 @@ class Compiler
     {
         return array_filter(
             $this->ObtainMiddleware(),
+
+            /**
+            * @psalm-suppress InvalidStringClass
+            */
             function (string $middleware) use ($uri) : bool {
                 $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
 
@@ -186,6 +193,9 @@ class Compiler
         );
     }
 
+    /**
+    * @psalm-suppress InvalidStringClass
+    */
     final protected function CompileDispatcherArray() : array
     {
         $out = [];

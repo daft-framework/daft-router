@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use FastRoute\Dispatcher\GroupCountBased as Base;
+use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
 use SignpostMarv\DaftRouter\ResponseException;
@@ -34,6 +35,9 @@ class Dispatcher extends Base
         return $routeInfo;
     }
 
+    /**
+    * @psalm-suppress InvalidStringClass
+    */
     public function handle(Request $request, string $prefix = '') : Response
     {
         $regex = '/^' . preg_quote($prefix, '/') . '/';
@@ -81,6 +85,9 @@ class Dispatcher extends Base
         return $resp;
     }
 
+    /**
+    * @psalm-suppress InvalidStringClass
+    */
     private function RunMiddlewareFirstPass(Request $request, string ...$middlewares) : ? Response
     {
         $response = null;
@@ -95,6 +102,9 @@ class Dispatcher extends Base
         return $response;
     }
 
+    /**
+    * @psalm-suppress InvalidStringClass
+    */
     private function RunMiddlewareSecondPass(
         Request $request,
         Response $response,

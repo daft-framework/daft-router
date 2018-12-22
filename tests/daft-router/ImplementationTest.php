@@ -146,6 +146,18 @@ class ImplementationTest extends Base
         */
         foreach ($this->DataProviderRoutes() as $args) {
             list($route) = $args;
+
+            if ( ! is_a($route, DaftRoute::class, true)) {
+                static::assertTrue(
+                    is_a($route, DaftRoute::class, true),
+                    sprintf(
+                        'Source must be an implementation of %s, "%s" given.',
+                        DaftRoute::class,
+                        $route
+                    )
+                );
+            }
+
             /**
             * @var string $method
             * @var array<int, string> $uris
@@ -224,6 +236,7 @@ class ImplementationTest extends Base
     */
     public function testSources(string $className) : void
     {
+        if ( ! is_a($className, DaftSource::class, true)) {
         static::assertTrue(
             is_a($className, DaftSource::class, true),
             sprintf(
@@ -232,6 +245,7 @@ class ImplementationTest extends Base
                 $className
             )
         );
+        }
 
         /**
         * this is here just for vimeo/psalm.
@@ -333,6 +347,17 @@ class ImplementationTest extends Base
     */
     public function testRoutes(string $className) : void
     {
+        if ( ! is_a($className, DaftRoute::class, true)) {
+            static::assertTrue(
+                is_a($className, DaftRoute::class, true),
+                sprintf(
+                    'Source must be an implementation of %s, "%s" given.',
+                    DaftRoute::class,
+                    $className
+                )
+            );
+        }
+
         /**
         * this is here just for vimeo/psalm.
         *
@@ -396,6 +421,17 @@ class ImplementationTest extends Base
     */
     public function testRoutesWithNoArgs(string $className, string $method) : void
     {
+        if ( ! is_a($className, DaftRoute::class, true)) {
+            static::assertTrue(
+                is_a($className, DaftRoute::class, true),
+                sprintf(
+                    'Source must be an implementation of %s, "%s" given.',
+                    DaftRoute::class,
+                    $className
+                )
+            );
+        }
+
         $this->expectException(InvalidArgumentException::class);
         $className::DaftRouterHttpRoute(['foo' => 'bar'], $method);
     }
@@ -474,6 +510,17 @@ class ImplementationTest extends Base
     */
     public function testMiddlware(string $className) : void
     {
+        if ( ! is_a($className, DaftRouteFilter::class, true)) {
+            static::assertTrue(
+                is_a($className, DaftRouteFilter::class, true),
+                sprintf(
+                    'Source must be an implementation of %s, "%s" given.',
+                    DaftRouteFilter::class,
+                    $className
+                )
+            );
+        }
+
         /**
         * this is here just for vimeo/psalm.
         *
