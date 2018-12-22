@@ -248,35 +248,28 @@ class ImplementationTest extends Base
         }
 
         /**
-        * this is here just for vimeo/psalm.
-        *
-        * @var array|false
+        * @var scalar|array|object|null
         */
         $sources = $className::DaftRouterRouteAndMiddlewareSources();
 
         static::assertIsArray($sources);
 
-        /**
-        * this is here just for vimeo/psalm.
-        *
-        * @var array
-        */
-        $sources = $sources;
+        $sources = (array) $sources;
 
         if (count($sources) < 1) {
             static::markTestSkipped('No sources to test!');
         } else {
             /**
-            * @var int|false
+            * @var int|false $prevKey
             */
             $prevKey = key($sources);
 
             /**
-            * this is here just for vimeo/psalm.
-            *
-            * @var string|int
+            * @var array<int, int|string>
             */
-            foreach (array_keys($sources) as $i => $k) {
+            $sourceKeys = array_keys($sources);
+
+            foreach ($sourceKeys as $i => $k) {
                 /*
                 * this is inside here because of a bug in phpstan/phpstan or phpstan/phpstan-phpunit
                 */
@@ -285,21 +278,11 @@ class ImplementationTest extends Base
                     'Sources must be listed with integer keys!'
                 );
 
-                /**
-                * this is here just for vimeo/psalm.
-                *
-                * @var int
-                */
-                $prevKey = $prevKey;
+                $prevKey = (int) $prevKey;
 
                 static::assertIsInt($k, 'Sources must be listed with integer keys!');
 
-                /**
-                * this is here just for vimeo/psalm.
-                *
-                * @var int
-                */
-                $k = $k;
+                $k = (int) $k;
 
                 if ($i > 0) {
                     static::assertGreaterThan(
@@ -316,12 +299,7 @@ class ImplementationTest extends Base
 
                 static::assertIsString($sources[$k]);
 
-                /**
-                * this is here just for vimeo/psalm.
-                *
-                * @var string
-                */
-                $source = $sources[$k];
+                $source = (string) $sources[$k];
 
                 static::assertTrue(
                     (
@@ -359,21 +337,14 @@ class ImplementationTest extends Base
         }
 
         /**
-        * this is here just for vimeo/psalm.
-        *
-        * @var array<string|int, array<string|int, string|false>|false>
+        * @var array<int|string, scalar[]>
         */
-        $routes = $className::DaftRouterRoutes();
+        $routes = (array) $className::DaftRouterRoutes();
 
-        foreach (array_keys($routes) as $uri) {
+        foreach ($routes as $uri => $routesToCheck) {
             static::assertIsString($uri, 'route keys must be strings!');
 
-            /**
-            * this is here just for vimeo/psalm.
-            *
-            * @var string
-            */
-            $uri = $uri;
+            $uri = (string) $uri;
 
             static::assertSame(
                 '/',
@@ -381,26 +352,11 @@ class ImplementationTest extends Base
                 'All route uris must begin with a forward slash!'
             );
 
-            $routesToCheck = $routes[$uri];
-
             static::assertIsArray(
                 $routesToCheck,
                 'All route uris must be specified with an array of HTTP methods!'
             );
 
-            /**
-            * this is here just for vimeo/psalm.
-            *
-            * @var array
-            */
-            $routesToCheck = $routesToCheck;
-
-            /**
-            * this is here just for vimeo/psalm.
-            *
-            * @var int|string
-            * @var string|false $v
-            */
             foreach ($routesToCheck as $k => $v) {
                 static::assertIsInt(
                     $k,
@@ -522,23 +478,16 @@ class ImplementationTest extends Base
         }
 
         /**
-        * this is here just for vimeo/psalm.
-        *
-        * @var string|false
+        * @var scalar[]
         */
-        foreach ($className::DaftRouterRoutePrefixExceptions() as $uriPrefix) {
-            static::assertIsString($uriPrefix);
+        $uriPrefixes = $className::DaftRouterRoutePrefixExceptions();
 
-            /**
-            * this is here just for vimeo/psalm.
-            *
-            * @var string
-            */
-            $uriPrefix = $uriPrefix;
+        foreach ($uriPrefixes as $uriPrefix) {
+            static::assertIsString($uriPrefix);
 
             static::assertSame(
                 '/',
-                mb_substr($uriPrefix, 0, 1),
+                mb_substr((string) $uriPrefix, 0, 1),
                 'All middleware uri prefixes must begin with a forward slash!'
             );
         }
@@ -647,39 +596,15 @@ class ImplementationTest extends Base
             $notPresentWith
         );
 
-        /**
-        * this is here just for vimeo/psalm.
-        *
-        * @var array|false
-        */
         $present = $dispatcher->dispatch($presentWithMethod, $presentWithUri);
 
-        /**
-        * this is here just for vimeo/psalm.
-        *
-        * @var array|false
-        */
         $notPresent = $dispatcher->dispatch(
             $notPresentWithMethod,
             $notPresentWithUri
         );
 
-        static::assertIsArray($present); // this is here just for vimeo/psalm
-        static::assertIsArray($notPresent); // this is here just for vimeo/psalm
-
-        /**
-        * this is here just for vimeo/psalm.
-        *
-        * @var array
-        */
-        $present = $present;
-
-        /**
-        * this is here just for vimeo/psalm.
-        *
-        * @var array
-        */
-        $notPresent = $notPresent;
+        static::assertIsArray($present);
+        static::assertIsArray($notPresent);
 
         static::assertTrue(Dispatcher::FOUND === $present[0]);
         static::assertTrue(Dispatcher::FOUND === $notPresent[0]);
@@ -718,14 +643,7 @@ class ImplementationTest extends Base
             'Last entry from a dispatcher should be a string'
         );
 
-        /**
-        * this bit is here just for vimeo/psalm.
-        *
-        * @var string
-        */
-        $route = $route;
-
-        static::assertTrue(is_a($route, DaftRoute::class, true), sprintf(
+        static::assertTrue(is_a((string) $route, DaftRoute::class, true), sprintf(
             'Last entry from a dispatcher should be %s',
             DaftRoute::class
         ));

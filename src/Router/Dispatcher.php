@@ -43,10 +43,7 @@ class Dispatcher extends Base
         $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
 
         /**
-        * this is here just for vimeo/psalm.
-        *
-        * @var array
-        * @var array $routeInfo[1]
+        * @var array{1:array}
         */
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
         $route = (string) array_pop($routeInfo[1]);
@@ -78,7 +75,7 @@ class Dispatcher extends Base
         $resp = $this->RunMiddlewareSecondPass(
             $request,
             $resp,
-            ...$secondPass // this is here just for vimeo/psalm
+            ...$secondPass
         );
 
         return $resp;
