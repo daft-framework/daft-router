@@ -209,6 +209,18 @@ class ImplementationTest extends Base
         ];
     }
 
+    public function DataProviderEnsureDispatcherIsCorrectlyTypedPublic() : array
+    {
+        return [
+            ['0'],
+            [1],
+            [2.0],
+            [[3,3,3]],
+            [new \stdClass()],
+            [null],
+        ];
+    }
+
     /**
     * @dataProvider DataProviderUriReplacement
     */
@@ -457,6 +469,26 @@ class ImplementationTest extends Base
         ));
 
         $compiler->AddMiddleware('stdClass');
+    }
+
+    /**
+    * @param mixed $maybe
+    *
+    * @dataProvider DataProviderEnsureDispatcherIsCorrectlyTypedPublic
+    */
+    public function testCompilerVerifyEnsureDispatcherIsCorrectlyTypedThrowsException(
+        $maybe
+    ) : void {
+        $compiler = Fixtures\Compiler::ObtainCompiler();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(sprintf(
+            'cachedDispatcher expected to return instance of %s, returned instead "%s"',
+            Dispatcher::class,
+            (is_object($maybe) ? get_class($maybe) : gettype($maybe))
+        ));
+
+        $compiler::EnsureDispatcherIsCorrectlyTypedPublic($maybe);
     }
 
     /**
