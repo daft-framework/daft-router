@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Profile implements DaftRoute
 {
     use DaftRouterAutoMethodCheckingTrait;
+
     const MIN_EXPECTED_ARGS = 1;
 
     const MAX_EXPECTED_ARGS = 2;
