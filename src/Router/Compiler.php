@@ -180,11 +180,14 @@ class Compiler
         string $middleware,
         string $uri
     ) : bool {
-        $any = false;
+        $exceptions = $middleware::DaftRouterRoutePrefixExceptions();
+
+        $any = 0 === count($exceptions);
+
         /**
         * @var string
         */
-        foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
+        foreach ($exceptions as $exception) {
             if (0 === mb_strpos($uri, $exception)) {
                 if ( ! $any) {
                     return false;
