@@ -200,31 +200,29 @@ class Compiler
         return $any;
     }
 
+    /**
+    * @psalm-suppress InvalidStringClass
+    */
     final protected function MakeMiddlewareNotExcludedFromUriFilter(string $uri) : Closure
     {
-        return
+        return function (string $middleware) use ($uri) : bool {
+            $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
+
             /**
-            * @psalm-suppress InvalidStringClass
+            * @var iterable<string>
             */
-            function (string $middleware) use ($uri) : bool {
-                $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
+            $requirements = $middleware::DaftRouterRoutePrefixRequirements();
 
-                /**
-                * @var iterable<string>
-                */
-                $requirements = $middleware::DaftRouterRoutePrefixRequirements();
+            foreach ($requirements as $requirement) {
+                $pos = mb_strpos($uri, $requirement);
 
-                foreach ($requirements as $requirement) {
-                    $pos = mb_strpos($uri, $requirement);
-
-                    if (false === $pos || $pos > 0) {
-                        return false;
-                    }
+                if (false === $pos || $pos > 0) {
+                    return false;
                 }
-
-                return $any;
             }
-        ;
+
+            return $any;
+        };
     }
 
     /**
