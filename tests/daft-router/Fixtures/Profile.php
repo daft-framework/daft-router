@@ -14,11 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Profile implements DaftRoute
 {
+    use DaftRouterAutoMethodCheckingTrait;
     const MIN_EXPECTED_ARGS = 1;
 
     const MAX_EXPECTED_ARGS = 2;
-
-    use DaftRouterAutoMethodCheckingTrait;
 
     public static function DaftRouterHandleRequest(Request $request, array $args) : Response
     {
@@ -70,7 +69,7 @@ class Profile implements DaftRoute
                 self::MIN_EXPECTED_ARGS,
                 self::MAX_EXPECTED_ARGS
             ));
-        } elseif (! isset($args['id']) || ! ctype_digit($args['id'])) {
+        } elseif ( ! isset($args['id']) || ! ctype_digit($args['id'])) {
             throw new InvalidArgumentException('id argument not specified correctly!');
         } elseif (isset($args['slug']) && rawurlencode($args['slug']) !== $args['slug']) {
             throw new InvalidArgumentException(
