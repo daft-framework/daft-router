@@ -178,6 +178,48 @@ class ImplementationTest extends Base
         }
     }
 
+    public function DataProviderRoutesWithKnownArgs() : Generator
+    {
+        yield from [
+            [
+                Fixtures\Profile::class,
+                ['id' => '1'],
+                ['id' => 1],
+                'GET',
+                '/profile/1',
+            ],
+            [
+                Fixtures\Profile::class,
+                [
+                    'id' => '1',
+                    'slug' => 'foo',
+                ],
+                [
+                    'id' => 1,
+                    'slug' => 'foo',
+                ],
+                'GET',
+                '/profile/1~foo',
+            ],
+            [
+                Fixtures\Home::class,
+                [],
+                [],
+                'GET',
+                '/',
+            ],
+            [
+                Fixtures\Home::class,
+                [],
+                [],
+                'GET',
+                '/',
+                InvalidArgumentException::class,
+                'This route takes no arguments!',
+            ],
+        ];
+    }
+
     public function DataProviderVerifyHandlerGood() : Generator
     {
         yield from $this->DataProviderVerifyHandler(true);
@@ -402,6 +444,45 @@ class ImplementationTest extends Base
 
         $this->expectException(InvalidArgumentException::class);
         $className::DaftRouterHttpRoute(['foo' => 'bar'], $method);
+    }
+
+    /**
+    * @depends testRoutes
+    *
+    * @dataProvider DataProviderRoutesWithKnownArgs
+    */
+    public function testRoutesWithArgs(
+        string $className,
+        array $args,
+        array $typedArgs,
+        string $method,
+        string $expectedRouteResult,
+        string $expectedExceptionClassWithArgs = null,
+        string $expectedExceptionMessageWithArgs = null
+    ) : void {
+        if ( ! is_a($className, DaftRoute::class, true)) {
+            static::assertTrue(
+                is_a($className, DaftRoute::class, true),
+                sprintf(
+                    'Source must be an implementation of %s, "%s" given.',
+                    DaftRoute::class,
+                    $className
+                )
+            );
+        }
+
+        static::assertSame($typedArgs, $className::DaftRouterHttpRouteArgsTyped($args, $method));
+        static::assertSame($expectedRouteResult, $className::DaftRouterHttpRoute($args, $method));
+
+        if (
+            is_string($expectedExceptionClassWithArgs) &&
+            is_string($expectedExceptionMessageWithArgs)
+        ) {
+            static::expectException($expectedExceptionClassWithArgs);
+            static::expectExceptionMessage($expectedExceptionMessageWithArgs);
+
+            $className::DaftRouterHttpRouteArgsTyped(['foo' => 'bar'], $method);
+        }
     }
 
     public function testCompilerVerifyAddRouteThrowsException() : void
