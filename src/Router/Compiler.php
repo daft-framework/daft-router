@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use Closure;
-use FastRoute\Dispatcher as BaseDispatcher;
 use InvalidArgumentException;
 use RuntimeException;
 use SignpostMarv\DaftInterfaceCollector\StaticMethodCollector;
