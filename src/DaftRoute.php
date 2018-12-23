@@ -28,18 +28,18 @@ interface DaftRoute
     /**
     * @param array<string, string> $args
     *
-    * @return array<string, string>
-    *
     * @throws \InvalidArgumentException if $args or $method are not supported or invalid
+    *
+    * @return array<string, string>
     */
     public static function DaftRouterHttpRouteArgs(array $args, string $method) : array;
 
     /**
     * @param array<string, string> $args
     *
-    * @return array<string, mixed>
-    *
     * @throws \InvalidArgumentException if $args or $method are not supported or invalid
+    *
+    * @return array<string, mixed>
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array;
 }
