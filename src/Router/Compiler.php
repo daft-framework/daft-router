@@ -129,6 +129,20 @@ class Compiler
         );
     }
 
+    final public function ObtainRoutes() : array
+    {
+        return $this->routes;
+    }
+
+    final public function ObtainMiddleware() : array
+    {
+        return array_values(array_filter($this->middleware, function (string $middleware) : bool {
+            return
+                is_a($middleware, DaftRequestInterceptor::class, true) ||
+                is_a($middleware, DaftResponseModifier::class, true);
+        }));
+    }
+
     /**
     * @param mixed $out
     */
@@ -143,20 +157,6 @@ class Compiler
         }
 
         return $out;
-    }
-
-    final public function ObtainRoutes() : array
-    {
-        return $this->routes;
-    }
-
-    final public function ObtainMiddleware() : array
-    {
-        return array_values(array_filter($this->middleware, function (string $middleware) : bool {
-            return
-                is_a($middleware, DaftRequestInterceptor::class, true) ||
-                is_a($middleware, DaftResponseModifier::class, true);
-        }));
     }
 
     /**
