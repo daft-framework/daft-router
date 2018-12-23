@@ -87,10 +87,13 @@ class Compiler
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
         /**
-        * @var string[]
+        * @var iterable<scalar|array|object|null>
         */
         $things = $this->collector->Collect(...$sources);
         foreach ($things as $thing) {
+            if ( ! is_string($thing)) {
+                continue;
+            }
             if (is_a($thing, DaftRoute::class, true)) {
                 $this->AddRoute($thing);
             }
