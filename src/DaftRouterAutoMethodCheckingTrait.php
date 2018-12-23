@@ -19,6 +19,11 @@ trait DaftRouterAutoMethodCheckingTrait
     {
         $methods = [];
 
+        /**
+        * @var array<string, array<int, string>>
+        */
+        $routes = static::DaftRouterRoutes();
+
         foreach ($routes as $uri => $routeMethods) {
             $methods = array_merge($routeMethods, $routeMethods);
         }
