@@ -200,17 +200,9 @@ class Compiler
         return $any;
     }
 
-    /**
-    * @return array<string, array<int, string>>
-    */
-    final protected function MiddlewareNotExcludedFromUri(string $uri) : array
+    final protected function MakeMiddlewareNotExcludedFromUriFilter(string $uri) : Closure
     {
-        /**
-        * @var array<int, string>
-        */
-        $middlewares = array_filter(
-            $this->ObtainMiddleware(),
-
+        return
             /**
             * @psalm-suppress InvalidStringClass
             */
@@ -232,6 +224,20 @@ class Compiler
 
                 return $any;
             }
+        ;
+    }
+
+    /**
+    * @return array<string, array<int, string>>
+    */
+    final protected function MiddlewareNotExcludedFromUri(string $uri) : array
+    {
+        /**
+        * @var array<int, string>
+        */
+        $middlewares = array_filter(
+            $this->ObtainMiddleware(),
+            $this->MakeMiddlewareNotExcludedFromUriFilter($uri)
         );
 
         $out = [
