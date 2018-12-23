@@ -48,18 +48,15 @@ class Dispatcher extends Base
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
         $route = (string) array_pop($routeInfo[1]);
 
-        $firstPass = [];
-        $secondPass = [];
+        /**
+        * @var array<int, string>
+        */
+        $firstPass = (array) $routeInfo[1][DaftRequestInterceptor::class];
 
-        foreach (array_map('strval', (array) $routeInfo[1]) as $middleware) {
-            if (is_a($middleware, DaftRequestInterceptor::class, true)) {
-                $firstPass[] = $middleware;
-            }
-
-            if (is_a($middleware, DaftResponseModifier::class, true)) {
-                $secondPass[] = $middleware;
-            }
-        }
+        /**
+        * @var array<int, string>
+        */
+        $secondPass = (array) $routeInfo[1][DaftResponseModifier::class];
 
         $resp = $this->RunMiddlewareFirstPass($request, ...$firstPass);
 

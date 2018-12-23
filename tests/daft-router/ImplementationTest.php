@@ -664,15 +664,29 @@ class ImplementationTest extends Base
         */
         $dispatchedNotPresent = $notPresent[1];
 
+
+        $expectedWithMiddleware = [
+            DaftRequestInterceptor::class => [],
+            DaftResponseModifier::class => [],
+            $presentWith,
+        ];
+
+        if (is_a($middleware, DaftRequestInterceptor::class, true)) {
+            $expectedWithMiddleware[DaftRequestInterceptor::class][] = $middleware;
+        }
+
+        if (is_a($middleware, DaftResponseModifier::class, true)) {
+            $expectedWithMiddleware[DaftResponseModifier::class][] = $middleware;
+        }
+
         static::assertSame(
-            [
-                $middleware,
-                $presentWith,
-            ],
+            $expectedWithMiddleware,
             $dispatchedPresent
         );
         static::assertSame(
             [
+                DaftRequestInterceptor::class => [],
+                DaftResponseModifier::class => [],
                 $notPresentWith,
             ],
             $dispatchedNotPresent
@@ -692,14 +706,65 @@ class ImplementationTest extends Base
             'Last entry from a dispatcher should be %s',
             DaftRoute::class
         ));
+        static::assertIsArray($dispatchedPresent);
+        static::assertCount(2, $dispatchedPresent);
+        static::assertTrue(isset($dispatchedPresent[DaftRequestInterceptor::class]));
+        static::assertTrue(isset($dispatchedPresent[DaftResponseModifier::class]));
+        static::assertIsArray($dispatchedPresent[DaftRequestInterceptor::class]);
+        static::assertIsArray($dispatchedPresent[DaftResponseModifier::class]);
 
-        if (is_array($dispatchedPresent) && count($dispatchedPresent) > 0) {
-            foreach ($dispatchedPresent as $middleware) {
-                static::assertTrue(is_a($middleware, DaftRouteFilter::class, true), sprintf(
-                    'Leading entries from a dispatcher should be %s',
-                    DaftRouteFilter::class
-                ));
-            }
+        /**
+        * @var array
+        */
+        $interceptor = $dispatchedPresent[DaftRequestInterceptor::class];
+
+        /**
+        * @var array
+        */
+        $modifier = $dispatchedPresent[DaftResponseModifier::class];
+
+        $initialCount = count($interceptor);
+
+        /**
+        * @var string[]
+        */
+        $interceptor = array_filter($interceptor, 'is_string');
+
+        static::assertCount($initialCount, $interceptor);
+        static::assertSame(array_values($interceptor), $interceptor);
+
+        /**
+        * @var array<int, string>
+        */
+        $interceptor = array_values($interceptor);
+
+        $initialCount = count($modifier);
+
+        /**
+        * @var string[]
+        */
+        $modifier = array_filter($modifier, 'is_string');
+
+        static::assertCount($initialCount, $modifier);
+        static::assertSame(array_values($modifier), $modifier);
+
+        /**
+        * @var array<int, string>
+        */
+        $modifier = array_values($modifier);
+
+        foreach ($interceptor as $middleware) {
+            static::assertTrue(is_a($middleware, DaftRequestInterceptor::class, true), sprintf(
+                'Leading entries from a dispatcher should be %s',
+                DaftRequestInterceptor::class
+            ));
+        }
+
+        foreach ($modifier as $middleware) {
+            static::assertTrue(is_a($middleware, DaftResponseModifier::class, true), sprintf(
+                'Leading entries from a dispatcher should be %s',
+                DaftResponseModifier::class
+            ));
         }
     }
 

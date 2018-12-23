@@ -46,9 +46,14 @@ final class RouteCollector extends Base
         */
         $routeClass = array_pop($handler);
 
-        $handler = array_values(array_filter($handler, function (string $maybeMiddleware) : bool {
+        $handler = array_map(
+            function (array $handler) : array {
+                return array_values(array_filter($handler, function (string $maybeMiddleware) : bool {
             return is_a($maybeMiddleware, DaftRouteFilter::class, true);
         }));
+            },
+            array_filter($handler, 'is_array')
+        );
 
         if ( ! is_a($routeClass, DaftRoute::class, true)) {
             throw new InvalidArgumentException(sprintf(

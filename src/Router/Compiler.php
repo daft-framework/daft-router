@@ -201,14 +201,14 @@ class Compiler
     }
 
     /**
-    * @return array<int, string>
+    * @return array<string, array<int, string>>
     */
     final protected function MiddlewareNotExcludedFromUri(string $uri) : array
     {
         /**
         * @var array<int, string>
         */
-        $out = array_filter(
+        $middlewares = array_filter(
             $this->ObtainMiddleware(),
 
             /**
@@ -234,19 +234,30 @@ class Compiler
             }
         );
 
+        $out = [
+            DaftRequestInterceptor::class => [],
+            DaftResponseModifier::class => [],
+        ];
+
+        foreach ($middlewares as $middleware) {
+            if (is_a($middleware, DaftRequestInterceptor::class, true)) {
+                $out[DaftRequestInterceptor::class][] = $middleware;
+            }
+            if (is_a($middleware, DaftResponseModifier::class, true)) {
+                $out[DaftResponseModifier::class][] = $middleware;
+            }
+        }
+
         return $out;
     }
 
     /**
-    * @psalm-suppress InvalidStringClass
+    * @return array<string, array<string, array>>
     *
-    * @return array<string, array<string, array<int, string>>>
+    * @psalm-suppress InvalidStringClass
     */
     final protected function CompileDispatcherArray() : array
     {
-        /**
-        * @var array<string, array<string, array<int, string>>>
-        */
         $out = [];
 
         foreach ($this->routes as $route) {
