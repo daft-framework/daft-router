@@ -215,7 +215,7 @@ class ImplementationTest extends Base
             ['0'],
             [1],
             [2.0],
-            [[3,3,3]],
+            [[3, 3, 3]],
             [new \stdClass()],
             [null],
         ];
