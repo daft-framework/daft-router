@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use Closure;
+use FastRoute\Dispatcher as BaseDispatcher;
 use InvalidArgumentException;
 use RuntimeException;
 use SignpostMarv\DaftInterfaceCollector\StaticMethodCollector;
@@ -123,16 +124,21 @@ class Compiler
         $options['dispatcher'] = Dispatcher::class;
         $options['routeCollector'] = RouteCollector::class;
 
-        /**
-        * @var \FastRoute\Dispatcher
-        */
-        $out = cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options);
+        return static::EnsureDispatcherIsCorrectlyTyped(
+            cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options)
+        );
+    }
 
+    /**
+    * @param mixed $out
+    */
+    final protected static function EnsureDispatcherIsCorrectlyTyped($out) : Dispatcher
+    {
         if ( ! ($out instanceof Dispatcher)) {
             throw new RuntimeException(sprintf(
                 'cachedDispatcher expected to return instance of %s, returned instead "%s"',
                 Dispatcher::class,
-                get_class($out)
+                (is_object($out) ? get_class($out) : gettype($out))
             ));
         }
 
