@@ -184,9 +184,6 @@ class Compiler
 
         $any = 0 === count($exceptions);
 
-        /**
-        * @var string
-        */
         foreach ($exceptions as $exception) {
             if (0 === mb_strpos($uri, $exception)) {
                 if ( ! $any) {
@@ -217,9 +214,6 @@ class Compiler
             function (string $middleware) use ($uri) : bool {
                 $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
 
-                /**
-                * @var string
-                */
                 foreach ($middleware::DaftRouterRoutePrefixRequirements() as $requirement) {
                     $pos = mb_strpos($uri, $requirement);
 
