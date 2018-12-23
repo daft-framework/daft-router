@@ -11,6 +11,21 @@ use SignpostMarv\DaftRouter\Router\Dispatcher;
 
 class Compiler extends Base
 {
+    /**
+    * @var \SignpostMarv\DaftInterfaceCollector\StaticMethodCollector|null
+    */
+    private $collector;
+
+    public function NudgeCompilerWithSourcesBad(string ...$sources) : void
+    {
+        $this->collector = new BadStaticMethodCollector(
+            Base::CollectorConfig,
+            Base::CollectorInterfacesConfig
+        );
+
+        $this->NudgeCompilerWithSources(...$sources);
+    }
+
     public static function ObtainCompiler() : self
     {
         return new self();

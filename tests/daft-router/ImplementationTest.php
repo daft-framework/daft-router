@@ -598,6 +598,12 @@ class ImplementationTest extends Base
         );
     }
 
+    public function testNudgeCompilerWithSourcesBad() : void
+    {
+        $compiler = Fixtures\Compiler::ObtainCompiler();
+        $compiler->NudgeCompilerWithSourcesBad('foo', 'bar', 'baz');
+    }
+
     /**
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
