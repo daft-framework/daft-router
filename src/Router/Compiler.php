@@ -8,6 +8,7 @@ namespace SignpostMarv\DaftRouter\Router;
 
 use Closure;
 use InvalidArgumentException;
+use RuntimeException;
 use SignpostMarv\DaftInterfaceCollector\StaticMethodCollector;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
@@ -34,6 +35,7 @@ class Compiler
         DaftResponseModifier::class,
         DaftRoute::class,
     ];
+
     /**
     * @var array<int, string>
     */
@@ -85,16 +87,29 @@ class Compiler
 
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
+        $collector = $this->ObtainCollector();
+
         /**
-        * @var string $thing
+        * @var iterable<scalar|array|object|null>
         */
-        foreach ($this->collector->Collect(...$sources) as $thing) {
-            if (is_a($thing, DaftRoute::class, true)) {
-                $this->AddRoute($thing);
+        $things = $collector->Collect(...$sources);
+        foreach ($things as $thing) {
+            if ( ! is_string($thing)) {
+                throw new RuntimeException(get_class($collector) . ' yielded a non-string value!');
             }
-            if (is_a($thing, DaftRouteFilter::class, true)) {
-                $this->AddMiddleware($thing);
-            }
+
+            $this->NudgeCompilerWithRouteOrRouteFilter($thing);
+        }
+    }
+
+    final public function NudgeCompilerWithRouteOrRouteFilter(string $thing) : void
+    {
+        if (is_a($thing, DaftRoute::class, true)) {
+            $this->AddRoute($thing);
+        }
+
+        if (is_a($thing, DaftRouteFilter::class, true)) {
+            $this->AddMiddleware($thing);
         }
     }
 
@@ -103,10 +118,6 @@ class Compiler
         $this->NudgeCompilerWithSources(...$sources);
 
         return function (RouteCollector $collector) : void {
-            /**
-            * @var string $method
-            * @var array<string, array<int, string>> $uris
-            */
             foreach ($this->CompileDispatcherArray() as $method => $uris) {
                 foreach ($uris as $uri => $handlers) {
                     $collector->addRoute($method, $uri, $handlers);
@@ -121,12 +132,10 @@ class Compiler
         $options['dispatcher'] = Dispatcher::class;
         $options['routeCollector'] = RouteCollector::class;
 
-        /**
-        * @var Dispatcher $out
-        */
-        $out = cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options);
-
-        return $out;
+        return static::EnsureDispatcherIsCorrectlyTyped(cachedDispatcher(
+            $compiler->CompileDispatcherClosure(...$sources),
+            $options
+        ));
     }
 
     final public function ObtainRoutes() : array
@@ -143,15 +152,42 @@ class Compiler
         }));
     }
 
+    protected function ObtainCollector() : StaticMethodCollector
+    {
+        return $this->collector;
+    }
+
+    /**
+    * @param mixed $out
+    */
+    final protected static function EnsureDispatcherIsCorrectlyTyped($out) : Dispatcher
+    {
+        if ( ! ($out instanceof Dispatcher)) {
+            throw new RuntimeException(sprintf(
+                'cachedDispatcher expected to return instance of %s, returned instead "%s"',
+                Dispatcher::class,
+                (is_object($out) ? get_class($out) : gettype($out))
+            ));
+        }
+
+        return $out;
+    }
+
+    /**
+    * @psalm-suppress InvalidStringClass
+    */
     final protected function MiddlewareNotExcludedFromUriExceptions(
         string $middleware,
         string $uri
     ) : bool {
-        $any = false;
         /**
-        * @var string $exception
+        * @var string[]
         */
-        foreach ($middleware::DaftRouterRoutePrefixExceptions() as $exception) {
+        $exceptions = $middleware::DaftRouterRoutePrefixExceptions();
+
+        $any = 0 === count($exceptions);
+
+        foreach ($exceptions as $exception) {
             if (0 === mb_strpos($uri, $exception)) {
                 if ( ! $any) {
                     return false;
@@ -164,38 +200,77 @@ class Compiler
         return $any;
     }
 
-    final protected function MiddlewareNotExcludedFromUri(string $uri) : array
+    /**
+    * @psalm-suppress InvalidStringClass
+    */
+    final protected function MakeMiddlewareNotExcludedFromUriFilter(string $uri) : Closure
     {
-        return array_filter(
-            $this->ObtainMiddleware(),
-            function (string $middleware) use ($uri) : bool {
-                $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
+        return function (string $middleware) use ($uri) : bool {
+            $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
 
-                /**
-                * @var string $requirement
-                */
-                foreach ($middleware::DaftRouterRoutePrefixRequirements() as $requirement) {
-                    $pos = mb_strpos($uri, $requirement);
-                    if (false === $pos || $pos > 0) {
-                        return false;
-                    }
+            /**
+            * @var iterable<string>
+            */
+            $requirements = $middleware::DaftRouterRoutePrefixRequirements();
+
+            foreach ($requirements as $requirement) {
+                $pos = mb_strpos($uri, $requirement);
+
+                if (false === $pos || $pos > 0) {
+                    return false;
                 }
-
-                return $any;
             }
-        );
+
+            return $any;
+        };
     }
 
+    /**
+    * @return array<string, array<int, string>>
+    */
+    final protected function MiddlewareNotExcludedFromUri(string $uri) : array
+    {
+        /**
+        * @var array<int, string>
+        */
+        $middlewares = array_filter(
+            $this->ObtainMiddleware(),
+            $this->MakeMiddlewareNotExcludedFromUriFilter($uri)
+        );
+
+        $out = [
+            DaftRequestInterceptor::class => [],
+            DaftResponseModifier::class => [],
+        ];
+
+        foreach ($middlewares as $middleware) {
+            if (is_a($middleware, DaftRequestInterceptor::class, true)) {
+                $out[DaftRequestInterceptor::class][] = $middleware;
+            }
+            if (is_a($middleware, DaftResponseModifier::class, true)) {
+                $out[DaftResponseModifier::class][] = $middleware;
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+    * @return array<string, array<string, array>>
+    *
+    * @psalm-suppress InvalidStringClass
+    */
     final protected function CompileDispatcherArray() : array
     {
         $out = [];
 
         foreach ($this->routes as $route) {
             /**
-            * @var string $uri
-            * @var array<int, string> $methods
+            * @var array<string, array<int, string>>
             */
-            foreach ($route::DaftRouterRoutes() as $uri => $methods) {
+            $routes = $route::DaftRouterRoutes();
+
+            foreach ($routes as $uri => $methods) {
                 foreach ($methods as $method) {
                     $out[$method][$uri] = $this->MiddlewareNotExcludedFromUri($uri);
 

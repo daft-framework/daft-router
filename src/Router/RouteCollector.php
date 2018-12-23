@@ -42,13 +42,20 @@ final class RouteCollector extends Base
     protected function addRouteStrict(string $httpMethod, string $route, array $handler) : void
     {
         /**
-        * @var string $routeClass
+        * @var string
         */
         $routeClass = array_pop($handler);
 
-        $handler = array_values(array_filter($handler, function (string $maybeMiddleware) : bool {
-            return is_a($maybeMiddleware, DaftRouteFilter::class, true);
-        }));
+        $handler = array_map(
+            function (array $handler) : array {
+                return array_values(
+                    array_filter($handler, function (string $maybeMiddleware) : bool {
+                        return is_a($maybeMiddleware, DaftRouteFilter::class, true);
+                    }
+                ));
+            },
+            array_filter($handler, 'is_array')
+        );
 
         if ( ! is_a($routeClass, DaftRoute::class, true)) {
             throw new InvalidArgumentException(sprintf(
