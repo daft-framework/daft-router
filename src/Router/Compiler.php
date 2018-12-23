@@ -90,7 +90,7 @@ class Compiler
         /**
         * @var iterable<scalar|array|object|null>
         */
-        $things = $this->collector->Collect(...$sources);
+        $things = $this->ObtainCollector()->Collect(...$sources);
         foreach ($things as $thing) {
             if ( ! is_string($thing)) {
                 continue;
@@ -122,6 +122,11 @@ class Compiler
                 }
             }
         };
+    }
+
+    protected function ObtainCollector() : StaticMethodCollector
+    {
+        return $this->collector;
     }
 
     public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher

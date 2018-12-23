@@ -6,15 +6,25 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
+use SignpostMarv\DaftInterfaceCollector\StaticMethodCollector as BaseStaticMethodCollector;
 use SignpostMarv\DaftRouter\Router\Compiler as Base;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
 
 class Compiler extends Base
 {
     /**
-    * @var \SignpostMarv\DaftInterfaceCollector\StaticMethodCollector|null
+    * @var \SignpostMarv\DaftInterfaceCollector\StaticMethodCollector
     */
     private $collector;
+
+    protected function __construct()
+    {
+        parent::__construct();
+        $this->collector = new BaseStaticMethodCollector(
+            Base::CollectorConfig,
+            Base::CollectorInterfacesConfig
+        );
+    }
 
     public function NudgeCompilerWithSourcesBad(string ...$sources) : void
     {
@@ -22,8 +32,12 @@ class Compiler extends Base
             Base::CollectorConfig,
             Base::CollectorInterfacesConfig
         );
-
         $this->NudgeCompilerWithSources(...$sources);
+    }
+
+    protected function ObtainCollector() : BaseStaticMethodCollector
+    {
+        return $this->collector;
     }
 
     public static function ObtainCompiler() : self
