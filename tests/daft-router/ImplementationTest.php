@@ -664,7 +664,6 @@ class ImplementationTest extends Base
         */
         $dispatchedNotPresent = $notPresent[1];
 
-
         $expectedWithMiddleware = [
             DaftRequestInterceptor::class => [],
             DaftResponseModifier::class => [],
