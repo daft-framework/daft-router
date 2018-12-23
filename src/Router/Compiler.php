@@ -95,6 +95,7 @@ class Compiler
             if ( ! is_string($thing)) {
                 continue;
             }
+
             $this->NudgeCompilerWithRouteOrRouteFilter($thing);
         }
     }
@@ -104,6 +105,7 @@ class Compiler
         if (is_a($thing, DaftRoute::class, true)) {
             $this->AddRoute($thing);
         }
+
         if (is_a($thing, DaftRouteFilter::class, true)) {
             $this->AddMiddleware($thing);
         }
@@ -128,9 +130,10 @@ class Compiler
         $options['dispatcher'] = Dispatcher::class;
         $options['routeCollector'] = RouteCollector::class;
 
-        return static::EnsureDispatcherIsCorrectlyTyped(
-            cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options)
-        );
+        return static::EnsureDispatcherIsCorrectlyTyped(cachedDispatcher(
+            $compiler->CompileDispatcherClosure(...$sources),
+            $options
+        ));
     }
 
     final public function ObtainRoutes() : array
@@ -209,6 +212,7 @@ class Compiler
                 */
                 foreach ($middleware::DaftRouterRoutePrefixRequirements() as $requirement) {
                     $pos = mb_strpos($uri, $requirement);
+
                     if (false === $pos || $pos > 0) {
                         return false;
                     }

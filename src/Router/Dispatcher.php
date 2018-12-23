@@ -55,15 +55,13 @@ class Dispatcher extends Base
             if (is_a($middleware, DaftRequestInterceptor::class, true)) {
                 $firstPass[] = $middleware;
             }
+
             if (is_a($middleware, DaftResponseModifier::class, true)) {
                 $secondPass[] = $middleware;
             }
         }
 
-        $resp = $this->RunMiddlewareFirstPass(
-            $request,
-            ...$firstPass
-        );
+        $resp = $this->RunMiddlewareFirstPass($request, ...$firstPass);
 
         if ( ! ($resp instanceof Response)) {
             /**
@@ -72,11 +70,7 @@ class Dispatcher extends Base
             $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
         }
 
-        $resp = $this->RunMiddlewareSecondPass(
-            $request,
-            $resp,
-            ...$secondPass
-        );
+        $resp = $this->RunMiddlewareSecondPass($request, $resp, ...$secondPass);
 
         return $resp;
     }
