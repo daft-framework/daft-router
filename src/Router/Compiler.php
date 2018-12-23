@@ -101,12 +101,12 @@ class Compiler
 
     final public function NudgeCompilerWithRouteOrRouteFilter(string $thing) : void
     {
-            if (is_a($thing, DaftRoute::class, true)) {
-                $this->AddRoute($thing);
-            }
-            if (is_a($thing, DaftRouteFilter::class, true)) {
-                $this->AddMiddleware($thing);
-            }
+        if (is_a($thing, DaftRoute::class, true)) {
+            $this->AddRoute($thing);
+        }
+        if (is_a($thing, DaftRouteFilter::class, true)) {
+            $this->AddMiddleware($thing);
+        }
     }
 
     final public function CompileDispatcherClosure(string ...$sources) : Closure
