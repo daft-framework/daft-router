@@ -8,6 +8,7 @@ namespace SignpostMarv\DaftRouter\Router;
 
 use Closure;
 use InvalidArgumentException;
+use RuntimeException;
 use SignpostMarv\DaftInterfaceCollector\StaticMethodCollector;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
@@ -123,9 +124,17 @@ class Compiler
         $options['routeCollector'] = RouteCollector::class;
 
         /**
-        * @var Dispatcher
+        * @var \FastRoute\Dispatcher
         */
         $out = cachedDispatcher($compiler->CompileDispatcherClosure(...$sources), $options);
+
+        if ( ! ($out instanceof Dispatcher)) {
+            throw new RuntimeException(sprintf(
+                'cachedDispatcher expected to return instance of %s, returned instead "%s"',
+                Dispatcher::class,
+                get_class($out)
+            ));
+        }
 
         return $out;
     }
