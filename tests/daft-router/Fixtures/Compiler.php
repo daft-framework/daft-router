@@ -35,11 +35,6 @@ class Compiler extends Base
         $this->NudgeCompilerWithSources(...$sources);
     }
 
-    protected function ObtainCollector() : BaseStaticMethodCollector
-    {
-        return $this->collector;
-    }
-
     public static function ObtainCompiler() : self
     {
         return new self();
@@ -51,5 +46,10 @@ class Compiler extends Base
     public static function EnsureDispatcherIsCorrectlyTypedPublic($out) : Dispatcher
     {
         return static::EnsureDispatcherIsCorrectlyTyped($out);
+    }
+
+    protected function ObtainCollector() : BaseStaticMethodCollector
+    {
+        return $this->collector;
     }
 }

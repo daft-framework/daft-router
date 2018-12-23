@@ -124,11 +124,6 @@ class Compiler
         };
     }
 
-    protected function ObtainCollector() : StaticMethodCollector
-    {
-        return $this->collector;
-    }
-
     public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher
     {
         $compiler = new self();
@@ -153,6 +148,11 @@ class Compiler
                 is_a($middleware, DaftRequestInterceptor::class, true) ||
                 is_a($middleware, DaftResponseModifier::class, true);
         }));
+    }
+
+    protected function ObtainCollector() : StaticMethodCollector
+    {
+        return $this->collector;
     }
 
     /**
