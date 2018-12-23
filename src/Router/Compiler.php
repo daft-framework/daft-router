@@ -87,13 +87,15 @@ class Compiler
 
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
+        $collector = $this->ObtainCollector();
+
         /**
         * @var iterable<scalar|array|object|null>
         */
-        $things = $this->ObtainCollector()->Collect(...$sources);
+        $things = $collector->Collect(...$sources);
         foreach ($things as $thing) {
             if ( ! is_string($thing)) {
-                continue;
+                throw new RuntimeException(get_class($collector) . ' yielded a non-string value!');
             }
 
             $this->NudgeCompilerWithRouteOrRouteFilter($thing);

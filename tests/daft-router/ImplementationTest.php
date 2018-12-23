@@ -601,6 +601,13 @@ class ImplementationTest extends Base
     public function testNudgeCompilerWithSourcesBad() : void
     {
         $compiler = Fixtures\Compiler::ObtainCompiler();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            Fixtures\BadStaticMethodCollector::class .
+            ' yielded a non-string value!'
+        );
+
         $compiler->NudgeCompilerWithSourcesBad('foo', 'bar', 'baz');
     }
 
