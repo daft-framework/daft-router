@@ -9,7 +9,6 @@
   </file>
   <file src="src\Router\Dispatcher.php">
     <InvalidStringClass occurrences="3">
-      <code>$route::DaftRouterHandleRequest($request, $routeInfo[2])</code>
       <code>$middleware::DaftRouterMiddlewareHandler($request, $response)</code>
       <code>$middleware::DaftRouterMiddlewareModifier($request, $response)</code>
     </InvalidStringClass>

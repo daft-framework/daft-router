@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Dispatcher extends Base
 {
+    const INT_ARRAY_INDEX_HTTP_METHOD = 2;
+
     /**
     * @param string $httpMethod
     * @param string $uri
@@ -40,7 +42,7 @@ class Dispatcher extends Base
         $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
 
         /**
-        * @var array{1:array}
+        * @var array{1:array, 2:string}
         */
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
         $route = (string) array_pop($routeInfo[1]);
@@ -61,7 +63,10 @@ class Dispatcher extends Base
             /**
             * @var Response
             */
-            $resp = $route::DaftRouterHandleRequest($request, $routeInfo[2]);
+            $resp = $route::DaftRouterHandleRequest(
+                $request,
+                $routeInfo[self::INT_ARRAY_INDEX_HTTP_METHOD]
+            );
         }
 
         $resp = $this->RunMiddlewareSecondPass($request, $resp, ...$secondPass);

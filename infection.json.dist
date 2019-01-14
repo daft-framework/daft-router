@@ -1,0 +1,66 @@
+{
+    "timeout": 10,
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "infection.log"
+    },
+    "mutators": {
+        "@default": true,
+        "CastArray": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handle"
+            ]
+        },
+        "CastString": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handle"
+            ]
+        },
+        "Foreach_": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorGenerator::getIterator",
+                "SignpostMarv\\DaftRouter\\Router\\RouteCollector::addRoute"
+            ]
+        },
+        "LogicalNot": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::MiddlewareNotExcludedFromUriExceptions"
+            ]
+        },
+        "MethodCallRemoval": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\DaftRouterZeroArgumentsTrait::DaftRouterHttpRouteArgs",
+                "SignpostMarv\\DaftRouter\\Router\\RouteCollector::addRoute"
+            ]
+        },
+        "ProtectedVisibility": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherArray",
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::MakeMiddlewareNotExcludedFromUriFilter",
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::MiddlewareNotExcludedFromUri",
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::MiddlewareNotExcludedFromUriExceptions",
+                "SignpostMarv\\DaftRouter\\Router\\RouteCollector::addRouteStrict"
+            ]
+        },
+        "PublicVisibility": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure",
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::NudgeCompilerWithRouteOrRouteFilter"
+            ]
+        },
+        "Throw_": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking"
+            ]
+        },
+        "TrueValue": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking"
+            ]
+        }
+    }
+}

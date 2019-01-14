@@ -19,6 +19,10 @@ use SignpostMarv\DaftRouter\DaftSource;
 
 class Compiler
 {
+    const BOOL_IN_ARRAY_STRICT = true;
+
+    const INT_NEEDLE_NOT_AT_START_OF_HAYSTACK = 0;
+
     const CollectorConfig = [
         DaftSource::class => [
             'DaftRouterRouteAndMiddlewareSources' => [
@@ -67,7 +71,7 @@ class Compiler
                 __METHOD__,
                 DaftRoute::class
             ));
-        } elseif ( ! in_array($route, $this->routes, true)) {
+        } elseif ( ! in_array($route, $this->routes, self::BOOL_IN_ARRAY_STRICT)) {
             $this->routes[] = $route;
         }
     }
@@ -80,7 +84,7 @@ class Compiler
                 __METHOD__,
                 DaftRouteFilter::class
             ));
-        } elseif ( ! in_array($middleware, $this->middleware, true)) {
+        } elseif ( ! in_array($middleware, $this->middleware, self::BOOL_IN_ARRAY_STRICT)) {
             $this->middleware[] = $middleware;
         }
     }
@@ -210,7 +214,7 @@ class Compiler
             foreach ($requirements as $requirement) {
                 $pos = mb_strpos($uri, $requirement);
 
-                if (false === $pos || $pos > 0) {
+                if (false === $pos || $pos > self::INT_NEEDLE_NOT_AT_START_OF_HAYSTACK) {
                     return false;
                 }
             }
