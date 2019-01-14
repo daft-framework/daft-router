@@ -173,9 +173,6 @@ class Compiler
         return $out;
     }
 
-    /**
-    * @psalm-suppress InvalidStringClass
-    */
     final protected function MiddlewareNotExcludedFromUriExceptions(
         string $middleware,
         string $uri
@@ -200,9 +197,6 @@ class Compiler
         return $any;
     }
 
-    /**
-    * @psalm-suppress InvalidStringClass
-    */
     final protected function MakeMiddlewareNotExcludedFromUriFilter(string $uri) : Closure
     {
         return function (string $middleware) use ($uri) : bool {
@@ -257,8 +251,6 @@ class Compiler
 
     /**
     * @return array<string, array<string, array>>
-    *
-    * @psalm-suppress InvalidStringClass
     */
     final protected function CompileDispatcherArray() : array
     {
