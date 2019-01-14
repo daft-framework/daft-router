@@ -18,7 +18,7 @@ final class RouteCollector extends Base
     * @param string $route
     * @param mixed $handler
     */
-    public function addRoute($httpMethod, $route, $handler) : void
+    public function addRoute($httpMethod, $route, $handler)
     {
         if ( ! is_array($handler)) {
             throw new InvalidArgumentException(sprintf(
@@ -39,7 +39,7 @@ final class RouteCollector extends Base
         $this->addRouteStrict($httpMethod, $route, $handler);
     }
 
-    protected function addRouteStrict(string $httpMethod, string $route, array $handler) : void
+    protected function addRouteStrict(string $httpMethod, string $route, array $handler)
     {
         /**
         * @var string

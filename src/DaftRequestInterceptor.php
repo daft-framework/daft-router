@@ -11,8 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface DaftRequestInterceptor extends DaftRouteFilter
 {
+    /**
+    * @return Response|null
+    */
     public static function DaftRouterMiddlewareHandler(
         Request $request,
-        ? Response $response
-    ) : ? Response;
+        Response $response = null
+    );
 }

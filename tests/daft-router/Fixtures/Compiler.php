@@ -26,7 +26,7 @@ class Compiler extends Base
         );
     }
 
-    public function NudgeCompilerWithSourcesBad(string ...$sources) : void
+    public function NudgeCompilerWithSourcesBad(string ...$sources)
     {
         $this->collector = new BadStaticMethodCollector(
             Base::CollectorConfig,

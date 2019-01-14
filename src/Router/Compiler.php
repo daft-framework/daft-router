@@ -19,8 +19,6 @@ use SignpostMarv\DaftRouter\DaftSource;
 
 class Compiler
 {
-    const BOOL_IN_ARRAY_STRICT = true;
-
     const INT_NEEDLE_NOT_AT_START_OF_HAYSTACK = 0;
 
     const CollectorConfig = [
@@ -63,7 +61,7 @@ class Compiler
         );
     }
 
-    public function AddRoute(string $route) : void
+    public function AddRoute(string $route)
     {
         if ( ! is_a($route, DaftRoute::class, true)) {
             throw new InvalidArgumentException(sprintf(
@@ -71,12 +69,12 @@ class Compiler
                 __METHOD__,
                 DaftRoute::class
             ));
-        } elseif ( ! in_array($route, $this->routes, self::BOOL_IN_ARRAY_STRICT)) {
+        } elseif ( ! in_array($route, $this->routes, true)) {
             $this->routes[] = $route;
         }
     }
 
-    public function AddMiddleware(string $middleware) : void
+    public function AddMiddleware(string $middleware)
     {
         if ( ! is_a($middleware, DaftRouteFilter::class, true)) {
             throw new InvalidArgumentException(sprintf(
@@ -84,12 +82,12 @@ class Compiler
                 __METHOD__,
                 DaftRouteFilter::class
             ));
-        } elseif ( ! in_array($middleware, $this->middleware, self::BOOL_IN_ARRAY_STRICT)) {
+        } elseif ( ! in_array($middleware, $this->middleware, true)) {
             $this->middleware[] = $middleware;
         }
     }
 
-    public function NudgeCompilerWithSources(string ...$sources) : void
+    public function NudgeCompilerWithSources(string ...$sources)
     {
         $collector = $this->ObtainCollector();
 
@@ -106,7 +104,7 @@ class Compiler
         }
     }
 
-    final public function NudgeCompilerWithRouteOrRouteFilter(string $thing) : void
+    final public function NudgeCompilerWithRouteOrRouteFilter(string $thing)
     {
         if (is_a($thing, DaftRoute::class, true)) {
             $this->AddRoute($thing);
@@ -121,7 +119,7 @@ class Compiler
     {
         $this->NudgeCompilerWithSources(...$sources);
 
-        return function (RouteCollector $collector) : void {
+        return function (RouteCollector $collector) {
             foreach ($this->CompileDispatcherArray() as $method => $uris) {
                 foreach ($uris as $uri => $handlers) {
                     $collector->addRoute($method, $uri, $handlers);

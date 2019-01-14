@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <psalm
+    requireVoidReturnType="false"
     totallyTyped="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="./vendor/vimeo/psalm/src/config.xsd"
-    errorBaseline="./psalm.baseline.xml"
 >
     <projectFiles>
         <file name=".php_cs.dist" />
         <directory name="src" />
         <directory name="tests" />
+
+        <ignoreFiles>
+            <directory name="./vendor/phpunit/phpunit/" />
+        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>

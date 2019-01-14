@@ -26,7 +26,7 @@ class BadHttpRouteGeneratorToRoutes extends HttpRouteGeneratorToRoutes
         yield from $this->badsource;
     }
 
-    public function ChangeToBadGenerator(array $badsource) : void
+    public function ChangeToBadGenerator(array $badsource)
     {
         $this->badsource = $badsource;
         $this->generator = $this->BadGenerator();

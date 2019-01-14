@@ -13,10 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminNotLoggedIn implements DaftRequestInterceptor
 {
+    /**
+    * @return Response|null
+    */
     public static function DaftRouterMiddlewareHandler(
         Request $request,
-        ? Response $response
-    ) : ? Response {
+        Response $response = null
+    ) {
         if ( ! ($response instanceof Response) && ! $request->query->has('loggedin')) {
             return new RedirectResponse('/login');
         }

@@ -15,7 +15,7 @@ trait DaftRouterAutoMethodCheckingTrait
     */
     abstract public static function DaftRouterRoutes() : array;
 
-    protected static function DaftRouterAutoMethodChecking(string $method) : void
+    protected static function DaftRouterAutoMethodChecking(string $method)
     {
         $methods = [];
 

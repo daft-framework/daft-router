@@ -19,7 +19,7 @@ class StdTest extends Base
         $this->runTestInSeparateProcess = false;
     }
 
-    protected function setExpectedException(string $className, string $message) : void
+    protected function setExpectedException(string $className, string $message)
     {
         static::expectException($className);
         static::expectExceptionMessage($message);

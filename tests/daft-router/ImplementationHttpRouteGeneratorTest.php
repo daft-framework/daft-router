@@ -120,7 +120,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
         $providedArgs = $this->DataProviderForSingleRouteGeneratorGenerator();
 
         foreach ($providedArgs as $dataProviderArgs) {
-            static::assertIsArray($dataProviderArgs);
+            static::assertInternalType('array', $dataProviderArgs);
 
             /**
             * @var array
@@ -131,8 +131,8 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
             list($routeArgs, $expected) = $dataProviderArgs;
 
-            static::assertIsArray($routeArgs);
-            static::assertIsArray($expected);
+            static::assertInternalType('array', $routeArgs);
+            static::assertInternalType('array', $expected);
 
             /**
             * @var array
@@ -147,8 +147,8 @@ class ImplementationHttpRouteGeneratorTest extends Base
             $routeArgs = $routeArgs;
 
             foreach ($routeArgs as $route => $arrayOfArgs) {
-                static::assertIsString($route);
-                static::assertIsArray($arrayOfArgs);
+                static::assertInternalType('string', $route);
+                static::assertInternalType('array', $arrayOfArgs);
 
                 /**
                 * @var array
@@ -169,8 +169,8 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
             foreach ($routeArgs as $route => $arrayOfArgs) {
                 foreach ($arrayOfArgs as $k => $args) {
-                    static::assertIsInt($k);
-                    static::assertIsArray($args);
+                    static::assertInternalType('int', $k);
+                    static::assertInternalType('array', $args);
 
                     /**
                     * @var int
@@ -197,7 +197,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
         string $route,
         array $args,
         string $expected
-    ) : void {
+    ) {
         if ( ! is_a($route, DaftRoute::class, true)) {
             throw new InvalidArgumentException(
                 'Argument 1 passed to ' .
@@ -215,7 +215,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
         */
         $result = $route::DaftRouterHttpRoute($args);
 
-        static::assertIsString($result);
+        static::assertInternalType('string', $result);
         static::assertSame($expected, $result);
     }
 
@@ -227,12 +227,12 @@ class ImplementationHttpRouteGeneratorTest extends Base
     public function testHttpRouteGeneratorAutomatic(
         array $singleRouteGeneratorFromArrayArgs,
         array $expectedResult
-    ) : void {
+    ) {
         $singleRouteGenerators = [];
 
         foreach ($singleRouteGeneratorFromArrayArgs as $route => $arrayOfArgs) {
-            static::assertIsString($route);
-            static::assertIsArray($arrayOfArgs);
+            static::assertInternalType('string', $route);
+            static::assertInternalType('array', $arrayOfArgs);
 
             $initialCount = count($arrayOfArgs, COUNT_RECURSIVE);
 
@@ -276,8 +276,8 @@ class ImplementationHttpRouteGeneratorTest extends Base
         $routes = $routes;
 
         foreach ($routes as $i => $compareTo) {
-            static::assertIsInt($i);
-            static::assertIsString($compareTo);
+            static::assertInternalType('int', $i);
+            static::assertInternalType('string', $compareTo);
             static::assertSame($expectedResult[$i] ?? null, $compareTo);
         }
     }
@@ -290,7 +290,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
         array $ctorArgs,
         string $expectedException,
         string $expectedExceptionMessage
-    ) : void {
+    ) {
         if ( ! is_a($implementation, HttpRouteGenerator\SingleRouteGenerator::class, true)) {
             throw new InvalidArgumentException(
                 'Argument 1 passed to ' .
@@ -317,7 +317,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
         array $ctorArgs,
         string $expectedException,
         string $expectedExceptionMessage
-    ) : void {
+    ) {
         if ( ! is_a($implementation, HttpRouteGenerator\SingleRouteGenerator::class, true)) {
             throw new InvalidArgumentException(
                 'Argument 1 passed to ' .
@@ -345,7 +345,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
     /**
     * @dataProvider DataProviderHttpRouteGeneratorToRoutesIteratorFailure
     */
-    public function testHttpRouteGeneratorToRoutesIteratorFailure(array $badsource) : void
+    public function testHttpRouteGeneratorToRoutesIteratorFailure(array $badsource)
     {
         $bad = new Fixtures\HttpRouteGenerator\BadHttpRouteGeneratorToRoutes(
             new HttpRouteGenerator\SingleRouteGeneratorFromArray(

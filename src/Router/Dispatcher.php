@@ -74,7 +74,10 @@ class Dispatcher extends Base
         return $resp;
     }
 
-    private function RunMiddlewareFirstPass(Request $request, string ...$middlewares) : ? Response
+    /**
+    * @return Response|null
+    */
+    private function RunMiddlewareFirstPass(Request $request, string ...$middlewares)
     {
         $response = null;
 

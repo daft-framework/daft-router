@@ -270,7 +270,7 @@ class ImplementationTest extends Base
         string $uri,
         string $prefix,
         string $expected
-    ) : void {
+    ) {
         static::assertSame(
             $expected,
             str_replace(
@@ -288,7 +288,7 @@ class ImplementationTest extends Base
     /**
     * @dataProvider DataProviderGoodSources
     */
-    public function testSources(string $className) : void
+    public function testSources(string $className)
     {
         if ( ! is_a($className, DaftSource::class, true)) {
             static::assertTrue(
@@ -306,7 +306,7 @@ class ImplementationTest extends Base
         */
         $sources = $className::DaftRouterRouteAndMiddlewareSources();
 
-        static::assertIsArray($sources);
+        static::assertInternalType('array', $sources);
 
         $sources = (array) $sources;
 
@@ -327,14 +327,15 @@ class ImplementationTest extends Base
                 /*
                 * this is inside here because of a bug in phpstan/phpstan or phpstan/phpstan-phpunit
                 */
-                static::assertIsInt(
+                static::assertInternalType(
+                    'int',
                     $prevKey,
                     'Sources must be listed with integer keys!'
                 );
 
                 $prevKey = (int) $prevKey;
 
-                static::assertIsInt($k, 'Sources must be listed with integer keys!');
+                static::assertInternalType('int', $k, 'Sources must be listed with integer keys!');
 
                 $k = (int) $k;
 
@@ -351,7 +352,7 @@ class ImplementationTest extends Base
                     );
                 }
 
-                static::assertIsString($sources[$k]);
+                static::assertInternalType('string', $sources[$k]);
 
                 $source = (string) $sources[$k];
 
@@ -377,7 +378,7 @@ class ImplementationTest extends Base
     *
     * @dataProvider DataProviderRoutes
     */
-    public function testRoutes(string $className) : void
+    public function testRoutes(string $className)
     {
         if ( ! is_a($className, DaftRoute::class, true)) {
             static::assertTrue(
@@ -396,7 +397,7 @@ class ImplementationTest extends Base
         $routes = (array) $className::DaftRouterRoutes();
 
         foreach ($routes as $uri => $routesToCheck) {
-            static::assertIsString($uri, 'route keys must be strings!');
+            static::assertInternalType('string', $uri, 'route keys must be strings!');
 
             $uri = (string) $uri;
 
@@ -406,17 +407,20 @@ class ImplementationTest extends Base
                 'All route uris must begin with a forward slash!'
             );
 
-            static::assertIsArray(
+            static::assertInternalType(
+                'array',
                 $routesToCheck,
                 'All route uris must be specified with an array of HTTP methods!'
             );
 
             foreach ($routesToCheck as $k => $v) {
-                static::assertIsInt(
+                static::assertInternalType(
+                    'int',
                     $k,
                     'All http methods must be specified with numeric indices!'
                 );
-                static::assertIsString(
+                static::assertInternalType(
+                    'string',
                     $v,
                     'All http methods must be specified as an array of strings!'
                 );
@@ -429,7 +433,7 @@ class ImplementationTest extends Base
     *
     * @dataProvider DataProviderRoutesWithNoArgs
     */
-    public function testRoutesWithNoArgs(string $className, string $method) : void
+    public function testRoutesWithNoArgs(string $className, string $method)
     {
         if ( ! is_a($className, DaftRoute::class, true)) {
             static::assertTrue(
@@ -459,7 +463,7 @@ class ImplementationTest extends Base
         string $expectedRouteResult,
         string $expectedExceptionClassWithArgs = null,
         string $expectedExceptionMessageWithArgs = null
-    ) : void {
+    ) {
         if ( ! is_a($className, DaftRoute::class, true)) {
             static::assertTrue(
                 is_a($className, DaftRoute::class, true),
@@ -485,7 +489,7 @@ class ImplementationTest extends Base
         }
     }
 
-    public function testCompilerVerifyAddRouteThrowsException() : void
+    public function testCompilerVerifyAddRouteThrowsException()
     {
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
@@ -500,7 +504,7 @@ class ImplementationTest extends Base
         $compiler->AddRoute('stdClass');
     }
 
-    public function testCompilerVerifyAddRouteThrowsExceptionWithHandler() : void
+    public function testCompilerVerifyAddRouteThrowsExceptionWithHandler()
     {
         $collector = new RouteCollector(new Std(), new GroupCountBased());
 
@@ -521,7 +525,7 @@ class ImplementationTest extends Base
     *
     * @dataProvider DataProviderGoodSources
     */
-    public function testCompilerVerifyAddRouteAddsRoutes(string $className) : void
+    public function testCompilerVerifyAddRouteAddsRoutes(string $className)
     {
         $routes = [];
         $compiler = Fixtures\Compiler::ObtainCompiler();
@@ -537,7 +541,7 @@ class ImplementationTest extends Base
         static::assertSame($routes, $compiler->ObtainRoutes());
     }
 
-    public function testCompilerVerifyAddMiddlewareThrowsException() : void
+    public function testCompilerVerifyAddMiddlewareThrowsException()
     {
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
@@ -559,7 +563,7 @@ class ImplementationTest extends Base
     */
     public function testCompilerVerifyEnsureDispatcherIsCorrectlyTypedThrowsException(
         $maybe
-    ) : void {
+    ) {
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
         $this->expectException(RuntimeException::class);
@@ -577,7 +581,7 @@ class ImplementationTest extends Base
     *
     * @dataProvider DataProviderMiddleware
     */
-    public function testMiddlware(string $className) : void
+    public function testMiddlware(string $className)
     {
         if ( ! is_a($className, DaftRouteFilter::class, true)) {
             static::assertTrue(
@@ -596,7 +600,7 @@ class ImplementationTest extends Base
         $uriPrefixes = $className::DaftRouterRoutePrefixExceptions();
 
         foreach ($uriPrefixes as $uriPrefix) {
-            static::assertIsString($uriPrefix);
+            static::assertInternalType('string', $uriPrefix);
 
             static::assertSame(
                 '/',
@@ -611,7 +615,7 @@ class ImplementationTest extends Base
     *
     * @dataProvider DataProviderGoodSources
     */
-    public function testCompilerVerifyAddMiddlewareAddsMiddlewares(string $className) : void
+    public function testCompilerVerifyAddMiddlewareAddsMiddlewares(string $className)
     {
         /**
         * @var string[]
@@ -643,7 +647,7 @@ class ImplementationTest extends Base
     *
     * @dataProvider DataProviderGoodSources
     */
-    public function testCompilerDoesNotDuplicateConfigEntries(string $className) : void
+    public function testCompilerDoesNotDuplicateConfigEntries(string $className)
     {
         $compiler = Fixtures\Compiler::ObtainCompiler();
         $routes = [];
@@ -679,7 +683,7 @@ class ImplementationTest extends Base
         );
     }
 
-    public function testNudgeCompilerWithSourcesBad() : void
+    public function testNudgeCompilerWithSourcesBad()
     {
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
@@ -706,7 +710,7 @@ class ImplementationTest extends Base
         string $notPresentWith,
         string $notPresentWithMethod,
         string $notPresentWithUri
-    ) : void {
+    ) {
         static::assertTrue(is_a($middleware, DaftRouteFilter::class, true));
         static::assertTrue(is_a($presentWith, DaftRoute::class, true));
         static::assertTrue(is_a($notPresentWith, DaftRoute::class, true));
@@ -729,8 +733,8 @@ class ImplementationTest extends Base
             $notPresentWithUri
         );
 
-        static::assertIsArray($present);
-        static::assertIsArray($notPresent);
+        static::assertInternalType('array', $present);
+        static::assertInternalType('array', $notPresent);
 
         static::assertTrue(Dispatcher::FOUND === $present[0]);
         static::assertTrue(Dispatcher::FOUND === $notPresent[0]);
@@ -777,7 +781,8 @@ class ImplementationTest extends Base
         */
         $route = array_pop($dispatchedPresent);
 
-        static::assertIsString(
+        static::assertInternalType(
+            'string',
             $route,
             'Last entry from a dispatcher should be a string'
         );
@@ -786,12 +791,12 @@ class ImplementationTest extends Base
             'Last entry from a dispatcher should be %s',
             DaftRoute::class
         ));
-        static::assertIsArray($dispatchedPresent);
+        static::assertInternalType('array', $dispatchedPresent);
         static::assertCount(2, $dispatchedPresent);
         static::assertTrue(isset($dispatchedPresent[DaftRequestInterceptor::class]));
         static::assertTrue(isset($dispatchedPresent[DaftResponseModifier::class]));
-        static::assertIsArray($dispatchedPresent[DaftRequestInterceptor::class]);
-        static::assertIsArray($dispatchedPresent[DaftResponseModifier::class]);
+        static::assertInternalType('array', $dispatchedPresent[DaftRequestInterceptor::class]);
+        static::assertInternalType('array', $dispatchedPresent[DaftResponseModifier::class]);
 
         /**
         * @var array
@@ -865,7 +870,7 @@ class ImplementationTest extends Base
         string $expectedContent,
         array $requestArgs,
         array $expectedHeaders = []
-    ) : void {
+    ) {
         /**
         * @var Dispatcher
         */
@@ -905,7 +910,7 @@ class ImplementationTest extends Base
         int $expectedStatus,
         string $expectedContent,
         array $requestArgs
-    ) : void {
+    ) {
         $dispatcher = Fixtures\Compiler::ObtainCompiler()::ObtainDispatcher(
             [
                 'cacheDisabled' => true,
@@ -981,9 +986,9 @@ class ImplementationTest extends Base
         string $route,
         array $handler,
         string $expectedExceptionClass,
-        ? string $expectedExceptionMessage,
-        ? int $expectedExceptionCode
-    ) : void {
+        string $expectedExceptionMessage = null,
+        int $expectedExceptionCode = null
+    ) {
         $collector = new RouteCollector(new Std(), new GroupCountBased());
 
         $this->expectException($expectedExceptionClass);
