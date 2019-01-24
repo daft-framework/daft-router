@@ -3,6 +3,9 @@ build:
     php70:
       environment:
         php: 7.0
+    php700:
+      environment:
+        php: 7.0.0
     analysis:
       project_setup:
         override: true
