@@ -37,6 +37,8 @@ class AppendHeader implements DaftResponseModifier
     */
     public static function DaftRouterRoutePrefixRequirements() : array
     {
-        return [];
+        return [
+            '/',
+        ];
     }
 }

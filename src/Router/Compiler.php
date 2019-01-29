@@ -191,25 +191,21 @@ class Compiler
     /**
     * @psalm-param class-string<DaftRouteFilter> $middleware
     */
-    final protected function MiddlewareNotExcludedFromUriExceptions(
+    final protected function DoesMiddlewareExcludeSelfFromUri(
         string $middleware,
         string $uri
     ) : bool {
         $exceptions = $middleware::DaftRouterRoutePrefixExceptions();
 
-        $any = 0 === count($exceptions);
-
+        if (count($exceptions) > 0) {
         foreach ($exceptions as $exception) {
             if (0 === mb_strpos($uri, $exception)) {
-                if ( ! $any) {
-                    return false;
-                }
-            } else {
-                $any = true;
+                return true;
             }
         }
+        }
 
-        return $any;
+        return false;
     }
 
     final protected function CreateFilterForMiddlewareThatMatchesAnUri(string $uri) : Closure
@@ -219,19 +215,21 @@ class Compiler
             * @psalm-param class-string<DaftRouteFilter> $middleware
             */
             function (string $middleware) use ($uri) : bool {
-                $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
+                if ($this->DoesMiddlewareExcludeSelfFromUri($middleware, $uri)) {
+                    return false;
+                }
 
                 $requirements = $middleware::DaftRouterRoutePrefixRequirements();
 
                 foreach ($requirements as $requirement) {
                     $pos = mb_strpos($uri, $requirement);
 
-                    if (false === $pos || $pos > self::INT_NEEDLE_NOT_AT_START_OF_HAYSTACK) {
-                        return false;
+                    if (0 === $pos) {
+                        return true;
                     }
                 }
 
-                return $any;
+                return false;
             };
     }
 
