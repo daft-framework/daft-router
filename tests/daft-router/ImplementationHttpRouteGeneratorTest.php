@@ -191,6 +191,10 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRoute> $route
+    *
+    * @param array<string, string> $args
+    *
     * @dataProvider DataProviderForSingleRouteGeneratorGeneratorManual
     */
     public function testHttpRouteGeneratorManual(
@@ -210,9 +214,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
             );
         }
 
-        /**
-        * @var string
-        */
         $result = $route::DaftRouterHttpRoute($args);
 
         static::assertInternalType('string', $result);
@@ -220,7 +221,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
-    * @param array<string, array<string, string>> $singleRouteGeneratorFromArrayArgs
+    * @param array<string, array> $singleRouteGeneratorFromArrayArgs
     *
     * @dataProvider DataProviderForSingleRouteGeneratorGenerator
     */
@@ -231,9 +232,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
         $singleRouteGenerators = [];
 
         foreach ($singleRouteGeneratorFromArrayArgs as $route => $arrayOfArgs) {
-            static::assertInternalType('string', $route);
-            static::assertInternalType('array', $arrayOfArgs);
-
             $initialCount = count($arrayOfArgs, COUNT_RECURSIVE);
 
             $wasArgs = $arrayOfArgs;
@@ -260,6 +258,9 @@ class ImplementationHttpRouteGeneratorTest extends Base
             );
         }
 
+        /**
+        * @var iterable<int, string>
+        */
         $routes = new HttpRouteGenerator\HttpRouteGeneratorToRoutes(
             new HttpRouteGenerator\SingleRouteGeneratorGenerator(
                 ...$singleRouteGenerators
@@ -270,14 +271,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
         static::assertCount($expectedCount, $routes);
 
-        /**
-        * @var iterable<int, string>
-        */
-        $routes = $routes;
-
         foreach ($routes as $i => $compareTo) {
-            static::assertInternalType('int', $i);
-            static::assertInternalType('string', $compareTo);
             static::assertSame($expectedResult[$i] ?? null, $compareTo);
         }
     }

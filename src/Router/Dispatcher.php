@@ -17,6 +17,8 @@ class Dispatcher extends Base
 {
     const INT_ARRAY_INDEX_HTTP_METHOD = 2;
 
+    const INT_ARRAY_INDEX_ROUTE_ARGS = 3;
+
     /**
     * @param string $httpMethod
     * @param string $uri
@@ -39,23 +41,37 @@ class Dispatcher extends Base
     public function handle(Request $request, string $prefix = '') : Response
     {
         $regex = '/^' . preg_quote($prefix, '/') . '/';
-        $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
+        $path = preg_replace($regex, '', parse_url($request->getUri(), PHP_URL_PATH) ?? '');
 
         /**
-        * @var array{1:array, 2:string}
+        * @var array{1:array, 2:string, 3:array<string, string>}
         */
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
-        $route = (string) array_pop($routeInfo[1]);
+
+        $routeArgs = [];
+
+        if (isset($routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS])) {
+            $routeArgs = $routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS];
+        }
 
         /**
-        * @var array<int, string>
+        * @psalm-var \SignpostMarv\DaftRouter\DaftRoute
         */
-        $firstPass = (array) $routeInfo[1][DaftRequestInterceptor::class];
+        $route = array_pop($routeInfo[1]) ?: '';
 
         /**
+        * @psalm-var array<int, class-string<DaftRequestInterceptor>>
+        *
         * @var array<int, string>
         */
-        $secondPass = (array) $routeInfo[1][DaftResponseModifier::class];
+        $firstPass = $routeInfo[1][DaftRequestInterceptor::class];
+
+        /**
+        * @psalm-var array<int, class-string<DaftResponseModifier>>
+        *
+        * @var array<int, string>
+        */
+        $secondPass = $routeInfo[1][DaftResponseModifier::class];
 
         $resp = $this->RunMiddlewareFirstPass($request, ...$firstPass);
 
@@ -65,7 +81,7 @@ class Dispatcher extends Base
             */
             $resp = $route::DaftRouterHandleRequest(
                 $request,
-                $routeInfo[self::INT_ARRAY_INDEX_HTTP_METHOD]
+                $routeArgs
             );
         }
 
@@ -75,7 +91,7 @@ class Dispatcher extends Base
     }
 
     /**
-    * @return Response|null
+    * @psalm-param class-string<DaftRequestInterceptor> ...$middlewares
     */
     private function RunMiddlewareFirstPass(Request $request, string ...$middlewares)
     {
@@ -91,6 +107,9 @@ class Dispatcher extends Base
         return $response;
     }
 
+    /**
+    * @psalm-param class-string<DaftResponseModifier> ...$middlewares
+    */
     private function RunMiddlewareSecondPass(
         Request $request,
         Response $response,

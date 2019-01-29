@@ -42,6 +42,8 @@ class NotLoggedIn implements DaftRequestInterceptor
     */
     public static function DaftRouterRoutePrefixRequirements() : array
     {
-        return [];
+        return [
+            '/',
+        ];
     }
 }

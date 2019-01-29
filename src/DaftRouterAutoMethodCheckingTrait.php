@@ -15,7 +15,7 @@ trait DaftRouterAutoMethodCheckingTrait
     */
     abstract public static function DaftRouterRoutes() : array;
 
-    protected static function DaftRouterAutoMethodChecking(string $method)
+    protected static function DaftRouterAutoMethodChecking(string $method) : string
     {
         $methods = [];
 
@@ -31,5 +31,7 @@ trait DaftRouterAutoMethodCheckingTrait
         if ( ! in_array($method, $methods, true)) {
             throw new InvalidArgumentException('Specified method not supported!');
         }
+
+        return $method;
     }
 }

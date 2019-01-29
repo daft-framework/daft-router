@@ -142,9 +142,11 @@ class ImplementationTest extends Base
     {
         $parser = new Std();
         /**
-        * @var string[]
+        * @psalm-var iterable<array{0:class-string<DaftRoute>}> $argsSource
         */
-        foreach ($this->DataProviderRoutes() as $args) {
+        $argsSource = $this->DataProviderRoutes();
+
+        foreach ($argsSource as $args) {
             list($route) = $args;
 
             if ( ! is_a($route, DaftRoute::class, true)) {
@@ -286,6 +288,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource> $className
+    *
     * @dataProvider DataProviderGoodSources
     */
     public function testSources(string $className)
@@ -308,37 +312,49 @@ class ImplementationTest extends Base
 
         static::assertInternalType('array', $sources);
 
-        $sources = (array) $sources;
+        /**
+        * @var array
+        */
+        $sources = $sources;
 
         if (count($sources) < 1) {
             static::markTestSkipped('No sources to test!');
         } else {
+            $initialCount = count($sources);
+
             /**
-            * @var int|false
+            * @var array<int, mixed>
+            */
+            $sources = array_filter($sources, 'is_int', ARRAY_FILTER_USE_KEY);
+
+            static::assertCount(
+                $initialCount,
+                $sources,
+                'DaftSource::DaftRouterRouteAndMiddlewareSources() must be of the form array<int, mixed>'
+            );
+
+            /**
+            * @var array<int, string>
+            */
+            $sources = array_filter($sources, 'is_string');
+
+            static::assertCount(
+                $initialCount,
+                $sources,
+                'DaftSource::DaftRouterRouteAndMiddlewareSources() must be of the form array<int, string>'
+            );
+
+            /**
+            * @var int
             */
             $prevKey = key($sources);
 
             /**
-            * @var array<int, int|string>
+            * @var array<int, int>
             */
             $sourceKeys = array_keys($sources);
 
             foreach ($sourceKeys as $i => $k) {
-                /*
-                * this is inside here because of a bug in phpstan/phpstan or phpstan/phpstan-phpunit
-                */
-                static::assertInternalType(
-                    'int',
-                    $prevKey,
-                    'Sources must be listed with integer keys!'
-                );
-
-                $prevKey = (int) $prevKey;
-
-                static::assertInternalType('int', $k, 'Sources must be listed with integer keys!');
-
-                $k = (int) $k;
-
                 if ($i > 0) {
                     static::assertGreaterThan(
                         $prevKey,
@@ -352,9 +368,10 @@ class ImplementationTest extends Base
                     );
                 }
 
-                static::assertInternalType('string', $sources[$k]);
-
-                $source = (string) $sources[$k];
+                /**
+                * @psalm-var class-string
+                */
+                $source = $sources[$k];
 
                 static::assertTrue(
                     (
@@ -374,6 +391,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRoute> $className
+    *
     * @depends testSources
     *
     * @dataProvider DataProviderRoutes
@@ -391,44 +410,72 @@ class ImplementationTest extends Base
             );
         }
 
+        $routes = $className::DaftRouterRoutes();
+
+        $initialCount = count($routes);
+
         /**
-        * @var array<int|string, scalar[]>
+        * @var array<string, mixed>
         */
-        $routes = (array) $className::DaftRouterRoutes();
+        $routes = array_filter($routes, 'is_string', ARRAY_FILTER_USE_KEY);
+
+        static::assertCount(
+            $initialCount,
+            $routes,
+            'DaftRoute::DaftRouterRoutes() must be of the form array<string, mixed>'
+        );
+
+        $routes = array_filter(
+            $routes,
+            function (string $uri) : bool {
+                return '/' === mb_substr($uri, 0, 1);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        static::assertCount(
+            $initialCount,
+            $routes,
+            'All route uris must begin with a forward slash!'
+        );
+
+        /**
+        * @var array<string, array>
+        */
+        $routes = array_filter($routes, 'is_array');
+
+        static::assertCount(
+            $initialCount,
+            $routes,
+            'DaftRoute::DaftRouterRoutes() must be of the form array<string, array>'
+        );
 
         foreach ($routes as $uri => $routesToCheck) {
-            static::assertInternalType('string', $uri, 'route keys must be strings!');
+            $initialCount = count($routesToCheck);
 
-            $uri = (string) $uri;
+            static::assertGreaterThan(0, $initialCount, 'URIs must have at least one method!');
 
-            static::assertSame(
-                '/',
-                mb_substr($uri, 0, 1),
-                'All route uris must begin with a forward slash!'
-            );
+            $routesToCheck = array_filter($routesToCheck, 'is_int', ARRAY_FILTER_USE_KEY);
 
-            static::assertInternalType(
-                'array',
+            static::assertCount(
+                $initialCount,
                 $routesToCheck,
-                'All route uris must be specified with an array of HTTP methods!'
+                'DaftRoute::DaftRouterRoutes() must be of the form array<string, array<int, mixed>>'
             );
 
-            foreach ($routesToCheck as $k => $v) {
-                static::assertInternalType(
-                    'int',
-                    $k,
-                    'All http methods must be specified with numeric indices!'
-                );
-                static::assertInternalType(
-                    'string',
-                    $v,
-                    'All http methods must be specified as an array of strings!'
-                );
-            }
+            $routesToCheck = array_filter($routesToCheck, 'is_string');
+
+            static::assertCount(
+                $initialCount,
+                $routesToCheck,
+                'DaftRoute::DaftRouterRoutes() must be of the form array<string, array<int, string>>'
+            );
         }
     }
 
     /**
+    * @psalm-param class-string<DaftRoute> $className
+    *
     * @depends testRoutes
     *
     * @dataProvider DataProviderRoutesWithNoArgs
@@ -451,6 +498,10 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRoute> $className
+    *
+    * @param array<string, string> $args
+    *
     * @depends testRoutes
     *
     * @dataProvider DataProviderRoutesWithKnownArgs
@@ -492,6 +543,8 @@ class ImplementationTest extends Base
     public function testCompilerVerifyAddRouteThrowsException()
     {
         $compiler = Fixtures\Compiler::ObtainCompiler();
+
+        $compiler->NudgeCompilerWithRouteOrRouteFilter('stdClass');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
@@ -535,7 +588,7 @@ class ImplementationTest extends Base
         */
         foreach (static::YieldRoutesFromSource($className) as $route) {
             $routes[] = $route;
-            $compiler->AddRoute($route);
+            $compiler->NudgeCompilerWithRouteOrRouteFilter($route);
         }
 
         static::assertSame($routes, $compiler->ObtainRoutes());
@@ -577,6 +630,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRouteFilter> $className
+    *
     * @depends testSources
     *
     * @dataProvider DataProviderMiddleware
@@ -599,12 +654,23 @@ class ImplementationTest extends Base
         */
         $uriPrefixes = $className::DaftRouterRoutePrefixExceptions();
 
-        foreach ($uriPrefixes as $uriPrefix) {
-            static::assertInternalType('string', $uriPrefix);
+        $initialCount = count($uriPrefixes);
 
+        /**
+        * @var string[]
+        */
+        $uriPrefixes = array_filter($uriPrefixes, 'is_string');
+
+        static::assertCount(
+            $initialCount,
+            $uriPrefixes,
+            'DaftRouteFilter::DaftRouterRoutePrefixExceptions() must return a list of strings!'
+        );
+
+        foreach ($uriPrefixes as $uriPrefix) {
             static::assertSame(
                 '/',
-                mb_substr((string) $uriPrefix, 0, 1),
+                mb_substr($uriPrefix, 0, 1),
                 'All middleware uri prefixes must begin with a forward slash!'
             );
         }
@@ -642,6 +708,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource> $className
+    *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     *
@@ -697,6 +765,10 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource> $middleware
+    * @psalm-param class-string<DaftSource> $presentWith
+    * @psalm-param class-string<DaftSource> $notPresentWith
+    *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     *
@@ -732,9 +804,6 @@ class ImplementationTest extends Base
             $notPresentWithMethod,
             $notPresentWithUri
         );
-
-        static::assertInternalType('array', $present);
-        static::assertInternalType('array', $notPresent);
 
         static::assertTrue(Dispatcher::FOUND === $present[0]);
         static::assertTrue(Dispatcher::FOUND === $notPresent[0]);
@@ -778,6 +847,8 @@ class ImplementationTest extends Base
 
         /**
         * @var string|false
+        *
+        * @psalm-var class-string<DaftRoute>|false
         */
         $route = array_pop($dispatchedPresent);
 
@@ -787,7 +858,12 @@ class ImplementationTest extends Base
             'Last entry from a dispatcher should be a string'
         );
 
-        static::assertTrue(is_a((string) $route, DaftRoute::class, true), sprintf(
+        /**
+        * @psalm-var class-string<DaftRoute>
+        */
+        $route = $route;
+
+        static::assertTrue(is_a($route, DaftRoute::class, true), sprintf(
             'Last entry from a dispatcher should be %s',
             DaftRoute::class
         ));
@@ -801,52 +877,52 @@ class ImplementationTest extends Base
         /**
         * @var array
         */
-        $interceptor = $dispatchedPresent[DaftRequestInterceptor::class];
+        $interceptors = $dispatchedPresent[DaftRequestInterceptor::class];
 
         /**
         * @var array
         */
-        $modifier = $dispatchedPresent[DaftResponseModifier::class];
+        $modifiers = $dispatchedPresent[DaftResponseModifier::class];
 
-        $initialCount = count($interceptor);
-
-        /**
-        * @var string[]
-        */
-        $interceptor = array_filter($interceptor, 'is_string');
-
-        static::assertCount($initialCount, $interceptor);
-        static::assertSame(array_values($interceptor), $interceptor);
-
-        /**
-        * @var array<int, string>
-        */
-        $interceptor = array_values($interceptor);
-
-        $initialCount = count($modifier);
+        $initialCount = count($interceptors);
 
         /**
         * @var string[]
         */
-        $modifier = array_filter($modifier, 'is_string');
+        $interceptors = array_filter($interceptors, 'is_string');
 
-        static::assertCount($initialCount, $modifier);
-        static::assertSame(array_values($modifier), $modifier);
+        static::assertCount($initialCount, $interceptors);
+        static::assertSame(array_values($interceptors), $interceptors);
 
         /**
         * @var array<int, string>
         */
-        $modifier = array_values($modifier);
+        $interceptors = array_values($interceptors);
 
-        foreach ($interceptor as $middleware) {
-            static::assertTrue(is_a($middleware, DaftRequestInterceptor::class, true), sprintf(
+        $initialCount = count($modifiers);
+
+        /**
+        * @var string[]
+        */
+        $modifiers = array_filter($modifiers, 'is_string');
+
+        static::assertCount($initialCount, $modifiers);
+        static::assertSame(array_values($modifiers), $modifiers);
+
+        /**
+        * @var array<int, string>
+        */
+        $modifiers = array_values($modifiers);
+
+        foreach ($interceptors as $interceptor) {
+            static::assertTrue(is_a($interceptor, DaftRequestInterceptor::class, true), sprintf(
                 'Leading entries from a dispatcher should be %s',
                 DaftRequestInterceptor::class
             ));
         }
 
-        foreach ($modifier as $middleware) {
-            static::assertTrue(is_a($middleware, DaftResponseModifier::class, true), sprintf(
+        foreach ($modifiers as $modifier) {
+            static::assertTrue(is_a($modifier, DaftResponseModifier::class, true), sprintf(
                 'Leading entries from a dispatcher should be %s',
                 DaftResponseModifier::class
             ));
@@ -854,6 +930,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource>[] $sources
+    *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     * @depends testCompilerExcludesMiddleware
@@ -896,6 +974,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource>[] $sources
+    *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     * @depends testCompilerExcludesMiddleware

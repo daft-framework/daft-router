@@ -40,6 +40,8 @@ class Compiler
 
     /**
     * @var array<int, string>
+    *
+    * @psalm-var array<int, class-string<DaftRoute>>
     */
     private $routes = [];
 
@@ -87,6 +89,9 @@ class Compiler
         }
     }
 
+    /**
+    * @psalm-param class-string<DaftSource> ...$sources
+    */
     public function NudgeCompilerWithSources(string ...$sources)
     {
         $collector = $this->ObtainCollector();
@@ -115,6 +120,9 @@ class Compiler
         }
     }
 
+    /**
+    * @psalm-param class-string<DaftSource> ...$sources
+    */
     final public function CompileDispatcherClosure(string ...$sources) : Closure
     {
         $this->NudgeCompilerWithSources(...$sources);
@@ -128,6 +136,9 @@ class Compiler
         };
     }
 
+    /**
+    * @psalm-param class-string<DaftSource> ...$sources
+    */
     public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher
     {
         $compiler = new self();
@@ -175,63 +186,60 @@ class Compiler
         return $out;
     }
 
-    final protected function MiddlewareNotExcludedFromUriExceptions(
+    /**
+    * @psalm-param class-string<DaftRouteFilter> $middleware
+    */
+    private function DoesMiddlewareExcludeSelfFromUri(
         string $middleware,
         string $uri
     ) : bool {
-        /**
-        * @var string[]
-        */
         $exceptions = $middleware::DaftRouterRoutePrefixExceptions();
-
-        $any = 0 === count($exceptions);
 
         foreach ($exceptions as $exception) {
             if (0 === mb_strpos($uri, $exception)) {
-                if ( ! $any) {
-                    return false;
-                }
-            } else {
-                $any = true;
+                return true;
             }
         }
 
-        return $any;
+        return false;
     }
 
-    final protected function MakeMiddlewareNotExcludedFromUriFilter(string $uri) : Closure
+    private function CreateFilterForMiddlewareThatMatchesAnUri(string $uri) : Closure
     {
-        return function (string $middleware) use ($uri) : bool {
-            $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
-
+        return
             /**
-            * @var iterable<string>
+            * @psalm-param class-string<DaftRouteFilter> $middleware
             */
-            $requirements = $middleware::DaftRouterRoutePrefixRequirements();
-
-            foreach ($requirements as $requirement) {
-                $pos = mb_strpos($uri, $requirement);
-
-                if (false === $pos || $pos > self::INT_NEEDLE_NOT_AT_START_OF_HAYSTACK) {
+            function (string $middleware) use ($uri) : bool {
+                if ($this->DoesMiddlewareExcludeSelfFromUri($middleware, $uri)) {
                     return false;
                 }
-            }
 
-            return $any;
-        };
+                $requirements = $middleware::DaftRouterRoutePrefixRequirements();
+
+                foreach ($requirements as $requirement) {
+                    $pos = mb_strpos($uri, $requirement);
+
+                    if (0 === $pos) {
+                        return true;
+                    }
+                }
+
+                return false;
+            };
     }
 
     /**
     * @return array<string, array<int, string>>
     */
-    final protected function MiddlewareNotExcludedFromUri(string $uri) : array
+    private function MiddlewareNotExcludedFromUri(string $uri) : array
     {
         /**
         * @var array<int, string>
         */
         $middlewares = array_filter(
             $this->ObtainMiddleware(),
-            $this->MakeMiddlewareNotExcludedFromUriFilter($uri)
+            $this->CreateFilterForMiddlewareThatMatchesAnUri($uri)
         );
 
         $out = [
@@ -243,6 +251,7 @@ class Compiler
             if (is_a($middleware, DaftRequestInterceptor::class, true)) {
                 $out[DaftRequestInterceptor::class][] = $middleware;
             }
+
             if (is_a($middleware, DaftResponseModifier::class, true)) {
                 $out[DaftResponseModifier::class][] = $middleware;
             }
@@ -254,7 +263,7 @@ class Compiler
     /**
     * @return array<string, array<string, array>>
     */
-    final protected function CompileDispatcherArray() : array
+    private function CompileDispatcherArray() : array
     {
         $out = [];
 
