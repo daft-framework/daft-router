@@ -220,7 +220,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
-    * @param array<string, array<string, string>> $singleRouteGeneratorFromArrayArgs
+    * @param array<int|string, mixed> $singleRouteGeneratorFromArrayArgs
     *
     * @dataProvider DataProviderForSingleRouteGeneratorGenerator
     */
@@ -269,11 +269,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
         $expectedCount = count($expectedResult);
 
         static::assertCount($expectedCount, $routes);
-
-        /**
-        * @var iterable<int, string>
-        */
-        $routes = $routes;
 
         foreach ($routes as $i => $compareTo) {
             static::assertIsInt($i);

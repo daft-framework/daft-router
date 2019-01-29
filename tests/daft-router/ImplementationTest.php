@@ -312,8 +312,6 @@ class ImplementationTest extends Base
 
         static::assertIsArray($sources);
 
-        $sources = (array) $sources;
-
         if (count($sources) < 1) {
             static::markTestSkipped('No sources to test!');
         } else {
@@ -336,11 +334,7 @@ class ImplementationTest extends Base
                     'Sources must be listed with integer keys!'
                 );
 
-                $prevKey = (int) $prevKey;
-
                 static::assertIsInt($k, 'Sources must be listed with integer keys!');
-
-                $k = (int) $k;
 
                 if ($i > 0) {
                     static::assertGreaterThan(
@@ -357,7 +351,7 @@ class ImplementationTest extends Base
 
                 static::assertIsString($sources[$k]);
 
-                $source = (string) $sources[$k];
+                $source = $sources[$k];
 
                 static::assertTrue(
                     (
@@ -397,14 +391,12 @@ class ImplementationTest extends Base
         }
 
         /**
-        * @var array<int|string, scalar[]>
+        * @var array<int|string, mixed>
         */
         $routes = (array) $className::DaftRouterRoutes();
 
         foreach ($routes as $uri => $routesToCheck) {
             static::assertIsString($uri, 'route keys must be strings!');
-
-            $uri = (string) $uri;
 
             static::assertSame(
                 '/',
@@ -614,7 +606,7 @@ class ImplementationTest extends Base
 
             static::assertSame(
                 '/',
-                mb_substr((string) $uriPrefix, 0, 1),
+                mb_substr($uriPrefix, 0, 1),
                 'All middleware uri prefixes must begin with a forward slash!'
             );
         }
@@ -749,9 +741,6 @@ class ImplementationTest extends Base
             $notPresentWithUri
         );
 
-        static::assertIsArray($present);
-        static::assertIsArray($notPresent);
-
         static::assertTrue(Dispatcher::FOUND === $present[0]);
         static::assertTrue(Dispatcher::FOUND === $notPresent[0]);
 
@@ -802,7 +791,7 @@ class ImplementationTest extends Base
             'Last entry from a dispatcher should be a string'
         );
 
-        static::assertTrue(is_a((string) $route, DaftRoute::class, true), sprintf(
+        static::assertTrue(is_a($route, DaftRoute::class, true), sprintf(
             'Last entry from a dispatcher should be %s',
             DaftRoute::class
         ));
@@ -816,52 +805,52 @@ class ImplementationTest extends Base
         /**
         * @var array
         */
-        $interceptor = $dispatchedPresent[DaftRequestInterceptor::class];
+        $interceptors = $dispatchedPresent[DaftRequestInterceptor::class];
 
         /**
         * @var array
         */
-        $modifier = $dispatchedPresent[DaftResponseModifier::class];
+        $modifiers = $dispatchedPresent[DaftResponseModifier::class];
 
-        $initialCount = count($interceptor);
-
-        /**
-        * @var string[]
-        */
-        $interceptor = array_filter($interceptor, 'is_string');
-
-        static::assertCount($initialCount, $interceptor);
-        static::assertSame(array_values($interceptor), $interceptor);
-
-        /**
-        * @var array<int, string>
-        */
-        $interceptor = array_values($interceptor);
-
-        $initialCount = count($modifier);
+        $initialCount = count($interceptors);
 
         /**
         * @var string[]
         */
-        $modifier = array_filter($modifier, 'is_string');
+        $interceptors = array_filter($interceptors, 'is_string');
 
-        static::assertCount($initialCount, $modifier);
-        static::assertSame(array_values($modifier), $modifier);
+        static::assertCount($initialCount, $interceptors);
+        static::assertSame(array_values($interceptors), $interceptors);
 
         /**
         * @var array<int, string>
         */
-        $modifier = array_values($modifier);
+        $interceptors = array_values($interceptors);
 
-        foreach ($interceptor as $middleware) {
-            static::assertTrue(is_a($middleware, DaftRequestInterceptor::class, true), sprintf(
+        $initialCount = count($modifiers);
+
+        /**
+        * @var string[]
+        */
+        $modifiers = array_filter($modifiers, 'is_string');
+
+        static::assertCount($initialCount, $modifiers);
+        static::assertSame(array_values($modifiers), $modifiers);
+
+        /**
+        * @var array<int, string>
+        */
+        $modifiers = array_values($modifiers);
+
+        foreach ($interceptors as $interceptor) {
+            static::assertTrue(is_a($interceptor, DaftRequestInterceptor::class, true), sprintf(
                 'Leading entries from a dispatcher should be %s',
                 DaftRequestInterceptor::class
             ));
         }
 
-        foreach ($modifier as $middleware) {
-            static::assertTrue(is_a($middleware, DaftResponseModifier::class, true), sprintf(
+        foreach ($modifiers as $modifier) {
+            static::assertTrue(is_a($modifier, DaftResponseModifier::class, true), sprintf(
                 'Leading entries from a dispatcher should be %s',
                 DaftResponseModifier::class
             ));

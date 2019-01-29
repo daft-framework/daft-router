@@ -41,13 +41,15 @@ class Profile implements DaftRoute
             rawurlencode((string) $args['id']) .
             (
                 isset($args['slug'])
-                    ? ('~' . rawurlencode($args['slug']))
+                    ? ('~' . rawurlencode((string) $args['slug']))
                     : ''
             );
     }
 
     /**
-    * @return array{id:string, slug?:string}
+    * @return array<string, string>
+    *
+    * @psalm-return array{id:string, slug?:string}
     */
     public static function DaftRouterHttpRouteArgs(array $args, string $method) : array
     {
@@ -90,7 +92,9 @@ class Profile implements DaftRoute
     }
 
     /**
-    * @return array{id:int, slug?:string}
+    * @return array<string, scalar>
+    *
+    * @psalm-return array{id:int, slug?:string}
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
     {
