@@ -312,30 +312,49 @@ class ImplementationTest extends Base
 
         static::assertIsArray($sources);
 
+        /**
+        * @var array
+        */
+        $sources = $sources;
+
         if (count($sources) < 1) {
             static::markTestSkipped('No sources to test!');
         } else {
+            $initialCount = count($sources);
+
             /**
-            * @var int|false
+            * @var array<int, mixed>
+            */
+            $sources = array_filter($sources, 'is_int', ARRAY_FILTER_USE_KEY);
+
+            static::assertCount(
+                $initialCount,
+                $sources,
+                'DaftSource::DaftRouterRouteAndMiddlewareSources() must be of the form array<int, mixed>'
+            );
+
+            /**
+            * @var array<int, string>
+            */
+            $sources = array_filter($sources, 'is_string');
+
+            static::assertCount(
+                $initialCount,
+                $sources,
+                'DaftSource::DaftRouterRouteAndMiddlewareSources() must be of the form array<int, string>'
+            );
+
+            /**
+            * @var int
             */
             $prevKey = key($sources);
 
             /**
-            * @var array<int, int|string>
+            * @var array<int, int>
             */
             $sourceKeys = array_keys($sources);
 
             foreach ($sourceKeys as $i => $k) {
-                /*
-                * this is inside here because of a bug in phpstan/phpstan or phpstan/phpstan-phpunit
-                */
-                static::assertIsInt(
-                    $prevKey,
-                    'Sources must be listed with integer keys!'
-                );
-
-                static::assertIsInt($k, 'Sources must be listed with integer keys!');
-
                 if ($i > 0) {
                     static::assertGreaterThan(
                         $prevKey,
@@ -349,8 +368,9 @@ class ImplementationTest extends Base
                     );
                 }
 
-                static::assertIsString($sources[$k]);
-
+                /**
+                * @psalm-var class-string
+                */
                 $source = $sources[$k];
 
                 static::assertTrue(
@@ -390,35 +410,66 @@ class ImplementationTest extends Base
             );
         }
 
+        $routes = $className::DaftRouterRoutes();
+
+        $initialCount = count($routes);
+
         /**
-        * @var array<int|string, mixed>
+        * @var array<string, mixed>
         */
-        $routes = (array) $className::DaftRouterRoutes();
+        $routes = array_filter($routes, 'is_string', ARRAY_FILTER_USE_KEY);
+
+        static::assertCount(
+            $initialCount,
+            $routes,
+            'DaftRoute::DaftRouterRoutes() must be of the form array<string, mixed>'
+        );
+
+        $routes = array_filter(
+            $routes,
+            function (string $uri) : bool {
+                return '/' === mb_substr($uri, 0, 1);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        static::assertCount(
+            $initialCount,
+            $routes,
+            'All route uris must begin with a forward slash!'
+        );
+
+        /**
+        * @var array<string, array>
+        */
+        $routes = array_filter($routes, 'is_array');
+
+        static::assertCount(
+            $initialCount,
+            $routes,
+            'DaftRoute::DaftRouterRoutes() must be of the form array<string, array>'
+        );
 
         foreach ($routes as $uri => $routesToCheck) {
-            static::assertIsString($uri, 'route keys must be strings!');
+            $initialCount = count($routesToCheck);
 
-            static::assertSame(
-                '/',
-                mb_substr($uri, 0, 1),
-                'All route uris must begin with a forward slash!'
-            );
+            static::assertGreaterThan(0, $initialCount, 'URIs must have at least one method!');
 
-            static::assertIsArray(
+            $routesToCheck = array_filter($routesToCheck, 'is_int', ARRAY_FILTER_USE_KEY);
+
+            static::assertCount(
+                $initialCount,
                 $routesToCheck,
-                'All route uris must be specified with an array of HTTP methods!'
+                'DaftRoute::DaftRouterRoutes() must be of the form array<string, array<int, mixed>>'
             );
 
-            foreach ($routesToCheck as $k => $v) {
-                static::assertIsInt(
-                    $k,
-                    'All http methods must be specified with numeric indices!'
-                );
-                static::assertIsString(
-                    $v,
-                    'All http methods must be specified as an array of strings!'
-                );
-            }
+            $routesToCheck = array_filter($routesToCheck, 'is_string');
+
+            static::assertCount(
+                $initialCount,
+                $routesToCheck,
+                'DaftRoute::DaftRouterRoutes() must be of the form array<string, array<int, string>>'
+            );
         }
     }
 
@@ -601,9 +652,20 @@ class ImplementationTest extends Base
         */
         $uriPrefixes = $className::DaftRouterRoutePrefixExceptions();
 
-        foreach ($uriPrefixes as $uriPrefix) {
-            static::assertIsString($uriPrefix);
+        $initialCount = count($uriPrefixes);
 
+        /**
+        * @var string[]
+        */
+        $uriPrefixes = array_filter($uriPrefixes, 'is_string');
+
+        static::assertCount(
+            $initialCount,
+            $uriPrefixes,
+            'DaftRouteFilter::DaftRouterRoutePrefixExceptions() must return a list of strings!'
+        );
+
+        foreach ($uriPrefixes as $uriPrefix) {
             static::assertSame(
                 '/',
                 mb_substr($uriPrefix, 0, 1),
@@ -783,6 +845,8 @@ class ImplementationTest extends Base
 
         /**
         * @var string|false
+        *
+        * @psalm-var class-string<DaftRoute>|false
         */
         $route = array_pop($dispatchedPresent);
 
@@ -790,6 +854,11 @@ class ImplementationTest extends Base
             $route,
             'Last entry from a dispatcher should be a string'
         );
+
+        /**
+        * @psalm-var class-string<DaftRoute>
+        */
+        $route = $route;
 
         static::assertTrue(is_a($route, DaftRoute::class, true), sprintf(
             'Last entry from a dispatcher should be %s',

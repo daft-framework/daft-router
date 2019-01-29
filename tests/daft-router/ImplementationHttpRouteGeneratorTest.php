@@ -220,7 +220,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
-    * @param array<int|string, mixed> $singleRouteGeneratorFromArrayArgs
+    * @param array<string, array> $singleRouteGeneratorFromArrayArgs
     *
     * @dataProvider DataProviderForSingleRouteGeneratorGenerator
     */
@@ -231,9 +231,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
         $singleRouteGenerators = [];
 
         foreach ($singleRouteGeneratorFromArrayArgs as $route => $arrayOfArgs) {
-            static::assertIsString($route);
-            static::assertIsArray($arrayOfArgs);
-
             $initialCount = count($arrayOfArgs, COUNT_RECURSIVE);
 
             $wasArgs = $arrayOfArgs;
@@ -260,6 +257,9 @@ class ImplementationHttpRouteGeneratorTest extends Base
             );
         }
 
+        /**
+        * @var iterable<int, string>
+        */
         $routes = new HttpRouteGenerator\HttpRouteGeneratorToRoutes(
             new HttpRouteGenerator\SingleRouteGeneratorGenerator(
                 ...$singleRouteGenerators
@@ -271,8 +271,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
         static::assertCount($expectedCount, $routes);
 
         foreach ($routes as $i => $compareTo) {
-            static::assertIsInt($i);
-            static::assertIsString($compareTo);
             static::assertSame($expectedResult[$i] ?? null, $compareTo);
         }
     }
