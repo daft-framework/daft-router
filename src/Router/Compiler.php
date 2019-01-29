@@ -197,11 +197,11 @@ class Compiler
     ) : bool {
         $exceptions = $middleware::DaftRouterRoutePrefixExceptions();
 
-            foreach ($exceptions as $exception) {
-                if (0 === mb_strpos($uri, $exception)) {
-                    return true;
-                }
+        foreach ($exceptions as $exception) {
+            if (0 === mb_strpos($uri, $exception)) {
+                return true;
             }
+        }
 
         return false;
     }
