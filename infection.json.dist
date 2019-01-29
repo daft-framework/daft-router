@@ -18,6 +18,7 @@
         },
         "MethodCallRemoval": {
             "ignore": [
+                "SignpostMarv\\DaftRouter\\DaftRouterZeroArgumentsTrait::DaftRouterHttpRouteArgs",
                 "SignpostMarv\\DaftRouter\\Router\\RouteCollector::addRoute"
             ]
         },
