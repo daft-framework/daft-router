@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files>
+  <file src="tests\daft-router\Fixtures\Compiler.php">
+    <TypeCoercion occurrences="1">
+      <code>$sources</code>
+    </TypeCoercion>
+  </file>
+</files>
