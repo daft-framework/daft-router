@@ -31,7 +31,6 @@
             "phpunit -vvvv --coverage-clover=phpunit.clover",
             "psalm",
             "phpcpd src",
-            "composer-require-checker check ./composer.json",
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
         ]
     },
