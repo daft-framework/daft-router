@@ -219,20 +219,20 @@ class Compiler
             * @psalm-param class-string<DaftRouteFilter> $middleware
             */
             function (string $middleware) use ($uri) : bool {
-            $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
+                $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
 
-            $requirements = $middleware::DaftRouterRoutePrefixRequirements();
+                $requirements = $middleware::DaftRouterRoutePrefixRequirements();
 
-            foreach ($requirements as $requirement) {
-                $pos = mb_strpos($uri, $requirement);
+                foreach ($requirements as $requirement) {
+                    $pos = mb_strpos($uri, $requirement);
 
-                if (false === $pos || $pos > self::INT_NEEDLE_NOT_AT_START_OF_HAYSTACK) {
-                    return false;
+                    if (false === $pos || $pos > self::INT_NEEDLE_NOT_AT_START_OF_HAYSTACK) {
+                        return false;
+                    }
                 }
-            }
 
-            return $any;
-        };
+                return $any;
+            };
     }
 
     /**
@@ -257,6 +257,7 @@ class Compiler
             if (is_a($middleware, DaftRequestInterceptor::class, true)) {
                 $out[DaftRequestInterceptor::class][] = $middleware;
             }
+
             if (is_a($middleware, DaftResponseModifier::class, true)) {
                 $out[DaftResponseModifier::class][] = $middleware;
             }
