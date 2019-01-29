@@ -212,7 +212,7 @@ class Compiler
         return $any;
     }
 
-    final protected function MakeMiddlewareNotExcludedFromUriFilter(string $uri) : Closure
+    final protected function CreateFilterForMiddlewareThatMatchesAnUri(string $uri) : Closure
     {
         return
             /**
@@ -245,7 +245,7 @@ class Compiler
         */
         $middlewares = array_filter(
             $this->ObtainMiddleware(),
-            $this->MakeMiddlewareNotExcludedFromUriFilter($uri)
+            $this->CreateFilterForMiddlewareThatMatchesAnUri($uri)
         );
 
         $out = [
