@@ -11,7 +11,7 @@ use Generator;
 class SingleRouteGeneratorGenerator implements HttpRouteGenerator
 {
     /**
-    * @var array<int, HttpRouteGenerator>
+    * @var array<int, SingleRouteGenerator>
     */
     protected $generators = [];
 
@@ -34,14 +34,7 @@ class SingleRouteGeneratorGenerator implements HttpRouteGenerator
     public function getIterator() : Generator
     {
         foreach ($this->generators as $generator) {
-            /**
-            * @var iterable<string, array>
-            */
-            $generator = $generator;
-
-            foreach ($generator as $route => $args) {
-                yield $route => $args;
-            }
+            yield from $generator;
         }
     }
 }

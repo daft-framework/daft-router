@@ -191,24 +191,22 @@ class Compiler
     /**
     * @psalm-param class-string<DaftRouteFilter> $middleware
     */
-    final protected function DoesMiddlewareExcludeSelfFromUri(
+    private function DoesMiddlewareExcludeSelfFromUri(
         string $middleware,
         string $uri
     ) : bool {
         $exceptions = $middleware::DaftRouterRoutePrefixExceptions();
 
-        if (count($exceptions) > 0) {
             foreach ($exceptions as $exception) {
                 if (0 === mb_strpos($uri, $exception)) {
                     return true;
                 }
             }
-        }
 
         return false;
     }
 
-    final protected function CreateFilterForMiddlewareThatMatchesAnUri(string $uri) : Closure
+    private function CreateFilterForMiddlewareThatMatchesAnUri(string $uri) : Closure
     {
         return
             /**
@@ -236,7 +234,7 @@ class Compiler
     /**
     * @return array<string, array<int, string>>
     */
-    final protected function MiddlewareNotExcludedFromUri(string $uri) : array
+    private function MiddlewareNotExcludedFromUri(string $uri) : array
     {
         /**
         * @var array<int, string>
@@ -267,7 +265,7 @@ class Compiler
     /**
     * @return array<string, array<string, array>>
     */
-    final protected function CompileDispatcherArray() : array
+    private function CompileDispatcherArray() : array
     {
         $out = [];
 

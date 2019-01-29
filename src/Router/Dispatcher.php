@@ -17,6 +17,8 @@ class Dispatcher extends Base
 {
     const INT_ARRAY_INDEX_HTTP_METHOD = 2;
 
+    const INT_ARRAY_INDEX_ROUTE_ARGS = 3;
+
     /**
     * @param string $httpMethod
     * @param string $uri
@@ -39,19 +41,23 @@ class Dispatcher extends Base
     public function handle(Request $request, string $prefix = '') : Response
     {
         $regex = '/^' . preg_quote($prefix, '/') . '/';
-        $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
+        $path = preg_replace($regex, '', parse_url($request->getUri(), PHP_URL_PATH) ?? '');
 
         /**
         * @var array{1:array, 2:string, 3:array<string, string>}
         */
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
 
-        $routeArgs = $routeInfo[3] ?? [];
+        $routeArgs = [];
+
+        if (isset($routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS])) {
+            $routeArgs = $routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS];
+        }
 
         /**
         * @psalm-var \SignpostMarv\DaftRouter\DaftRoute
         */
-        $route = (string) array_pop($routeInfo[1]);
+        $route = array_pop($routeInfo[1]) ?: '';
 
         /**
         * @psalm-var array<int, class-string<DaftRequestInterceptor>>

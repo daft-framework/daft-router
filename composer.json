@@ -34,6 +34,7 @@
             "phpcpd src",
             "phpmnd src",
             "composer-require-checker check ./composer.json",
+            "infection --min-msi=100",
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
         ]
     },

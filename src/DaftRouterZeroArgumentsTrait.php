@@ -19,7 +19,7 @@ trait DaftRouterZeroArgumentsTrait
 
     public static function DaftRouterHttpRouteArgs(array $args, string $method) : array
     {
-        static::DaftRouterAutoMethodChecking($method);
+        $method = static::DaftRouterAutoMethodChecking($method);
 
         if (count($args) > 0) {
             throw new InvalidArgumentException('This route takes no arguments!');

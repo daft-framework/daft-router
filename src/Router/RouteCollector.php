@@ -39,7 +39,7 @@ final class RouteCollector extends Base
         $this->addRouteStrict($httpMethod, $route, $handler);
     }
 
-    protected function addRouteStrict(string $httpMethod, string $route, array $handler) : void
+    private function addRouteStrict(string $httpMethod, string $route, array $handler) : void
     {
         /**
         * @var string

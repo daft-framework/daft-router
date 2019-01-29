@@ -544,6 +544,8 @@ class ImplementationTest extends Base
     {
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
+        $compiler->NudgeCompilerWithRouteOrRouteFilter('stdClass');
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
             'Argument 1 passed to %s::%s must be an implementation of %s',
@@ -586,7 +588,7 @@ class ImplementationTest extends Base
         */
         foreach (static::YieldRoutesFromSource($className) as $route) {
             $routes[] = $route;
-            $compiler->AddRoute($route);
+            $compiler->NudgeCompilerWithRouteOrRouteFilter($route);
         }
 
         static::assertSame($routes, $compiler->ObtainRoutes());
