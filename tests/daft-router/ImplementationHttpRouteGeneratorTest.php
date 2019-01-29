@@ -192,6 +192,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
     /**
     * @psalm-param class-string<DaftRoute> $route
+    *
     * @param array<string, string> $args
     *
     * @dataProvider DataProviderForSingleRouteGeneratorGeneratorManual
