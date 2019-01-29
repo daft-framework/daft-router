@@ -11,10 +11,10 @@
         <directory name="tests"/>
 
         <ignoreFiles>
-            <directory name="./vendor/phpunit/phpunit/" />
+            <directory name="./vendor/phpunit/phpunit/"/>
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
     </issueHandlers>
-</psalm>
+<plugins><pluginClass xmlns="https://getpsalm.org/schema/config" class="Psalm\PhpUnitPlugin\Plugin"/></plugins></psalm>
