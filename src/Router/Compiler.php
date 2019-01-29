@@ -42,6 +42,8 @@ class Compiler
 
     /**
     * @var array<int, string>
+    *
+    * @psalm-var array<int, class-string<DaftRoute>>
     */
     private $routes = [];
 
@@ -89,6 +91,9 @@ class Compiler
         }
     }
 
+    /**
+    * @psalm-param class-string<DaftSource> ...$sources
+    */
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
         $collector = $this->ObtainCollector();
@@ -117,6 +122,9 @@ class Compiler
         }
     }
 
+    /**
+    * @psalm-param class-string<DaftSource> ...$sources
+    */
     final public function CompileDispatcherClosure(string ...$sources) : Closure
     {
         $this->NudgeCompilerWithSources(...$sources);
@@ -130,6 +138,9 @@ class Compiler
         };
     }
 
+    /**
+    * @psalm-param class-string<DaftSource> ...$sources
+    */
     public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher
     {
         $compiler = new self();
@@ -177,13 +188,13 @@ class Compiler
         return $out;
     }
 
+    /**
+    * @psalm-param class-string<DaftRouteFilter> $middleware
+    */
     final protected function MiddlewareNotExcludedFromUriExceptions(
         string $middleware,
         string $uri
     ) : bool {
-        /**
-        * @var string[]
-        */
         $exceptions = $middleware::DaftRouterRoutePrefixExceptions();
 
         $any = 0 === count($exceptions);
@@ -203,12 +214,13 @@ class Compiler
 
     final protected function MakeMiddlewareNotExcludedFromUriFilter(string $uri) : Closure
     {
-        return function (string $middleware) use ($uri) : bool {
+        return
+            /**
+            * @psalm-param class-string<DaftRouteFilter> $middleware
+            */
+            function (string $middleware) use ($uri) : bool {
             $any = $this->MiddlewareNotExcludedFromUriExceptions($middleware, $uri);
 
-            /**
-            * @var iterable<string>
-            */
             $requirements = $middleware::DaftRouterRoutePrefixRequirements();
 
             foreach ($requirements as $requirement) {

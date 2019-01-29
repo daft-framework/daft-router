@@ -42,20 +42,30 @@ class Dispatcher extends Base
         $path = preg_replace($regex, '', (string) parse_url($request->getUri(), PHP_URL_PATH));
 
         /**
-        * @var array{1:array, 2:string}
+        * @var array{1:array, 2:string, 3:array<string, string>}
         */
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
+
+        $routeArgs = $routeInfo[3] ?? [];
+
+        /**
+        * @psalm-var \SignpostMarv\DaftRouter\DaftRoute
+        */
         $route = (string) array_pop($routeInfo[1]);
 
         /**
+        * @psalm-var array<int, class-string<DaftRequestInterceptor>>
+        *
         * @var array<int, string>
         */
-        $firstPass = (array) $routeInfo[1][DaftRequestInterceptor::class];
+        $firstPass = $routeInfo[1][DaftRequestInterceptor::class];
 
         /**
+        * @psalm-var array<int, class-string<DaftResponseModifier>>
+        *
         * @var array<int, string>
         */
-        $secondPass = (array) $routeInfo[1][DaftResponseModifier::class];
+        $secondPass = $routeInfo[1][DaftResponseModifier::class];
 
         $resp = $this->RunMiddlewareFirstPass($request, ...$firstPass);
 
@@ -65,7 +75,7 @@ class Dispatcher extends Base
             */
             $resp = $route::DaftRouterHandleRequest(
                 $request,
-                $routeInfo[self::INT_ARRAY_INDEX_HTTP_METHOD]
+                $routeArgs
             );
         }
 
@@ -74,6 +84,9 @@ class Dispatcher extends Base
         return $resp;
     }
 
+    /**
+    * @psalm-param class-string<DaftRequestInterceptor> ...$middlewares
+    */
     private function RunMiddlewareFirstPass(Request $request, string ...$middlewares) : ? Response
     {
         $response = null;
@@ -88,6 +101,9 @@ class Dispatcher extends Base
         return $response;
     }
 
+    /**
+    * @psalm-param class-string<DaftResponseModifier> ...$middlewares
+    */
     private function RunMiddlewareSecondPass(
         Request $request,
         Response $response,

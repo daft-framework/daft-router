@@ -142,9 +142,11 @@ class ImplementationTest extends Base
     {
         $parser = new Std();
         /**
-        * @var string[]
+        * @psalm-var iterable<array{0:class-string<DaftRoute>}> $argsSource
         */
-        foreach ($this->DataProviderRoutes() as $args) {
+        $argsSource = $this->DataProviderRoutes();
+
+        foreach ($argsSource as $args) {
             list($route) = $args;
 
             if ( ! is_a($route, DaftRoute::class, true)) {
@@ -286,6 +288,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource> $className
+    *
     * @dataProvider DataProviderGoodSources
     */
     public function testSources(string $className) : void
@@ -373,6 +377,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRoute> $className
+    *
     * @depends testSources
     *
     * @dataProvider DataProviderRoutes
@@ -425,6 +431,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRoute> $className
+    *
     * @depends testRoutes
     *
     * @dataProvider DataProviderRoutesWithNoArgs
@@ -447,6 +455,10 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRoute> $className
+    *
+    * @param array<string, string> $args
+    *
     * @depends testRoutes
     *
     * @dataProvider DataProviderRoutesWithKnownArgs
@@ -573,6 +585,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRouteFilter> $className
+    *
     * @depends testSources
     *
     * @dataProvider DataProviderMiddleware
@@ -638,6 +652,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource> $className
+    *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     *
@@ -693,6 +709,10 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource> $middleware
+    * @psalm-param class-string<DaftSource> $presentWith
+    * @psalm-param class-string<DaftSource> $notPresentWith
+    *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     *
@@ -849,6 +869,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource>[] $sources
+    *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     * @depends testCompilerExcludesMiddleware
@@ -891,6 +913,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftSource>[] $sources
+    *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     * @depends testCompilerExcludesMiddleware

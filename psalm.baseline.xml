@@ -1,33 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
-  <file src="src\Router\Compiler.php">
-    <InvalidStringClass occurrences="3">
-      <code>$middleware::DaftRouterRoutePrefixExceptions()</code>
-      <code>$middleware::DaftRouterRoutePrefixRequirements()</code>
-      <code>$route::DaftRouterRoutes()</code>
-    </InvalidStringClass>
-  </file>
-  <file src="src\Router\Dispatcher.php">
-    <InvalidStringClass occurrences="3">
-      <code>$middleware::DaftRouterMiddlewareHandler($request, $response)</code>
-      <code>$middleware::DaftRouterMiddlewareModifier($request, $response)</code>
-    </InvalidStringClass>
-  </file>
-  <file src="tests\daft-router\ImplementationHttpRouteGeneratorTest.php">
-    <MixedTypeCoercion occurrences="1">
-      <code>$args</code>
-    </MixedTypeCoercion>
-  </file>
-  <file src="tests\daft-router\ImplementationTest.php">
-    <InvalidStringClass occurrences="8">
-      <code>$route::DaftRouterRoutes()</code>
-      <code>$className::DaftRouterRouteAndMiddlewareSources()</code>
-      <code>$className::DaftRouterRoutes()</code>
-      <code>$className::DaftRouterHttpRoute(['foo' =&gt; 'bar'], $method)</code>
-      <code>$className::DaftRouterHttpRouteArgsTyped($args, $method)</code>
-      <code>$className::DaftRouterHttpRoute($args, $method)</code>
-      <code>$className::DaftRouterHttpRouteArgsTyped(['foo' =&gt; 'bar'], $method)</code>
-      <code>$className::DaftRouterRoutePrefixExceptions()</code>
-    </InvalidStringClass>
+  <file src="tests\daft-router\Fixtures\Compiler.php">
+    <TypeCoercion occurrences="1">
+      <code>$sources</code>
+    </TypeCoercion>
   </file>
 </files>

@@ -191,6 +191,9 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRoute> $route
+    * @param array<string, string> $args
+    *
     * @dataProvider DataProviderForSingleRouteGeneratorGeneratorManual
     */
     public function testHttpRouteGeneratorManual(
@@ -210,9 +213,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
             );
         }
 
-        /**
-        * @var string
-        */
         $result = $route::DaftRouterHttpRoute($args);
 
         static::assertIsString($result);
