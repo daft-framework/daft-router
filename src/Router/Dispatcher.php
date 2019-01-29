@@ -92,6 +92,8 @@ class Dispatcher extends Base
 
     /**
     * @psalm-param class-string<DaftRequestInterceptor> ...$middlewares
+    *
+    * @return Response|null
     */
     private function RunMiddlewareFirstPass(Request $request, string ...$middlewares)
     {

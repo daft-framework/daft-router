@@ -98,9 +98,6 @@ class Profile implements DaftRoute
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
     {
-        /**
-        * @var array<string, scalar>
-        */
         $args = static::DaftRouterHttpRouteArgs($args, $method);
 
         $args['id'] = (int) $args['id'];
