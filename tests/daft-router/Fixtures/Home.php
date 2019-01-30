@@ -28,6 +28,9 @@ class Home implements DaftRoute
         ];
     }
 
+    /**
+    * @param array<string, string> $args
+    */
     public static function DaftRouterHttpRoute(array $args, string $method = 'GET') : string
     {
         $args = static::DaftRouterHttpRouteArgsTyped($args, $method);

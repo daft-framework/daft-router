@@ -12,11 +12,17 @@ trait DaftRouterZeroArgumentsTrait
 {
     use DaftRouterAutoMethodCheckingTrait;
 
+    /**
+    * @return array<string, string>
+    */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
     {
         return static::DaftRouterHttpRouteArgs($args, $method);
     }
 
+    /**
+    * @return array<string, string>
+    */
     public static function DaftRouterHttpRouteArgs(array $args, string $method) : array
     {
         static::DaftRouterAutoMethodChecking($method);
