@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a500027c9fd3dfefba090fdf564c4d01",
+    "content-hash": "5cfe381a7175d48ba766eeb55de48a30",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -2578,16 +2578,16 @@
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "0.11",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "747a742b26a35ef4e4ebef5ec4490ad74eebcbc0"
+                "reference": "5c5e30d041097f2adaf4da1827a52d4d19fee06d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/747a742b26a35ef4e4ebef5ec4490ad74eebcbc0",
-                "reference": "747a742b26a35ef4e4ebef5ec4490ad74eebcbc0",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/5c5e30d041097f2adaf4da1827a52d4d19fee06d",
+                "reference": "5c5e30d041097f2adaf4da1827a52d4d19fee06d",
                 "shasum": ""
             },
             "require": {
@@ -2620,7 +2620,7 @@
                 "MIT"
             ],
             "description": "Extra strict and opinionated rules for PHPStan",
-            "time": "2019-01-14T09:56:55+00:00"
+            "time": "2019-01-21T09:41:07+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5158,6 +5158,7 @@
     "stability-flags": {
         "phpstan/phpstan": 20,
         "phpstan/phpstan-phpunit": 20,
+        "phpstan/phpstan-strict-rules": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
