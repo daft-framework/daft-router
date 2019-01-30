@@ -41,7 +41,11 @@ class Dispatcher extends Base
     public function handle(Request $request, string $prefix = '') : Response
     {
         $regex = '/^' . preg_quote($prefix, '/') . '/';
-        $path = preg_replace($regex, '', parse_url($request->getUri(), PHP_URL_PATH) ?? '');
+        /**
+        * @var string
+        */
+        $path = parse_url($request->getUri(), PHP_URL_PATH);
+        $path = preg_replace($regex, '', $path);
 
         /**
         * @var array{1:array, 2:string, 3:array<string, string>}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d459f1858a765cae06c423e1e501a85",
+    "content-hash": "f9f30efa13d4fa60dce011e4a08c2c72",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -2454,16 +2454,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.11.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a138b8a2731b2c19f1dffa2f1411984a638fe977"
+                "reference": "df6202656b66cf8477626973629a64de59bf6d56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a138b8a2731b2c19f1dffa2f1411984a638fe977",
-                "reference": "a138b8a2731b2c19f1dffa2f1411984a638fe977",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/df6202656b66cf8477626973629a64de59bf6d56",
+                "reference": "df6202656b66cf8477626973629a64de59bf6d56",
                 "shasum": ""
             },
             "require": {
@@ -2523,7 +2523,7 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2019-01-19T20:23:08+00:00"
+            "time": "2019-01-24T16:25:53+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -5156,6 +5156,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "phpstan/phpstan": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
