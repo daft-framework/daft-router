@@ -18,6 +18,9 @@ class Login extends Home
         ];
     }
 
+    /**
+    * @return array<string, string>
+    */
     public static function DaftRouterHttpRouteArgs(array $args, string $method) : array
     {
         static::DaftRouterAutoMethodChecking($method);

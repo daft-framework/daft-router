@@ -13,10 +13,6 @@ trait DaftRouterZeroArgumentsTrait
     use DaftRouterAutoMethodCheckingTrait;
 
     /**
-    * @param array<string, string> $args
-    *
-    * @throws InvalidArgumentException if $args or $method are not supported or invalid
-    *
     * @return array<string, string>
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
@@ -25,11 +21,7 @@ trait DaftRouterZeroArgumentsTrait
     }
 
     /**
-    * @param array<string, string> $args
-    *
-    * @throws InvalidArgumentException if $args or $method are not supported or invalid
-    *
-    * @return array<string, mixed>
+    * @return array<string, string>
     */
     public static function DaftRouterHttpRouteArgs(array $args, string $method) : array
     {
