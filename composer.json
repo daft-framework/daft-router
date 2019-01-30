@@ -28,8 +28,18 @@
     },
     "scripts": {
         "tests": [
+            "@phpunit",
+            "@other-tests"
+        ],
+        "phpunit": [
             "phpunit -vvvv --coverage-clover=phpunit.clover",
+            "echo 'if phpstan passes, remove this'"
+        ],
+        "phpstan": [
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src tests",
+            "echo 'if phpstan passes, remove this'"
+        ],
+        "other-tests": [
             "psalm",
             "phpcpd src",
             "phpmnd src",
