@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9f30efa13d4fa60dce011e4a08c2c72",
+    "content-hash": "a500027c9fd3dfefba090fdf564c4d01",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -2527,16 +2527,16 @@
         },
         {
             "name": "phpstan/phpstan-phpunit",
-            "version": "0.11",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "70c22d44b96a21a4952fc13021a5a63cc83f5c81"
+                "reference": "ec9408e03859f9c775663c14687a7d106e17c751"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/70c22d44b96a21a4952fc13021a5a63cc83f5c81",
-                "reference": "70c22d44b96a21a4952fc13021a5a63cc83f5c81",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/ec9408e03859f9c775663c14687a7d106e17c751",
+                "reference": "ec9408e03859f9c775663c14687a7d106e17c751",
                 "shasum": ""
             },
             "require": {
@@ -2574,7 +2574,7 @@
                 "MIT"
             ],
             "description": "PHPUnit extensions and rules for PHPStan",
-            "time": "2018-12-22T14:05:04+00:00"
+            "time": "2019-01-21T09:40:45+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
@@ -5157,6 +5157,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "phpstan/phpstan": 20,
+        "phpstan/phpstan-phpunit": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
