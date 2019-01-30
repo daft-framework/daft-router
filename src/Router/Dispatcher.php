@@ -15,9 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Dispatcher extends Base
 {
-    const INT_ARRAY_INDEX_HTTP_METHOD = 2;
-
-    const INT_ARRAY_INDEX_ROUTE_ARGS = 3;
+    const INT_ARRAY_INDEX_ROUTE_ARGS = 2;
 
     /**
     * @param string $httpMethod
@@ -48,7 +46,7 @@ class Dispatcher extends Base
         $path = preg_replace($regex, '', $path);
 
         /**
-        * @var array{1:array, 2:string, 3:array<string, string>}
+        * @var array{1:array, 2:array<string, string>}
         */
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
 
