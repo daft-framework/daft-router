@@ -186,7 +186,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
             $routeArgs = $routeArgs;
 
             foreach ($routeArgs as $route => $arrayOfArgs) {
-                foreach ($arrayOfArgs as $k => $args) {
+                foreach ($arrayOfArgs as $args) {
                     yield [$route, $args, $expected[$i]];
 
                     ++$i;
@@ -237,8 +237,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
         foreach ($singleRouteGeneratorFromArrayArgs as $route => $arrayOfArgs) {
             $initialCount = count($arrayOfArgs, COUNT_RECURSIVE);
-
-            $wasArgs = $arrayOfArgs;
 
             /**
             * @var array<int, array>
@@ -307,7 +305,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
         static::expectException($expectedException);
         static::expectExceptionMessage($expectedExceptionMessage);
 
-        $obj = new $implementation(...$ctorArgs);
+        new $implementation(...$ctorArgs);
     }
 
     /**

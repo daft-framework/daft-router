@@ -462,7 +462,7 @@ class ImplementationTest extends Base
             'DaftRoute::DaftRouterRoutes() must be of the form array<string, array>'
         );
 
-        foreach ($routes as $uri => $routesToCheck) {
+        foreach ($routes as $routesToCheck) {
             $initialCount = count($routesToCheck);
 
             static::assertGreaterThan(0, $initialCount, 'URIs must have at least one method!');
@@ -1022,7 +1022,7 @@ class ImplementationTest extends Base
         $this->expectExceptionCode($expectedStatus);
         $this->expectExceptionMessage($expectedContent);
 
-        $response = $dispatcher->handle($request, $prefix);
+        $dispatcher->handle($request, $prefix);
     }
 
     /**

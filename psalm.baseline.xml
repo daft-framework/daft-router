@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
+  <file src="src\HttpRouteGenerator\SingleRouteGeneratorFromArray.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>getIterator</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="src\HttpRouteGenerator\SingleRouteGeneratorGenerator.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>getIterator</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests\daft-router\ImplementationHttpRouteGeneratorTest.php">
+    <UnusedVariable occurrences="2">
+      <code>$v</code>
+      <code>$v</code>
+    </UnusedVariable>
+  </file>
   <file src="tests\daft-router\ImplementationTest.php">
     <ArgumentTypeCoercion occurrences="1">
       <code>'foo'</code>
@@ -7,5 +23,36 @@
     <UndefinedClass occurrences="1">
       <code>'foo'</code>
     </UndefinedClass>
+  </file>
+  <file src="tests\fast-route\Dispatcher\CharCountBasedTest.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>__construct</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests\fast-route\Dispatcher\GroupCountBasedTest.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>__construct</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests\fast-route\Dispatcher\GroupPosBasedTest.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>__construct</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests\fast-route\Dispatcher\MarkBasedTest.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>__construct</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests\fast-route\RouteCollectorTest.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>__construct</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="tests\fast-route\RouteParser\StdTest.php">
+    <PossiblyUnusedMethod occurrences="2">
+      <code>__construct</code>
+      <code>setExpectedException</code>
+    </PossiblyUnusedMethod>
   </file>
 </files>
