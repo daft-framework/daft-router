@@ -21,9 +21,13 @@ use SignpostMarv\DaftRouter\Router\Compiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
 use SignpostMarv\DaftRouter\Router\RouteCollector;
 use Symfony\Component\HttpFoundation\Request;
+use Throwable;
 
 class ImplementationTest extends Base
 {
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftSource>}, mixed, void>
+    */
     public function DataProviderGoodSources() : Generator
     {
         yield from [
@@ -36,6 +40,9 @@ class ImplementationTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:string, 3:string, 4:class-string<DaftRoute>, 5:string, 6:string}, mixed, void>
+    */
     public function DataProviderMiddlewareWithExceptions() : Generator
     {
         yield from [
@@ -60,6 +67,9 @@ class ImplementationTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftRoute>}, mixed, void>
+    */
     public function DataProviderRoutes() : Generator
     {
         /**
@@ -90,35 +100,18 @@ class ImplementationTest extends Base
                 ));
             }
 
-            /**
-            * @var string
-            */
             foreach (static::YieldRoutesFromSource($source) as $route) {
                 yield [$route];
             }
         }
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftRouteFilter>}, mixed, void>
+    */
     public function DataProviderMiddleware() : Generator
     {
-        /**
-        * @var string[]|null
-        */
         foreach ($this->DataProviderGoodSources() as $i => $args) {
-            if ( ! is_array($args)) {
-                throw new RuntimeException(sprintf(
-                    'Non-array result yielded from %s::DataProviderGoodSources() at index %s',
-                    static::class,
-                    $i
-                ));
-            } elseif (count($args) < 1) {
-                throw new RuntimeException(sprintf(
-                    'Empty result yielded from %s::DataProviderGoodSources() at index %s',
-                    static::class,
-                    $i
-                ));
-            }
-
             $source = array_shift($args);
 
             if ( ! is_string($source)) {
@@ -129,15 +122,15 @@ class ImplementationTest extends Base
                 ));
             }
 
-            /**
-            * @var string
-            */
             foreach (static::YieldMiddlewareFromSource($source) as $middleware) {
                 yield [$middleware];
             }
         }
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftRoute>, 1:string}, mixed, void>
+    */
     public function DataProviderRoutesWithNoArgs() : Generator
     {
         $parser = new Std();
@@ -180,6 +173,9 @@ class ImplementationTest extends Base
         }
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftRoute>, 1:array<string, string>, 2:array<string, mixed>, 3:string, 4:string, 5?:class-string<Throwable>, 6?:string}, mixed, void>
+    */
     public function DataProviderRoutesWithKnownArgs() : Generator
     {
         yield from [
@@ -222,16 +218,27 @@ class ImplementationTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftSource>[], 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
+    */
     public function DataProviderVerifyHandlerGood() : Generator
     {
         yield from $this->DataProviderVerifyHandler(true);
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftSource>[], 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
+    */
     public function DataProviderVerifyHandlerBad() : Generator
     {
         yield from $this->DataProviderVerifyHandler(false);
     }
 
+    /**
+    * @return string[][]
+    *
+    * @psalm-return array<int, array{0:string, 1:string, 2:string}>
+    */
     public function DataProviderUriReplacement() : array
     {
         return [
@@ -253,6 +260,11 @@ class ImplementationTest extends Base
         ];
     }
 
+    /**
+    * @return mixed[][]
+    *
+    * @psalm-return array<int, array{0:mixed}>
+    */
     public function DataProviderEnsureDispatcherIsCorrectlyTypedPublic() : array
     {
         return [
@@ -499,6 +511,7 @@ class ImplementationTest extends Base
 
     /**
     * @psalm-param class-string<DaftRoute> $className
+    * @psalm-param class-string<Throwable>|null $expectedExceptionClassWithArgs
     *
     * @param array<string, string> $args
     *
@@ -677,6 +690,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $className
+    *
     * @depends testCompilerVerifyAddMiddlewareThrowsException
     *
     * @dataProvider DataProviderGoodSources
@@ -689,9 +704,6 @@ class ImplementationTest extends Base
         $middlewares = [];
         $compiler = Fixtures\Compiler::ObtainCompiler();
 
-        /**
-        * @var string
-        */
         foreach (static::YieldMiddlewareFromSource($className) as $middleware) {
             $middlewares[] = $middleware;
             $compiler->AddMiddleware($middleware);
@@ -765,9 +777,9 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftSource> $middleware
-    * @psalm-param class-string<DaftSource> $presentWith
-    * @psalm-param class-string<DaftSource> $notPresentWith
+    * @psalm-param class-string<DaftRouteFilter> $middleware
+    * @psalm-param class-string<DaftRoute> $presentWith
+    * @psalm-param class-string<DaftRoute> $notPresentWith
     *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
@@ -852,6 +864,11 @@ class ImplementationTest extends Base
         */
         $route = array_pop($dispatchedPresent);
 
+        /**
+        * @var array
+        */
+        $dispatchedPresent = $dispatchedPresent;
+
         static::assertIsString(
             $route,
             'Last entry from a dispatcher should be a string'
@@ -866,7 +883,7 @@ class ImplementationTest extends Base
             'Last entry from a dispatcher should be %s',
             DaftRoute::class
         ));
-        static::assertIsArray($dispatchedPresent);
+
         static::assertCount(2, $dispatchedPresent);
         static::assertTrue(isset($dispatchedPresent[DaftRequestInterceptor::class]));
         static::assertTrue(isset($dispatchedPresent[DaftResponseModifier::class]));
@@ -1008,6 +1025,9 @@ class ImplementationTest extends Base
         $response = $dispatcher->handle($request, $prefix);
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:string, 1:string, 2:array, 3:class-string<Throwable>, 4:string|null, 5:int|null}, mixed, void>
+    */
     public function DataProviderRouteCollectorAddRouteThrowsException() : Generator
     {
         yield from [
@@ -1058,6 +1078,8 @@ class ImplementationTest extends Base
     }
 
     /**
+    * @psalm-param class-string<Throwable> $expectedExceptionClass
+    *
     * @dataProvider DataProviderRouteCollectorAddRouteThrowsException
     */
     public function testRouteCollectorAddRouteThrowsException(
@@ -1132,6 +1154,9 @@ class ImplementationTest extends Base
         );
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftSource>[], 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
+    */
     protected function DataProviderVerifyHandler(bool $good = true) : Generator
     {
         $argsSource = $good ? $this->DataProviderGoodHandler() : $this->DataProviderBadHandler();
@@ -1141,6 +1166,9 @@ class ImplementationTest extends Base
         foreach ($argsSource as $args) {
             list($sources, $prefix, $expectedStatus, $expectedContent, $headers, $uri) = $args;
 
+            /**
+            * @psalm-var array{0:class-string<DaftSource>[], 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}
+            */
             $yield = [
                 $sources,
                 $prefix,
@@ -1293,21 +1321,26 @@ class ImplementationTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return Generator<int, class-string<DaftRoute>, mixed, void>
+    */
     protected static function YieldRoutesFromSource(string $source) : Generator
     {
         if (is_a($source, DaftRoute::class, true)) {
             yield $source;
         }
         if (is_a($source, DaftSource::class, true)) {
-            /**
-            * @var string
-            */
             foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
                 yield from static::YieldRoutesFromSource($otherSource);
             }
         }
     }
 
+    /**
+    * @psalm-param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $source
+    *
+    * @psalm-return Generator<int, class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>, mixed, void>
+    */
     protected static function YieldMiddlewareFromSource(string $source) : Generator
     {
         if (
@@ -1317,9 +1350,6 @@ class ImplementationTest extends Base
             yield $source;
         }
         if (is_a($source, DaftSource::class, true)) {
-            /**
-            * @var string
-            */
             foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
                 yield from static::YieldMiddlewareFromSource($otherSource);
             }

@@ -11,9 +11,13 @@ use InvalidArgumentException;
 use RuntimeException;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\HttpRouteGenerator;
+use Throwable;
 
 class ImplementationHttpRouteGeneratorTest extends Base
 {
+    /**
+    * @psalm-return array<int, array{0:array<class-string<DaftRoute>, array<int, array<string, string>>>, 1:array<int, string>}>
+    */
     public function DataProviderForSingleRouteGeneratorGenerator() : array
     {
         return [
@@ -58,6 +62,9 @@ class ImplementationHttpRouteGeneratorTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return array<int, array{0:class-string<HttpRouteGenerator\HttpRouteGenerator>, 1:mixed[], 2:class-string<Throwable>, 3:string}>
+    */
     public function DataProviderSingleRouteGeneratorConstructorFailure() : array
     {
         return [
@@ -81,6 +88,9 @@ class ImplementationHttpRouteGeneratorTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return array<int, array{0:class-string<HttpRouteGenerator\HttpRouteGenerator>, 1:mixed[], 2:class-string<Throwable>, 3:string}>
+    */
     public function DataProviderSingleRouteGeneratorIteratorFailure() : array
     {
         return [
@@ -100,6 +110,9 @@ class ImplementationHttpRouteGeneratorTest extends Base
         ];
     }
 
+    /**
+    * @return array<int, array<int, array<int|string, int>>>
+    */
     public function DataProviderHttpRouteGeneratorToRoutesIteratorFailure() : array
     {
         return [
@@ -112,6 +125,9 @@ class ImplementationHttpRouteGeneratorTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftRoute>, 1:array<string, string>, 2:string}, mixed, void>
+    */
     final public function DataProviderForSingleRouteGeneratorGeneratorManual() : Generator
     {
         /**
@@ -135,7 +151,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
             static::assertIsArray($expected);
 
             /**
-            * @var array
+            * @var array<int, string>
             */
             $expected = $expected;
 
@@ -164,24 +180,13 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
             /**
             * @var array<string, array<int|string, scalar|array|object|null>>
+            *
+            * @psalm-var array<class-string<DaftRoute>, array<int, array<string, string>>>
             */
             $routeArgs = $routeArgs;
 
             foreach ($routeArgs as $route => $arrayOfArgs) {
                 foreach ($arrayOfArgs as $k => $args) {
-                    static::assertIsInt($k);
-                    static::assertIsArray($args);
-
-                    /**
-                    * @var int
-                    */
-                    $k = $k;
-
-                    /**
-                    * @var array
-                    */
-                    $args = $args;
-
                     yield [$route, $args, $expected[$i]];
 
                     ++$i;
@@ -216,7 +221,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
         $result = $route::DaftRouterHttpRoute($args);
 
-        static::assertIsString($result);
         static::assertSame($expected, $result);
     }
 
@@ -277,6 +281,9 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
+    * @psalm-param class-string<HttpRouteGenerator\HttpRouteGenerator> $implementation
+    * @psalm-param class-string<Throwable> $expectedException
+    *
     * @dataProvider DataProviderSingleRouteGeneratorConstructorFailure
     */
     public function testSingleRouteGeneratorConstructorFailure(
@@ -304,6 +311,9 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
+    * @psalm-param class-string<HttpRouteGenerator\HttpRouteGenerator> $implementation
+    * @psalm-param class-string<Throwable> $expectedException
+    *
     * @dataProvider DataProviderSingleRouteGeneratorIteratorFailure
     */
     public function testSingleRouteGeneratorIteratorFailure(

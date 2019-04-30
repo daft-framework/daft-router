@@ -40,6 +40,9 @@ class Login extends Home
         throw new InvalidArgumentException('Args are invalid!');
     }
 
+    /**
+    * @return array<string, string>
+    */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
     {
         return static::DaftRouterHttpRouteArgs($args, $method);

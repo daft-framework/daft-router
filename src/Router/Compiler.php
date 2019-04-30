@@ -92,7 +92,7 @@ class Compiler
     }
 
     /**
-    * @psalm-param class-string<DaftSource> ...$sources
+    * @psalm-param class-string<DaftSource>|class-string<DaftRoute>|class-string<DaftRouteFilter> ...$sources
     */
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
@@ -123,7 +123,7 @@ class Compiler
     }
 
     /**
-    * @psalm-param class-string<DaftSource> ...$sources
+    * @psalm-param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
     */
     final public function CompileDispatcherClosure(string ...$sources) : Closure
     {
@@ -139,7 +139,7 @@ class Compiler
     }
 
     /**
-    * @psalm-param class-string<DaftSource> ...$sources
+    * @psalm-param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
     */
     public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher
     {

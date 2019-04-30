@@ -12,6 +12,8 @@ interface DaftSource
     * Provides an array of DaftRoute, DaftRouteFilter, or DaftSource implementations.
     *
     * @return array<int, string>
+    *
+    * @psalm-return array<int, class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource>>
     */
     public static function DaftRouterRouteAndMiddlewareSources() : array;
 }
