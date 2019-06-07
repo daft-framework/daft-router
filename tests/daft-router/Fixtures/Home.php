@@ -13,9 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template ARGS as array<empty, empty>
-*
-* @template-extends DaftRoute<ARGS>
+* @template-implements DaftRoute<array<empty, empty>>
 */
 class Home implements DaftRoute
 {
