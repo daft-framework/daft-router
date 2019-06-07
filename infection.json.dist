@@ -12,7 +12,9 @@
         "@default": true,
         "Foreach_": {
             "ignore": [
+                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorFromArray::getIterator",
                 "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorGenerator::getIterator",
+                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\HttpRouteGeneratorToRoutes::getIterator",
                 "SignpostMarv\\DaftRouter\\Router\\RouteCollector::addRoute"
             ]
         },
@@ -20,6 +22,11 @@
             "ignore": [
                 "SignpostMarv\\DaftRouter\\DaftRouterZeroArgumentsTrait::DaftRouterHttpRouteArgs",
                 "SignpostMarv\\DaftRouter\\Router\\RouteCollector::addRoute"
+            ]
+        },
+        "ProtectedVisibility": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking"
             ]
         },
         "PublicVisibility": {
