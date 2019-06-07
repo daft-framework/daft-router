@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files>
-  <file src="src\HttpRouteGenerator\SingleRouteGeneratorFromArray.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>getIterator</code>
-    </PossiblyUnusedMethod>
-  </file>
+<files psalm-version="3.4.2@f327d75116a15e88431668c36b9613f1e3dd62a4">
   <file src="src\HttpRouteGenerator\SingleRouteGeneratorGenerator.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>getIterator</code>
-    </PossiblyUnusedMethod>
+    <MixedReturnTypeCoercion occurrences="1">
+      <code>Generator&lt;class-string&lt;\SignpostMarv\DaftRouter\DaftRoute&gt;, array&lt;string, string&gt;, mixed, void&gt;</code>
+    </MixedReturnTypeCoercion>
   </file>
-  <file src="tests\daft-router\ImplementationHttpRouteGeneratorTest.php">
-    <UnusedVariable occurrences="2">
-      <code>$v</code>
-      <code>$v</code>
-    </UnusedVariable>
+  <file src="tests\daft-router\Fixtures\Login.php">
+    <LessSpecificImplementedReturnType occurrences="1">
+      <code>array</code>
+    </LessSpecificImplementedReturnType>
   </file>
   <file src="tests\daft-router\ImplementationTest.php">
     <ArgumentTypeCoercion occurrences="1">

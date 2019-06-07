@@ -8,12 +8,22 @@ namespace SignpostMarv\DaftRouter;
 
 use InvalidArgumentException;
 
+/**
+* @template ARGS as array<empty, empty>
+* @template TYPED as array<empty, empty>
+*/
 trait DaftRouterZeroArgumentsTrait
 {
     use DaftRouterAutoMethodCheckingTrait;
 
     /**
+    * @param array<string, string> $args
+    *
+    * @psalm-param ARGS $args
+    *
     * @return array<string, string>
+    *
+    * @psalm-return TYPED
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
     {
@@ -21,7 +31,13 @@ trait DaftRouterZeroArgumentsTrait
     }
 
     /**
+    * @param array<string, string> $args
+    *
+    * @psalm-param ARGS $args
+    *
     * @return array<string, string>
+    *
+    * @psalm-return TYPED
     */
     public static function DaftRouterHttpRouteArgs(array $args, string $method) : array
     {

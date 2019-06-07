@@ -31,19 +31,9 @@ class HttpRouteGeneratorToRoutes implements Countable, IteratorAggregate
 
     public function getIterator() : Generator
     {
-        /**
-        * @var iterable<int|string, array<string, string>>
-        */
         $generator = $this->generator;
 
         foreach ($generator as $route => $args) {
-            if ( ! is_string($route) || ! is_a($route, DaftRoute::class, true)) {
-                throw new RuntimeException(
-                    'Keys yielded from generator must be implementations of ' .
-                    DaftRoute::class
-                );
-            }
-
             yield $route::DaftRouterHttpRoute($args);
         }
     }

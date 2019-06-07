@@ -13,6 +13,8 @@ abstract class SingleRouteGenerator implements HttpRouteGenerator
 {
     /**
     * @var string
+    *
+    * @psalm-var class-string<DaftRoute>
     */
     protected $route;
 

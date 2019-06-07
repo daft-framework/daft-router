@@ -8,8 +8,20 @@ namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
 
-class Login extends Home
+use SignpostMarv\DaftRouter\DaftRoute;
+use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+* @template ARGS as array{mode:'admin'}|array<empty, empty>
+*
+* @template-implements DaftRoute<ARGS, ARGS>
+*/
+class Login implements DaftRoute
 {
+    use DaftRouterAutoMethodCheckingTrait;
+
     public static function DaftRouterRoutes() : array
     {
         return [
@@ -18,33 +30,17 @@ class Login extends Home
         ];
     }
 
-    /**
-    * @return array<string, string>
-    */
     public static function DaftRouterHttpRouteArgs(array $args, string $method) : array
     {
         static::DaftRouterAutoMethodChecking($method);
 
-        $count = count($args);
-
-        if (0 === $count) {
-            return [];
-        } elseif (1 === $count) {
-            if ( ! isset($args['mode']) || 'admin' !== $args['mode']) {
-                throw new InvalidArgumentException('When mode is specified, mode must be "admin"');
-            }
-
-            return ['mode' => 'admin'];
-        }
-
-        throw new InvalidArgumentException('Args are invalid!');
+        return $args;
     }
 
-    /**
-    * @return array<string, string>
-    */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
     {
+        static::DaftRouterAutoMethodChecking($method);
+
         return static::DaftRouterHttpRouteArgs($args, $method);
     }
 
@@ -53,5 +49,10 @@ class Login extends Home
         $args = static::DaftRouterHttpRouteArgsTyped($args, $method);
 
         return ('admin' === ($args['mode'] ?? null)) ? '/admin/login' : '/login';
+    }
+
+    public static function DaftRouterHandleRequest(Request $request, array $args) : Response
+    {
+        return new Response('');
     }
 }

@@ -12,6 +12,9 @@ use SignpostMarv\DaftRouter\DaftRouterZeroArgumentsTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+* @template-implements DaftRoute<array<empty, empty>, array<empty, empty>>
+*/
 class AdminHome implements DaftRoute
 {
     use DaftRouterZeroArgumentsTrait;
@@ -28,9 +31,6 @@ class AdminHome implements DaftRoute
         ];
     }
 
-    /**
-    * @param array<string, string> $args
-    */
     public static function DaftRouterHttpRoute(array $args, string $method = 'GET') : string
     {
         $args = static::DaftRouterHttpRouteArgsTyped($args, $method);

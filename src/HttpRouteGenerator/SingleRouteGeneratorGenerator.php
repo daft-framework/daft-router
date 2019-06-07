@@ -31,6 +31,9 @@ class SingleRouteGeneratorGenerator implements HttpRouteGenerator
         return $out;
     }
 
+    /**
+    * @psalm-return Generator<class-string<\SignpostMarv\DaftRouter\DaftRoute>, array<string, string>, mixed, void>
+    */
     public function getIterator() : Generator
     {
         foreach ($this->generators as $generator) {

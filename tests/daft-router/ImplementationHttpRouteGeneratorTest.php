@@ -89,43 +89,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
-    * @psalm-return array<int, array{0:class-string<HttpRouteGenerator\HttpRouteGenerator>, 1:mixed[], 2:class-string<Throwable>, 3:string}>
-    */
-    public function DataProviderSingleRouteGeneratorIteratorFailure() : array
-    {
-        return [
-            [
-                HttpRouteGenerator\SingleRouteGeneratorFromArray::class,
-                [
-                    Fixtures\AdminHome::class,
-                    [1],
-                ],
-                InvalidArgumentException::class,
-                (
-                    'Argument 2 passed to ' .
-                    HttpRouteGenerator\SingleRouteGeneratorFromArray::class .
-                    '::__construct() had a non-array value at index 0'
-                ),
-            ],
-        ];
-    }
-
-    /**
-    * @return array<int, array<int, array<int|string, int>>>
-    */
-    public function DataProviderHttpRouteGeneratorToRoutesIteratorFailure() : array
-    {
-        return [
-            [
-                [1 => 2],
-            ],
-            [
-                ['three' => 4],
-            ],
-        ];
-    }
-
-    /**
     * @psalm-return Generator<int, array{0:class-string<DaftRoute>, 1:array<string, string>, 2:string}, mixed, void>
     */
     final public function DataProviderForSingleRouteGeneratorGeneratorManual() : Generator
@@ -227,6 +190,8 @@ class ImplementationHttpRouteGeneratorTest extends Base
     /**
     * @param array<string, array> $singleRouteGeneratorFromArrayArgs
     *
+    * @psalm-param array<class-string<DaftRoute>, array<int, array<string, string>>> $singleRouteGeneratorFromArrayArgs
+    *
     * @dataProvider DataProviderForSingleRouteGeneratorGenerator
     */
     public function testHttpRouteGeneratorAutomatic(
@@ -237,18 +202,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
         foreach ($singleRouteGeneratorFromArrayArgs as $route => $arrayOfArgs) {
             $initialCount = count($arrayOfArgs, COUNT_RECURSIVE);
-
-            /**
-            * @var array<int, array>
-            */
-            $arrayOfArgs = array_filter(
-                array_filter(
-                    $arrayOfArgs,
-                    'is_array'
-                ),
-                'is_int',
-                ARRAY_FILTER_USE_KEY
-            );
 
             $newCount = count($arrayOfArgs, COUNT_RECURSIVE);
 
@@ -306,72 +259,5 @@ class ImplementationHttpRouteGeneratorTest extends Base
         static::expectExceptionMessage($expectedExceptionMessage);
 
         new $implementation(...$ctorArgs);
-    }
-
-    /**
-    * @psalm-param class-string<HttpRouteGenerator\HttpRouteGenerator> $implementation
-    * @psalm-param class-string<Throwable> $expectedException
-    *
-    * @dataProvider DataProviderSingleRouteGeneratorIteratorFailure
-    */
-    public function testSingleRouteGeneratorIteratorFailure(
-        string $implementation,
-        array $ctorArgs,
-        string $expectedException,
-        string $expectedExceptionMessage
-    ) : void {
-        if ( ! is_a($implementation, HttpRouteGenerator\SingleRouteGenerator::class, true)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                ' must be an implementation of ' .
-                HttpRouteGenerator\SingleRouteGenerator::class .
-                ', ' .
-                $implementation .
-                ' given!'
-            );
-        }
-
-        /**
-        * @var iterable<int, string>
-        */
-        $obj = new $implementation(...$ctorArgs);
-
-        static::expectException($expectedException);
-        static::expectExceptionMessage($expectedExceptionMessage);
-
-        foreach ($obj as $v) {
-        }
-    }
-
-    /**
-    * @dataProvider DataProviderHttpRouteGeneratorToRoutesIteratorFailure
-    */
-    public function testHttpRouteGeneratorToRoutesIteratorFailure(array $badsource) : void
-    {
-        $bad = new Fixtures\HttpRouteGenerator\BadHttpRouteGeneratorToRoutes(
-            new HttpRouteGenerator\SingleRouteGeneratorFromArray(
-                Fixtures\AdminHome::class,
-                [
-                    [],
-                    [],
-                ]
-            )
-        );
-        $bad->ChangeToBadGenerator($badsource);
-
-        static::expectException(RuntimeException::class);
-        static::expectExceptionMessage(
-            'Keys yielded from generator must be implementations of ' .
-            DaftRoute::class
-        );
-
-        /**
-        * @var iterable<int, string>
-        */
-        $bad = $bad;
-
-        foreach ($bad as $v) {
-        }
     }
 }
