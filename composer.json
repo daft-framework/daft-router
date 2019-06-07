@@ -38,6 +38,9 @@
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
         ]
     },
+    "suggest": {
+        "vimeo/psalm": "Useful for static analysis to reduce runtime type checks etc."
+    },
     "require": {
         "php": "^7.1,>=7.1.12",
         "ext-mbstring": "*",
