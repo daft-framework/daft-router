@@ -570,22 +570,6 @@ class ImplementationTest extends Base
         $compiler->AddRoute('stdClass');
     }
 
-    public function testCompilerVerifyAddRouteThrowsExceptionWithHandler() : void
-    {
-        $collector = new RouteCollector(new Std(), new GroupCountBased());
-
-        $collector->addRoute(['GET'], '/', [Fixtures\Home::class]);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Argument 3 passed to %s::%s must be an array!',
-            RouteCollector::class,
-            'addRoute'
-        ));
-
-        $collector->addRoute('GET', '', '');
-    }
-
     /**
     * @depends testCompilerVerifyAddRouteThrowsException
     *
@@ -1023,86 +1007,6 @@ class ImplementationTest extends Base
         $this->expectExceptionMessage($expectedContent);
 
         $dispatcher->handle($request, $prefix);
-    }
-
-    /**
-    * @psalm-return Generator<int, array{0:string, 1:string, 2:array, 3:class-string<Throwable>, 4:string|null, 5:int|null}, mixed, void>
-    */
-    public function DataProviderRouteCollectorAddRouteThrowsException() : Generator
-    {
-        yield from [
-            [
-                'GET',
-                '/',
-                [],
-                InvalidArgumentException::class,
-                sprintf(
-                    'Cannot call %s::%s without a trailing implementation of %s',
-                    RouteCollector::class,
-                    'addRouteStrict',
-                    DaftRoute::class
-                ),
-                null,
-            ],
-            [
-                'GET',
-                '/',
-                [
-                    InvalidArgumentException::class,
-                ],
-                InvalidArgumentException::class,
-                sprintf(
-                    'Cannot call %s::%s without a trailing implementation of %s',
-                    RouteCollector::class,
-                    'addRouteStrict',
-                    DaftRoute::class
-                ),
-                null,
-            ],
-            [
-                'GET',
-                '/',
-                [
-                    Fixtures\NotLoggedIn::class,
-                ],
-                InvalidArgumentException::class,
-                sprintf(
-                    'Cannot call %s::%s without a trailing implementation of %s',
-                    RouteCollector::class,
-                    'addRouteStrict',
-                    DaftRoute::class
-                ),
-                null,
-            ],
-        ];
-    }
-
-    /**
-    * @psalm-param class-string<Throwable> $expectedExceptionClass
-    *
-    * @dataProvider DataProviderRouteCollectorAddRouteThrowsException
-    */
-    public function testRouteCollectorAddRouteThrowsException(
-        string $httpMethod,
-        string $route,
-        array $handler,
-        string $expectedExceptionClass,
-        ? string $expectedExceptionMessage,
-        ? int $expectedExceptionCode
-    ) : void {
-        $collector = new RouteCollector(new Std(), new GroupCountBased());
-
-        $this->expectException($expectedExceptionClass);
-
-        if ( ! is_null($expectedExceptionMessage)) {
-            $this->expectExceptionMessage($expectedExceptionMessage);
-        }
-
-        if ( ! is_null($expectedExceptionCode)) {
-            $this->expectExceptionCode($expectedExceptionCode);
-        }
-
-        $collector->addRoute($httpMethod, $route, $handler);
     }
 
     protected static function ReqeuestFromArgs(array $requestArgs) : Request

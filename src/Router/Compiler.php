@@ -233,6 +233,8 @@ class Compiler
 
     /**
     * @return array<string, array<int, string>>
+    *
+    * @psam-return array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
     */
     private function MiddlewareNotExcludedFromUri(string $uri) : array
     {
@@ -264,9 +266,14 @@ class Compiler
 
     /**
     * @return array<string, array<string, array>>
+    *
+    * @psalm-return array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
     */
     private function CompileDispatcherArray() : array
     {
+        /**
+        * @psalm-var array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
+        */
         $out = [];
 
         foreach ($this->routes as $route) {
@@ -277,9 +284,14 @@ class Compiler
 
             foreach ($routes as $uri => $methods) {
                 foreach ($methods as $method) {
-                    $out[$method][$uri] = $this->MiddlewareNotExcludedFromUri($uri);
+                    /**
+                    * @psalm-var array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
+                    */
+                    $append = $this->MiddlewareNotExcludedFromUri($uri);
 
-                    $out[$method][$uri][] = $route;
+                    $append[0] = $route;
+
+                    $out[$method][$uri] = $append;
                 }
             }
         }

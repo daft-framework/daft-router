@@ -5,6 +5,11 @@
       <code>Generator&lt;class-string&lt;\SignpostMarv\DaftRouter\DaftRoute&gt;, array&lt;string, string&gt;, mixed, void&gt;</code>
     </MixedReturnTypeCoercion>
   </file>
+  <file src="src\Router\RouteCollector.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$handler</code>
+    </MoreSpecificImplementedParamType>
+  </file>
   <file src="tests\daft-router\Fixtures\Login.php">
     <LessSpecificImplementedReturnType occurrences="1">
       <code>array</code>

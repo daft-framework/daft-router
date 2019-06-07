@@ -17,16 +17,7 @@ trait DaftRouterAutoMethodCheckingTrait
 
     protected static function DaftRouterAutoMethodChecking(string $method) : void
     {
-        $methods = [];
-
-        /**
-        * @var array<string, array<int, string>>
-        */
-        $routes = static::DaftRouterRoutes();
-
-        foreach ($routes as $routeMethods) {
-            $methods = array_merge($methods, $routeMethods);
-        }
+        $methods = array_merge([], ...array_values(static::DaftRouterRoutes()));
 
         if ( ! in_array($method, $methods, true)) {
             throw new InvalidArgumentException('Specified method not supported!');

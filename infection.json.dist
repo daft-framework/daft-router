@@ -10,6 +10,11 @@
     },
     "mutators": {
         "@default": true,
+        "DecrementInteger": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherArray"
+            ]
+        },
         "Foreach_": {
             "ignore": [
                 "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorFromArray::getIterator",
@@ -18,10 +23,16 @@
                 "SignpostMarv\\DaftRouter\\Router\\RouteCollector::addRoute"
             ]
         },
+        "MBString": false,
         "MethodCallRemoval": {
             "ignore": [
                 "SignpostMarv\\DaftRouter\\DaftRouterZeroArgumentsTrait::DaftRouterHttpRouteArgs",
                 "SignpostMarv\\DaftRouter\\Router\\RouteCollector::addRoute"
+            ]
+        },
+        "OneZeroInteger": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherArray"
             ]
         },
         "ProtectedVisibility": {
