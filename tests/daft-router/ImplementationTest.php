@@ -127,51 +127,6 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftRoute>, 1:string}, mixed, void>
-    */
-    public function DataProviderRoutesWithNoArgs() : Generator
-    {
-        $parser = new Std();
-        /**
-        * @psalm-var iterable<array{0:class-string<DaftRoute>}> $argsSource
-        */
-        $argsSource = $this->DataProviderRoutes();
-
-        foreach ($argsSource as $args) {
-            list($route) = $args;
-
-            if ( ! is_a($route, DaftRoute::class, true)) {
-                static::assertTrue(
-                    is_a($route, DaftRoute::class, true),
-                    sprintf(
-                        'Source must be an implementation of %s, "%s" given.',
-                        DaftRoute::class,
-                        $route
-                    )
-                );
-            }
-
-            /**
-            * @var string
-            * @var array<int, string> $uris
-            */
-            foreach ($route::DaftRouterRoutes() as $method => $uris) {
-                $hasNoArgs = true;
-                foreach ($uris as $uri) {
-                    if (count($parser->parse($uri)) > 1) {
-                        $hasNoArgs = false;
-                        break;
-                    }
-                }
-
-                if ($hasNoArgs) {
-                    yield [$route, $method];
-                }
-            }
-        }
-    }
-
-    /**
     * @psalm-return Generator<int, array{0:class-string<DaftRoute>, 1:array<string, string>, 2:array<string, mixed>, 3:string, 4:string, 5?:class-string<Throwable>, 6?:string}, mixed, void>
     */
     public function DataProviderRoutesWithKnownArgs() : Generator
@@ -481,30 +436,6 @@ class ImplementationTest extends Base
                 'DaftRoute::DaftRouterRoutes() must be of the form array<string, array<int, string>>'
             );
         }
-    }
-
-    /**
-    * @psalm-param class-string<DaftRoute> $className
-    *
-    * @depends testRoutes
-    *
-    * @dataProvider DataProviderRoutesWithNoArgs
-    */
-    public function testRoutesWithNoArgs(string $className, string $method) : void
-    {
-        if ( ! is_a($className, DaftRoute::class, true)) {
-            static::assertTrue(
-                is_a($className, DaftRoute::class, true),
-                sprintf(
-                    'Source must be an implementation of %s, "%s" given.',
-                    DaftRoute::class,
-                    $className
-                )
-            );
-        }
-
-        $this->expectException(InvalidArgumentException::class);
-        $className::DaftRouterHttpRoute(['foo' => 'bar'], $method);
     }
 
     /**

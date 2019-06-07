@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="3.4.2@f327d75116a15e88431668c36b9613f1e3dd62a4">
+  <file src="src\DaftRouterZeroArgumentsTrait.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$args</code>
+    </MoreSpecificImplementedParamType>
+  </file>
   <file src="src\HttpRouteGenerator\SingleRouteGeneratorGenerator.php">
     <MixedReturnTypeCoercion occurrences="1">
-      <code>Generator&lt;class-string&lt;\SignpostMarv\DaftRouter\DaftRoute&gt;, array&lt;string, string&gt;, mixed, void&gt;</code>
+      <code>Generator&lt;class-string&lt;\SignpostMarv\DaftRouter\DaftRoute&gt;, array&lt;string, scalar&gt;, mixed, void&gt;</code>
     </MixedReturnTypeCoercion>
   </file>
   <file src="src\Router\RouteCollector.php">
@@ -10,12 +15,12 @@
       <code>$handler</code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="tests\daft-router\Fixtures\Home.php">
-    <InvalidDocblock occurrences="1">
-      <code>class Home implements DaftRoute</code>
-    </InvalidDocblock>
-  </file>
   <file src="tests\daft-router\Fixtures\Login.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$args</code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="tests\daft-router\Fixtures\Profile.php">
     <LessSpecificImplementedReturnType occurrences="1">
       <code>array</code>
     </LessSpecificImplementedReturnType>

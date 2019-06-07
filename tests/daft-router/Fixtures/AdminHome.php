@@ -13,12 +13,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template-implements DaftRoute<array<empty, empty>, array<empty, empty>>
+* @template T as array<empty, empty>
+*
+* @template-implements DaftRoute<T>
 */
 class AdminHome implements DaftRoute
 {
     use DaftRouterZeroArgumentsTrait;
 
+    /**
+    * @psalm-param T $args
+    */
     public static function DaftRouterHandleRequest(Request $request, array $args) : Response
     {
         return new Response('');
@@ -31,10 +36,11 @@ class AdminHome implements DaftRoute
         ];
     }
 
+    /**
+    * @psalm-param T $args
+    */
     public static function DaftRouterHttpRoute(array $args, string $method = 'GET') : string
     {
-        $args = static::DaftRouterHttpRouteArgsTyped($args, $method);
-
         return '/admin';
     }
 }

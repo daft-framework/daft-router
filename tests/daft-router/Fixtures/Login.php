@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template ARGS as array{mode:'admin'}|array<empty, empty>
+* @template ARGS as array{mode?:'admin'}
 *
-* @template-implements DaftRoute<ARGS, ARGS>
+* @template-implements DaftRoute<ARGS>
 */
 class Login implements DaftRoute
 {
@@ -29,24 +29,24 @@ class Login implements DaftRoute
         ];
     }
 
-    public static function DaftRouterHttpRouteArgs(array $args, string $method) : array
+    /**
+    * @param array<string, string> $args
+    *
+    * @psalm-param ARGS $args
+    *
+    * @return array<string, string>
+    *
+    * @psalm-return ARGS
+    */
+    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
     {
         static::DaftRouterAutoMethodChecking($method);
 
         return $args;
     }
 
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
-    {
-        static::DaftRouterAutoMethodChecking($method);
-
-        return static::DaftRouterHttpRouteArgs($args, $method);
-    }
-
     public static function DaftRouterHttpRoute(array $args, string $method = 'GET') : string
     {
-        $args = static::DaftRouterHttpRouteArgsTyped($args, $method);
-
         return ('admin' === ($args['mode'] ?? null)) ? '/admin/login' : '/login';
     }
 

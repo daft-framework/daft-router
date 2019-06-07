@@ -52,14 +52,17 @@ class Dispatcher extends Base
 
         $routeArgs = [];
 
-        if (isset($routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS])) {
-            $routeArgs = $routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS];
-        }
-
         /**
-        * @psalm-var \SignpostMarv\DaftRouter\DaftRoute
+        * @psalm-var class-string<\SignpostMarv\DaftRouter\DaftRoute>
         */
         $route = array_pop($routeInfo[1]) ?: '';
+
+        if (isset($routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS])) {
+            $routeArgs = $route::DaftRouterHttpRouteArgsTyped(
+                $routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS],
+                $request->getMethod()
+            );
+        }
 
         /**
         * @psalm-var array<int, class-string<DaftRequestInterceptor>>

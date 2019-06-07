@@ -15,13 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 /**
 * @template ARGS as array<empty, empty>
 *
-* @template-extends DaftRoute<ARGS, ARGS>
+* @template-extends DaftRoute<ARGS>
 */
 class Home implements DaftRoute
 {
-    /**
-    * @use DaftRouterZeroArgumentsTrait<ARGS, ARGS>
-    */
     use DaftRouterZeroArgumentsTrait;
 
     public static function DaftRouterHandleRequest(Request $request, array $args) : Response

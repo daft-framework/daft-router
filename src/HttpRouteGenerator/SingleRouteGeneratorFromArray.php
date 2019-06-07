@@ -11,12 +11,12 @@ use Generator;
 class SingleRouteGeneratorFromArray extends SingleRouteGenerator
 {
     /**
-    * @var array<int, array<string, string>>
+    * @var array<int, array<string, scalar>>
     */
     protected $arrayOfArgs = [];
 
     /**
-    * @param array<int, array<string, string>> $arrayOfArgs
+    * @param array<int, array<string, scalar>> $arrayOfArgs
     */
     public function __construct(string $route, array $arrayOfArgs)
     {
@@ -31,7 +31,7 @@ class SingleRouteGeneratorFromArray extends SingleRouteGenerator
     }
 
     /**
-    * @psalm-return Generator<class-string<\SignpostMarv\DaftRouter\DaftRoute>, array<string, string>, mixed, void>
+    * @psalm-return Generator<class-string<\SignpostMarv\DaftRouter\DaftRoute>, array<string, scalar>, mixed, void>
     */
     public function getIterator() : Generator
     {
