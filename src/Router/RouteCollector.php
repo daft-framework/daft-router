@@ -7,10 +7,9 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use FastRoute\RouteCollector as Base;
-use InvalidArgumentException;
-use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
+use SignpostMarv\DaftRouter\DaftRoute;
 
 final class RouteCollector extends Base
 {

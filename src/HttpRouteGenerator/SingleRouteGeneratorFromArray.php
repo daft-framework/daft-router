@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\HttpRouteGenerator;
 
 use Generator;
-use InvalidArgumentException;
 
 class SingleRouteGeneratorFromArray extends SingleRouteGenerator
 {

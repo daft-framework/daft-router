@@ -8,7 +8,6 @@ namespace SignpostMarv\DaftRouter\Tests;
 
 use Generator;
 use InvalidArgumentException;
-use RuntimeException;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\HttpRouteGenerator;
 use Throwable;

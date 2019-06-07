@@ -9,8 +9,6 @@ namespace SignpostMarv\DaftRouter\HttpRouteGenerator;
 use Countable;
 use Generator;
 use IteratorAggregate;
-use RuntimeException;
-use SignpostMarv\DaftRouter\DaftRoute;
 
 class HttpRouteGeneratorToRoutes implements Countable, IteratorAggregate
 {

@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter\Tests;
 
-use FastRoute\DataGenerator\GroupCountBased;
 use FastRoute\RouteParser\Std;
 use Generator;
 use InvalidArgumentException;
@@ -19,7 +18,6 @@ use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
-use SignpostMarv\DaftRouter\Router\RouteCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
