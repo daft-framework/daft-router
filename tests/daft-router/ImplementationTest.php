@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter\Tests;
 
-use FastRoute\RouteParser\Std;
 use Generator;
 use InvalidArgumentException;
 use RuntimeException;
