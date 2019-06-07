@@ -23,15 +23,7 @@ final class RouteCollector extends Base
     public function addRoute($httpMethod, $route, $handler) : void
     {
         foreach ((array) $httpMethod as $method) {
-            $this->addRouteStrict($method, $route, $handler);
-        }
-    }
-
-    /**
-    * @psalm-param array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>} $handler
-    */
-    private function addRouteStrict(string $method, string $route, array $handler) : void
-    {
             parent::addRoute($method, $route, $handler);
+        }
     }
 }
