@@ -22,15 +22,9 @@ final class RouteCollector extends Base
     */
     public function addRoute($httpMethod, $route, $handler) : void
     {
-        if (is_array($httpMethod)) {
-            foreach ($httpMethod as $method) {
+        foreach ((array) $httpMethod as $method) {
                 $this->addRouteStrict($method, $route, $handler);
             }
-
-            return;
-        }
-
-        $this->addRouteStrict($httpMethod, $route, $handler);
     }
 
     /**
