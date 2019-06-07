@@ -10,6 +10,11 @@
       <code>$handler</code>
     </MoreSpecificImplementedParamType>
   </file>
+  <file src="tests\daft-router\Fixtures\Home.php">
+    <InvalidDocblock occurrences="1">
+      <code>class Home implements DaftRoute</code>
+    </InvalidDocblock>
+  </file>
   <file src="tests\daft-router\Fixtures\Login.php">
     <LessSpecificImplementedReturnType occurrences="1">
       <code>array</code>
