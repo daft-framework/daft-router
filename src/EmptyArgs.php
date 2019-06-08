@@ -20,11 +20,11 @@ final class EmptyArgs extends TypedArgs
     /**
     * @param T $args
     */
-    final public function __construct(array $args = [])
+    public function __construct(array $args = [])
     {
     }
 
-    final public function __get(string $k)
+    public function __get(string $k)
     {
         throw new BadMethodCallException(
             __METHOD__ .
@@ -38,12 +38,12 @@ final class EmptyArgs extends TypedArgs
         );
     }
 
-    final public function count() : int
+    public function count() : int
     {
         return self::COUNT_EMPTY;
     }
 
-    final public function toArray() : array
+    public function toArray() : array
     {
         return [];
     }

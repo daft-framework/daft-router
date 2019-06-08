@@ -8,8 +8,6 @@ namespace SignpostMarv\DaftRouter;
 
 use BadMethodCallException;
 use Countable;
-use Generator;
-use IteratorAggregate;
 
 /**
 * @template T as array<string, scalar>

@@ -7,11 +7,9 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Tests;
 
 use Generator;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase as Base;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\HttpRouteGenerator;
-use Throwable;
 
 class ImplementationHttpRouteGeneratorTest extends Base
 {
@@ -134,7 +132,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
     /**
     * @param class-string<DaftRoute> $route
-    *
     * @param array<string, string> $args
     *
     * @dataProvider DataProviderForSingleRouteGeneratorGeneratorManual

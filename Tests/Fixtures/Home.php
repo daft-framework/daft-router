@@ -21,7 +21,6 @@ class Home implements DaftRoute
 {
     use DaftRouterZeroArgumentsTrait;
 
-
     public static function DaftRouterHandleRequest(Request $request, TypedArgs $args) : Response
     {
         return new Response('');

@@ -20,7 +20,6 @@ use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
-use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
@@ -434,7 +433,6 @@ class ImplementationTest extends Base
 
     /**
     * @param class-string<DaftRoute> $className
-    *
     * @param array<string, string> $args
     *
     * @depends testRoutes

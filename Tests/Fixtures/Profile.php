@@ -49,8 +49,7 @@ class Profile implements DaftRoute
     {
         static::DaftRouterAutoMethodChecking($method);
 
-        if ($args instanceof IntIdStringSlugArgs)
-        {
+        if ($args instanceof IntIdStringSlugArgs) {
             return
                 '/profile/' .
                 rawurlencode((string) $args->id) .
