@@ -937,6 +937,14 @@ class ImplementationTest extends Base
         $dispatcher->handle($request, $prefix);
     }
 
+    public function testDaftRouterAutoMethodCheckingTraitFails() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Specified method not supported!');
+
+        Fixtures\Profile::DaftRouterHttpRoute(['id' => 1], 'POST');
+    }
+
     protected static function ReqeuestFromArgs(array $requestArgs) : Request
     {
         $uri = (string) $requestArgs[0];

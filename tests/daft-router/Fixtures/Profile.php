@@ -39,6 +39,8 @@ class Profile implements DaftRoute
 
     public static function DaftRouterHttpRoute(array $args, string $method = 'GET') : string
     {
+        static::DaftRouterAutoMethodChecking($method);
+
         $slug = $args['slug'] ?? null;
 
         if (is_string($slug)) {
