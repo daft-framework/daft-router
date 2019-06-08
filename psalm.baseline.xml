@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.4.2@f327d75116a15e88431668c36b9613f1e3dd62a4">
+<files psalm-version="dev-master@395057c6dfc9798bbe70f4cff74b64dc26dc6da6">
+  <file src="Tests\Fixtures\Login.php">
+    <InvalidTemplateParam occurrences="1">
+      <code>DaftRoute</code>
+    </InvalidTemplateParam>
+  </file>
   <file src="src\DaftRouterZeroArgumentsTrait.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$args</code>
     </MoreSpecificImplementedParamType>
+  </file>
+  <file src="src\EmptyArgs.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$k</code>
+    </MoreSpecificImplementedParamType>
+    <PossiblyUnusedParam occurrences="1">
+      <code>$args</code>
+    </PossiblyUnusedParam>
   </file>
   <file src="src\HttpRouteGenerator\SingleRouteGeneratorGenerator.php">
     <MixedReturnTypeCoercion occurrences="1">
@@ -15,53 +28,9 @@
       <code>$handler</code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="tests\daft-router\Fixtures\Login.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$args</code>
-    </MoreSpecificImplementedParamType>
-  </file>
-  <file src="tests\daft-router\Fixtures\Profile.php">
-    <LessSpecificImplementedReturnType occurrences="1">
-      <code>array</code>
-    </LessSpecificImplementedReturnType>
-  </file>
-  <file src="tests\daft-router\ImplementationTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'foo'</code>
-    </ArgumentTypeCoercion>
-    <UndefinedClass occurrences="1">
-      <code>'foo'</code>
-    </UndefinedClass>
-  </file>
-  <file src="tests\fast-route\Dispatcher\CharCountBasedTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>__construct</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="tests\fast-route\Dispatcher\GroupCountBasedTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>__construct</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="tests\fast-route\Dispatcher\GroupPosBasedTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>__construct</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="tests\fast-route\Dispatcher\MarkBasedTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>__construct</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="tests\fast-route\RouteCollectorTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>__construct</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="tests\fast-route\RouteParser\StdTest.php">
-    <PossiblyUnusedMethod occurrences="2">
-      <code>__construct</code>
-      <code>setExpectedException</code>
-    </PossiblyUnusedMethod>
+  <file src="vendor\phpunit\phpunit\src\Framework\TestCase.php">
+    <MissingConstructor occurrences="1">
+      <code>$backupGlobals</code>
+    </MissingConstructor>
   </file>
 </files>

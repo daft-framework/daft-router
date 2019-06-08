@@ -16,6 +16,7 @@ class SingleRouteGeneratorFromArray extends SingleRouteGenerator
     protected $arrayOfArgs = [];
 
     /**
+    * @param class-string<\SignpostMarv\DaftRouter\DaftRoute> $route
     * @param array<int, array<string, scalar>> $arrayOfArgs
     */
     public function __construct(string $route, array $arrayOfArgs)

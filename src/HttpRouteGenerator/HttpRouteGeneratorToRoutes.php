@@ -32,7 +32,7 @@ class HttpRouteGeneratorToRoutes implements Countable, IteratorAggregate
         $generator = $this->generator;
 
         foreach ($generator as $route => $args) {
-            yield $route::DaftRouterHttpRoute($args);
+            yield $route::DaftRouterHttpRoute($route::DaftRouterHttpRouteArgsTyped($args, 'GET'));
         }
     }
 }

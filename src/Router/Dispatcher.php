@@ -9,7 +9,9 @@ namespace SignpostMarv\DaftRouter\Router;
 use FastRoute\Dispatcher\GroupCountBased as Base;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
+use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\ResponseException;
+use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -50,7 +52,7 @@ class Dispatcher extends Base
         */
         $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
 
-        $routeArgs = [];
+        $routeArgs = new EmptyArgs();
 
         /**
         * @psalm-var class-string<\SignpostMarv\DaftRouter\DaftRoute>

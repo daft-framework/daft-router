@@ -6,17 +6,21 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter\Tests;
 
+use BadMethodCallException;
 use Generator;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase as Base;
 use RuntimeException;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouteFilter;
 use SignpostMarv\DaftRouter\DaftSource;
+use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
+use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
@@ -157,15 +161,6 @@ class ImplementationTest extends Base
                 [],
                 'GET',
                 '/',
-            ],
-            [
-                Fixtures\Home::class,
-                [],
-                [],
-                'GET',
-                '/',
-                InvalidArgumentException::class,
-                'This route takes no arguments!',
             ],
         ];
     }
@@ -438,8 +433,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftRoute> $className
-    * @psalm-param class-string<Throwable>|null $expectedExceptionClassWithArgs
+    * @param class-string<DaftRoute> $className
     *
     * @param array<string, string> $args
     *
@@ -452,33 +446,15 @@ class ImplementationTest extends Base
         array $args,
         array $typedArgs,
         string $method,
-        string $expectedRouteResult,
-        string $expectedExceptionClassWithArgs = null,
-        string $expectedExceptionMessageWithArgs = null
+        string $expectedRouteResult
     ) : void {
-        if ( ! is_a($className, DaftRoute::class, true)) {
-            static::assertTrue(
-                is_a($className, DaftRoute::class, true),
-                sprintf(
-                    'Source must be an implementation of %s, "%s" given.',
-                    DaftRoute::class,
-                    $className
-                )
-            );
-        }
+        $typed_args_object = $className::DaftRouterHttpRouteArgsTyped($args, $method);
 
-        static::assertSame($typedArgs, $className::DaftRouterHttpRouteArgsTyped($args, $method));
-        static::assertSame($expectedRouteResult, $className::DaftRouterHttpRoute($args, $method));
-
-        if (
-            is_string($expectedExceptionClassWithArgs) &&
-            is_string($expectedExceptionMessageWithArgs)
-        ) {
-            static::expectException($expectedExceptionClassWithArgs);
-            static::expectExceptionMessage($expectedExceptionMessageWithArgs);
-
-            $className::DaftRouterHttpRouteArgsTyped(['foo' => 'bar'], $method);
-        }
+        static::assertSame($typedArgs, $typed_args_object->toArray());
+        static::assertSame(
+            $expectedRouteResult,
+            $className::DaftRouterHttpRoute($typed_args_object, $method)
+        );
     }
 
     public function testCompilerVerifyAddRouteThrowsException() : void
@@ -673,19 +649,6 @@ class ImplementationTest extends Base
             $compiler->ObtainMiddleware(),
             'Middleware must be identical after adding a source more than once!'
         );
-    }
-
-    public function testNudgeCompilerWithSourcesBad() : void
-    {
-        $compiler = Fixtures\Compiler::ObtainCompiler();
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage(
-            Fixtures\BadStaticMethodCollector::class .
-            ' yielded a non-string value!'
-        );
-
-        $compiler->NudgeCompilerWithSourcesBad('foo', 'bar', 'baz');
     }
 
     /**
@@ -942,7 +905,41 @@ class ImplementationTest extends Base
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Specified method not supported!');
 
-        Fixtures\Profile::DaftRouterHttpRoute(['id' => 1], 'POST');
+        Fixtures\Profile::DaftRouterHttpRoute(new Fixtures\IntIdArgs(['id' => '1']), 'POST');
+    }
+
+    public function testImmutabilityOfTypedArgs() : void
+    {
+        $object = new Fixtures\IntIdArgs(['id' => '1']);
+
+        static::assertSame(1, $object->id);
+
+        static::expectException(BadMethodCallException::class);
+        static::expectExceptionMessage(
+            Fixtures\IntIdArgs::class .
+            '::$id is not writeable, cannot be set to 2'
+        );
+
+        $object->id = 2;
+    }
+
+    public function testImmutabilityOfEmptyArgs() : void
+    {
+        $object = new EmptyArgs();
+
+        static::assertCount(0, $object);
+
+        static::expectException(BadMethodCallException::class);
+        static::expectExceptionMessage(
+            EmptyArgs::class .
+            '::__get() cannot be called on ' .
+            EmptyArgs::class .
+            ' with foo, ' .
+            EmptyArgs::class .
+            ' has no arguments!'
+        );
+
+        $object->foo;
     }
 
     protected static function ReqeuestFromArgs(array $requestArgs) : Request

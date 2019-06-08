@@ -29,18 +29,6 @@ class Compiler extends Base
         );
     }
 
-    /**
-    * @psalm-param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
-    */
-    public function NudgeCompilerWithSourcesBad(string ...$sources) : void
-    {
-        $this->collector = new BadStaticMethodCollector(
-            Base::CollectorConfig,
-            Base::CollectorInterfacesConfig
-        );
-        $this->NudgeCompilerWithSources(...$sources);
-    }
-
     public static function ObtainCompiler() : self
     {
         return new self();

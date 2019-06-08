@@ -8,6 +8,7 @@ namespace SignpostMarv\DaftRouter\Tests;
 
 use Generator;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase as Base;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\HttpRouteGenerator;
 use Throwable;
@@ -57,32 +58,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
                     '/profile/2~baz',
                     '/profile/3~bat',
                 ],
-            ],
-        ];
-    }
-
-    /**
-    * @psalm-return array<int, array{0:class-string<HttpRouteGenerator\HttpRouteGenerator>, 1:mixed[], 2:class-string<Throwable>, 3:string}>
-    */
-    public function DataProviderSingleRouteGeneratorConstructorFailure() : array
-    {
-        return [
-            [
-                HttpRouteGenerator\SingleRouteGeneratorFromArray::class,
-                [
-                    InvalidArgumentException::class,
-                    [],
-                ],
-                InvalidArgumentException::class,
-                (
-                    'Argument 1 passed to ' .
-                    HttpRouteGenerator\SingleRouteGenerator::class .
-                    '::__construct must be an implementation of ' .
-                    DaftRoute::class .
-                    ', ' .
-                    InvalidArgumentException::class .
-                    ' given!'
-                ),
             ],
         ];
     }
@@ -158,7 +133,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftRoute> $route
+    * @param class-string<DaftRoute> $route
     *
     * @param array<string, string> $args
     *
@@ -169,19 +144,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
         array $args,
         string $expected
     ) : void {
-        if ( ! is_a($route, DaftRoute::class, true)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                ' must be an implementation of ' .
-                DaftRoute::class .
-                ', ' .
-                $route .
-                ' given!'
-            );
-        }
-
-        $result = $route::DaftRouterHttpRoute($args);
+        $result = $route::DaftRouterHttpRoute($route::DaftRouterHttpRouteArgsTyped($args, 'GET'));
 
         static::assertSame($expected, $result);
     }
@@ -228,35 +191,5 @@ class ImplementationHttpRouteGeneratorTest extends Base
         foreach ($routes as $i => $compareTo) {
             static::assertSame($expectedResult[$i] ?? null, $compareTo);
         }
-    }
-
-    /**
-    * @psalm-param class-string<HttpRouteGenerator\HttpRouteGenerator> $implementation
-    * @psalm-param class-string<Throwable> $expectedException
-    *
-    * @dataProvider DataProviderSingleRouteGeneratorConstructorFailure
-    */
-    public function testSingleRouteGeneratorConstructorFailure(
-        string $implementation,
-        array $ctorArgs,
-        string $expectedException,
-        string $expectedExceptionMessage
-    ) : void {
-        if ( ! is_a($implementation, HttpRouteGenerator\SingleRouteGenerator::class, true)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                ' must be an implementation of ' .
-                HttpRouteGenerator\SingleRouteGenerator::class .
-                ', ' .
-                $implementation .
-                ' given!'
-            );
-        }
-
-        static::expectException($expectedException);
-        static::expectExceptionMessage($expectedExceptionMessage);
-
-        new $implementation(...$ctorArgs);
     }
 }

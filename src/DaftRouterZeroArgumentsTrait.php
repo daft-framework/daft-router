@@ -7,27 +7,34 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter;
 
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
-* @template TYPED as array<empty, empty>
-*/
 trait DaftRouterZeroArgumentsTrait
 {
     /**
-    * @param array<string, scalar> $args
-    *
-    * @psalm-param TYPED $args
-    *
-    * @return array<string, scalar>
-    *
-    * @psalm-return TYPED
+    * @param EmptyArgs $args
     */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
-    {
-        if (count($args) > 0) {
-            throw new InvalidArgumentException('This route takes no arguments!');
-        }
+    abstract public static function DaftRouterHandleRequest(
+        Request $request,
+        TypedArgs $args
+    ) : Response;
 
-        return [];
+    /**
+    * @param EmptyArgs $args
+    */
+    abstract public static function DaftRouterHttpRoute(
+        TypedArgs $args,
+        string $method = 'GET'
+    ) : string;
+
+    /**
+    * @param array<empty, empty> $args
+    *
+    * @return EmptyArgs
+    */
+    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgs
+    {
+        return new EmptyArgs();
     }
 }

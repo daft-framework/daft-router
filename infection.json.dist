@@ -10,32 +10,28 @@
     },
     "mutators": {
         "@default": true,
+        "CastString": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\EmptyArgs::__get"
+            ]
+        },
         "Foreach_": {
             "ignore": [
+                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\HttpRouteGeneratorToRoutes::getIterator",
                 "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorFromArray::getIterator",
-                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorGenerator::getIterator",
-                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\HttpRouteGeneratorToRoutes::getIterator"
+                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorGenerator::getIterator"
             ]
         },
         "MBString": false,
-        "MethodCallRemoval": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\DaftRouterZeroArgumentsTrait::DaftRouterHttpRouteArgsTyped"
-            ]
-        },
         "ProtectedVisibility": {
             "ignore": [
-                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking"
+                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking",
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::ObtainCollector"
             ]
         },
         "PublicVisibility": {
             "ignore": [
                 "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
-            ]
-        },
-        "Throw_": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking"
             ]
         }
     }

@@ -98,15 +98,8 @@ class Compiler
     {
         $collector = $this->ObtainCollector();
 
-        /**
-        * @var iterable<scalar|array|object|null>
-        */
         $things = $collector->Collect(...$sources);
         foreach ($things as $thing) {
-            if ( ! is_string($thing)) {
-                throw new RuntimeException(get_class($collector) . ' yielded a non-string value!');
-            }
-
             $this->NudgeCompilerWithRouteOrRouteFilter($thing);
         }
     }

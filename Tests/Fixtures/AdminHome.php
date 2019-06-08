@@ -9,17 +9,19 @@ namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouterZeroArgumentsTrait;
+use SignpostMarv\DaftRouter\EmptyArgs;
+use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template-implements DaftRoute<array<empty, empty>>
+* @template-implements DaftRoute<array<empty, empty>, EmptyArgs>
 */
-class Home implements DaftRoute
+class AdminHome implements DaftRoute
 {
     use DaftRouterZeroArgumentsTrait;
 
-    public static function DaftRouterHandleRequest(Request $request, array $args) : Response
+    public static function DaftRouterHandleRequest(Request $request, TypedArgs $args) : Response
     {
         return new Response('');
     }
@@ -27,14 +29,12 @@ class Home implements DaftRoute
     public static function DaftRouterRoutes() : array
     {
         return [
-            '/' => ['GET'],
+            '/admin' => ['GET'],
         ];
     }
 
-    public static function DaftRouterHttpRoute(array $args, string $method = 'GET') : string
+    public static function DaftRouterHttpRoute(TypedArgs $args, string $method = 'GET') : string
     {
-        $args = static::DaftRouterHttpRouteArgsTyped($args, $method);
-
-        return '/';
+        return '/admin';
     }
 }
