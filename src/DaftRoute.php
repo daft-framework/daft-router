@@ -10,13 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template ARRAY as array<string, scalar>
-* @template TYPED as TypedArgs
+* @template T1 as array<string, scalar>
+* @template T2 as TypedArgs
 */
 interface DaftRoute
 {
     /**
-    * @param TYPED $args
+    * @param T2 $args
     */
     public static function DaftRouterHandleRequest(Request $request, TypedArgs $args) : Response;
 
@@ -26,16 +26,16 @@ interface DaftRoute
     public static function DaftRouterRoutes() : array;
 
     /**
-    * @param TYPED $args
+    * @param T2 $args
     *
     * @throws \InvalidArgumentException if no uri could be found
     */
     public static function DaftRouterHttpRoute(TypedArgs $args, string $method = 'GET') : string;
 
     /**
-    * @param ARRAY $args
+    * @param T1 $args
     *
-    * @return TYPED
+    * @return T2
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgs;
 }

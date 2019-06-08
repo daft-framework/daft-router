@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template ARRAY as array<empty, empty>|array{mode:'admin'}
-* @template TYPED as EmptyArgs|AdminModeArgs
+* @template T1 as array<empty, empty>|array{mode:'admin'}
+* @template T2 as EmptyArgs|AdminModeArgs
 *
-* @template-implements DaftRoute<ARRAY, TYPED>
+* @template-implements DaftRoute<T1, T2>
 */
 class Login implements DaftRoute
 {
@@ -35,7 +35,7 @@ class Login implements DaftRoute
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgs
     {
         /**
-        * @var TYPED
+        * @var T2
         */
         $out = new EmptyArgs();
 
@@ -47,7 +47,7 @@ class Login implements DaftRoute
     }
 
     /**
-    * @param TYPED $args
+    * @param T2 $args
     */
     public static function DaftRouterHttpRoute(TypedArgs $args, string $method = 'GET') : string
     {
@@ -57,7 +57,7 @@ class Login implements DaftRoute
     }
 
     /**
-    * @param TYPED $args
+    * @param T2 $args
     */
     public static function DaftRouterHandleRequest(Request $request, TypedArgs $args) : Response
     {
