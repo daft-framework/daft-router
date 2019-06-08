@@ -33,7 +33,9 @@ interface DaftRoute
     public static function DaftRouterHttpRoute(TypedArgs $args, string $method = 'GET') : string;
 
     /**
-    * @param T1 $args
+    * @template K as key-of<T1>
+    *
+    * @param array<K, string> $args
     *
     * @return T2
     */
