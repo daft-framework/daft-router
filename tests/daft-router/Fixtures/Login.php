@@ -40,13 +40,13 @@ class Login implements DaftRoute
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
     {
-        static::DaftRouterAutoMethodChecking($method);
-
         return $args;
     }
 
     public static function DaftRouterHttpRoute(array $args, string $method = 'GET') : string
     {
+        static::DaftRouterAutoMethodChecking($method);
+
         return ('admin' === ($args['mode'] ?? null)) ? '/admin/login' : '/login';
     }
 

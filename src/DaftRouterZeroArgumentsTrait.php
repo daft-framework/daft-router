@@ -13,8 +13,6 @@ use InvalidArgumentException;
 */
 trait DaftRouterZeroArgumentsTrait
 {
-    use DaftRouterAutoMethodCheckingTrait;
-
     /**
     * @param array<string, scalar> $args
     *
@@ -26,8 +24,6 @@ trait DaftRouterZeroArgumentsTrait
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : array
     {
-        static::DaftRouterAutoMethodChecking($method);
-
         if (count($args) > 0) {
             throw new InvalidArgumentException('This route takes no arguments!');
         }
