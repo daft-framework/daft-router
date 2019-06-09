@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.4.2@f327d75116a15e88431668c36b9613f1e3dd62a4">
-  <file src="Tests\Fixtures\Profile.php">
-    <LessSpecificImplementedReturnType occurrences="1">
-      <code>TypedArgs</code>
-    </LessSpecificImplementedReturnType>
-  </file>
-  <file src="src\DaftRouterZeroArgumentsTrait.php">
+<files psalm-version="dev-master@3a5a347b0b10e566e87cde416a2a2687f4fdf21d">
+  <file src="src/DaftRouterZeroArgumentsTrait.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$args</code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src\EmptyArgs.php">
+  <file src="src/EmptyArgs.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$k</code>
     </MoreSpecificImplementedParamType>
@@ -18,28 +13,17 @@
       <code>$args</code>
     </PossiblyUnusedParam>
   </file>
-  <file src="src\HttpRouteGenerator\SingleRouteGeneratorGenerator.php">
+  <file src="src/HttpRouteGenerator/SingleRouteGeneratorGenerator.php">
     <MixedReturnTypeCoercion occurrences="1">
       <code>Generator&lt;class-string&lt;\SignpostMarv\DaftRouter\DaftRoute&gt;, array&lt;string, string&gt;, mixed, void&gt;</code>
     </MixedReturnTypeCoercion>
   </file>
-  <file src="src\Router\RouteCollector.php">
+  <file src="src/Router/RouteCollector.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$handler</code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src\TypedArgs.php">
-    <InvalidReturnStatement occurrences="1">
-      <code>$this-&gt;typed[$k]</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>T[K]</code>
-    </InvalidReturnType>
-    <MixedArrayTypeCoercion occurrences="1">
-      <code>$this-&gt;typed[$k]</code>
-    </MixedArrayTypeCoercion>
-  </file>
-  <file src="vendor\phpunit\phpunit\src\Framework\TestCase.php">
+  <file src="vendor/phpunit/phpunit/src/Framework/TestCase.php">
     <MissingConstructor occurrences="1">
       <code>$backupGlobals</code>
     </MissingConstructor>

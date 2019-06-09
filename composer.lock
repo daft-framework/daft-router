@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d3ee012d12a459972a5a239378ed84f5",
+    "content-hash": "c38e307156d43c09026a29ebddb4398d",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -1553,16 +1553,16 @@
         },
         {
             "name": "openlss/lib-array2xml",
-            "version": "0.5.1",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nullivex/lib-array2xml.git",
-                "reference": "c8b5998a342d7861f2e921403f44e0a2f3ef2be0"
+                "reference": "a91f18a8dfc69ffabe5f9b068bc39bb202c81d90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nullivex/lib-array2xml/zipball/c8b5998a342d7861f2e921403f44e0a2f3ef2be0",
-                "reference": "c8b5998a342d7861f2e921403f44e0a2f3ef2be0",
+                "url": "https://api.github.com/repos/nullivex/lib-array2xml/zipball/a91f18a8dfc69ffabe5f9b068bc39bb202c81d90",
+                "reference": "a91f18a8dfc69ffabe5f9b068bc39bb202c81d90",
                 "shasum": ""
             },
             "require": {
@@ -1581,24 +1581,24 @@
             "authors": [
                 {
                     "name": "Bryan Tong",
-                    "email": "contact@nullivex.com",
-                    "homepage": "http://bryantong.com"
+                    "email": "bryan@nullivex.com",
+                    "homepage": "https://www.nullivex.com"
                 },
                 {
                     "name": "Tony Butler",
                     "email": "spudz76@gmail.com",
-                    "homepage": "http://openlss.org"
+                    "homepage": "https://www.nullivex.com"
                 }
             ],
             "description": "Array2XML conversion library credit to lalit.org",
-            "homepage": "http://openlss.org",
+            "homepage": "https://www.nullivex.com",
             "keywords": [
                 "array",
                 "array conversion",
                 "xml",
                 "xml conversion"
             ],
-            "time": "2016-11-10T19:10:18+00:00"
+            "time": "2019-03-29T20:06:56+00:00"
         },
         {
             "name": "padraic/humbug_get_contents",
@@ -4514,16 +4514,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.4.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "f327d75116a15e88431668c36b9613f1e3dd62a4"
+                "reference": "3a5a347b0b10e566e87cde416a2a2687f4fdf21d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f327d75116a15e88431668c36b9613f1e3dd62a4",
-                "reference": "f327d75116a15e88431668c36b9613f1e3dd62a4",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/3a5a347b0b10e566e87cde416a2a2687f4fdf21d",
+                "reference": "3a5a347b0b10e566e87cde416a2a2687f4fdf21d",
                 "shasum": ""
             },
             "require": {
@@ -4535,7 +4535,7 @@
                 "netresearch/jsonmapper": "^1.0",
                 "nikic/php-parser": "^4.0.2 || ^4.1",
                 "ocramius/package-versions": "^1.2",
-                "openlss/lib-array2xml": "^0.0.10||^0.5.1",
+                "openlss/lib-array2xml": "^1.0",
                 "php": "^7.1",
                 "sebastian/diff": "^3.0",
                 "symfony/console": "^3.3||^4.0",
@@ -4593,7 +4593,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-06-05T12:50:24+00:00"
+            "time": "2019-06-09T14:30:14+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4743,7 +4743,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "roave/security-advisories": 20
+        "roave/security-advisories": 20,
+        "vimeo/psalm": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
