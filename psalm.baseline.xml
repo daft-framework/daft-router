@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="dev-master@395057c6dfc9798bbe70f4cff74b64dc26dc6da6">
+<files psalm-version="3.4.2@f327d75116a15e88431668c36b9613f1e3dd62a4">
+  <file src="Tests\Fixtures\Profile.php">
+    <LessSpecificImplementedReturnType occurrences="1">
+      <code>TypedArgs</code>
+    </LessSpecificImplementedReturnType>
+  </file>
   <file src="src\DaftRouterZeroArgumentsTrait.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$args</code>
@@ -22,6 +27,17 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$handler</code>
     </MoreSpecificImplementedParamType>
+  </file>
+  <file src="src\TypedArgs.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>$this-&gt;typed[$k]</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>T[K]</code>
+    </InvalidReturnType>
+    <MixedArrayTypeCoercion occurrences="1">
+      <code>$this-&gt;typed[$k]</code>
+    </MixedArrayTypeCoercion>
   </file>
   <file src="vendor\phpunit\phpunit\src\Framework\TestCase.php">
     <MissingConstructor occurrences="1">
