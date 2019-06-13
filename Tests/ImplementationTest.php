@@ -386,7 +386,7 @@ class ImplementationTest extends Base
         $routes = array_filter(
             $routes,
             function (string $uri) : bool {
-                return '/' === mb_substr($uri, 0, 1);
+                return 1 === preg_match('/^(?:\/|{[a-z][a-z0-9]*:\/)/', $uri);
             },
             ARRAY_FILTER_USE_KEY
         );
@@ -394,7 +394,7 @@ class ImplementationTest extends Base
         static::assertCount(
             $initialCount,
             $routes,
-            'All route uris must begin with a forward slash!'
+            'All route uris must begin with a forward slash, or an argument that begins with such!'
         );
 
         /**

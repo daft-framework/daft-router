@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="dev-master@3a5a347b0b10e566e87cde416a2a2687f4fdf21d">
+  <file src="Tests/Fixtures/Content.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$args</code>
+    </MoreSpecificImplementedParamType>
+  </file>
   <file src="src/DaftRouterZeroArgumentsTrait.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$args</code>

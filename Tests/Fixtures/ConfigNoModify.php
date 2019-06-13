@@ -18,6 +18,7 @@ class ConfigNoModify implements DaftSource
             Home::class,
             Login::class,
             NotLoggedIn::class,
+            Content::class,
         ];
     }
 }
