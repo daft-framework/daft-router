@@ -32,7 +32,7 @@ final class EmptyArgs extends TypedArgs
             '() cannot be called on ' .
             static::class .
             ' with ' .
-            (string) $k .
+            $k .
             ', ' .
             static::class .
             ' has no arguments!'

@@ -10,11 +10,6 @@
     },
     "mutators": {
         "@default": true,
-        "CastString": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\EmptyArgs::__get"
-            ]
-        },
         "Foreach_": {
             "ignore": [
                 "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\HttpRouteGeneratorToRoutes::getIterator",
@@ -23,6 +18,11 @@
             ]
         },
         "MBString": false,
+        "MethodCallRemoval": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\EmptyArgs::__construct"
+            ]
+        },
         "ProtectedVisibility": {
             "ignore": [
                 "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking",
