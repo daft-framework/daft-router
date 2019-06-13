@@ -37,6 +37,11 @@ class SingleRouteGeneratorGenerator implements HttpRouteGenerator
     public function getIterator() : Generator
     {
         foreach ($this->generators as $generator) {
+            /**
+            * @var \IteratorAggregate<class-string<\SignpostMarv\DaftRouter\DaftRoute>, array<string, string>>
+            */
+            $generator = $generator;
+
             yield from $generator;
         }
     }

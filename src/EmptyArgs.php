@@ -17,13 +17,14 @@ final class EmptyArgs extends TypedArgs
 {
     const COUNT_EMPTY = 0;
 
-    /**
-    * @param T $args
-    */
-    public function __construct(array $args = [])
+    public function __construct()
     {
+        parent::__construct([]);
     }
 
+    /**
+    * @param key-of<T> $k
+    */
     public function __get(string $k)
     {
         throw new BadMethodCallException(

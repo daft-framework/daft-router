@@ -10,6 +10,9 @@ use Countable;
 use Generator;
 use IteratorAggregate;
 
+/**
+* @template-implements IteratorAggregate<int, string>
+*/
 class HttpRouteGeneratorToRoutes implements Countable, IteratorAggregate
 {
     /**
@@ -27,6 +30,9 @@ class HttpRouteGeneratorToRoutes implements Countable, IteratorAggregate
         return $this->generator->count();
     }
 
+    /**
+    * @return Generator<int, string, mixed, void>
+    */
     public function getIterator() : Generator
     {
         $generator = $this->generator;

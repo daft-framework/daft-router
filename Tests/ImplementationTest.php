@@ -937,6 +937,9 @@ class ImplementationTest extends Base
             ' has no arguments!'
         );
 
+        /**
+        * @psalm-suppress InvalidScalarArgument
+        */
         $object->foo;
     }
 

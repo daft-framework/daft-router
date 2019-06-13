@@ -10,19 +10,6 @@
       <code>$args</code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src/EmptyArgs.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$k</code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyUnusedParam occurrences="1">
-      <code>$args</code>
-    </PossiblyUnusedParam>
-  </file>
-  <file src="src/HttpRouteGenerator/SingleRouteGeneratorGenerator.php">
-    <MixedReturnTypeCoercion occurrences="1">
-      <code>Generator&lt;class-string&lt;\SignpostMarv\DaftRouter\DaftRoute&gt;, array&lt;string, string&gt;, mixed, void&gt;</code>
-    </MixedReturnTypeCoercion>
-  </file>
   <file src="src/Router/RouteCollector.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$handler</code>
