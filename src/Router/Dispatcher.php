@@ -45,11 +45,16 @@ class Dispatcher extends Base
         */
         $path = parse_url($request->getUri(), PHP_URL_PATH);
         $path = preg_replace($regex, '', $path);
+        $path = implode(
+            '/',
+            array_map('rawurldecode', explode('/', str_replace('//', '/', ('/' . $path))))
+        );
+
 
         /**
         * @var array{1:array, 2:array<string, string>}
         */
-        $routeInfo = $this->dispatch($request->getMethod(), str_replace('//', '/', ('/' . $path)));
+        $routeInfo = $this->dispatch($request->getMethod(), $path);
 
         $routeArgs = new EmptyArgs();
 

@@ -33,6 +33,11 @@
             "ignore": [
                 "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
             ]
+        },
+        "UnwrapArrayMap": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handle"
+            ]
         }
     }
 }
