@@ -50,7 +50,6 @@ class Dispatcher extends Base
             array_map('rawurldecode', explode('/', str_replace('//', '/', ('/' . $path))))
         );
 
-
         /**
         * @var array{1:array, 2:array<string, string>}
         */
