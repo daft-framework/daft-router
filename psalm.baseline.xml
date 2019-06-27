@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.4.4@c21e9917fa05ba4d97da464725471f53ab4fe0d8">
+<files
+  psalm-version="3.4.4@c21e9917fa05ba4d97da464725471f53ab4fe0d8"
+>
   <file src="Tests/Fixtures/Content.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$args</code>
