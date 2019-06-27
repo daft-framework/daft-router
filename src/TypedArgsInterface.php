@@ -8,9 +8,10 @@ namespace SignpostMarv\DaftRouter;
 
 use BadMethodCallException;
 use Countable;
+use DateTimeImmutable;
 
 /**
-* @template T as array<string, scalar>|array<empty, empty>
+* @template T as array<string, scalar|DateTimeImmutable>|array<empty, empty>
 */
 interface TypedArgsInterface extends Countable
 {
