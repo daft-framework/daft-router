@@ -15,4 +15,10 @@
 
     <issueHandlers>
     </issueHandlers>
-<plugins><pluginClass xmlns="https://getpsalm.org/schema/config" class="Psalm\PhpUnitPlugin\Plugin"/></plugins></psalm>
+    <plugins>
+        <pluginClass
+            xmlns="https://getpsalm.org/schema/config"
+            class="Psalm\PhpUnitPlugin\Plugin"
+        />
+    </plugins>
+</psalm>
