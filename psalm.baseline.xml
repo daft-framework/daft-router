@@ -2,11 +2,6 @@
 <files
   psalm-version="3.4.5@a0866da88e605adaa648e9f1ad37f4990650f55c"
 >
-  <file src="Tests/Fixtures/Content.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$args</code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/DaftRouterZeroArgumentsTrait.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$args</code>

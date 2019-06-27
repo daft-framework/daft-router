@@ -27,9 +27,6 @@ class Content implements DaftRoute
 
     const MAX_EXPECTED_ARGS = 2;
 
-    /**
-    * @param TYPED $args
-    */
     public static function DaftRouterHandleRequest(Request $request, TypedArgs $args) : Response
     {
         return new Response('');
@@ -42,9 +39,6 @@ class Content implements DaftRoute
         ];
     }
 
-    /**
-    * @param TYPED $args
-    */
     public static function DaftRouterHttpRoute(TypedArgs $args, string $method = 'GET') : string
     {
         static::DaftRouterAutoMethodChecking($method);
@@ -52,13 +46,12 @@ class Content implements DaftRoute
         return $args->locator;
     }
 
-    /**
-    * @param T $args
-    */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgs
     {
         static::DaftRouterAutoMethodChecking($method);
 
-        return new LocatorArgs($args);
+        return new LocatorArgs([
+            'locator' => $args['locator'],
+        ]);
     }
 }
