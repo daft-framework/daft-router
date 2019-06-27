@@ -17,9 +17,4 @@
       <code>$handler</code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="vendor/phpunit/phpunit/src/Framework/TestCase.php">
-    <MissingConstructor occurrences="1">
-      <code>$backupGlobals</code>
-    </MissingConstructor>
-  </file>
 </files>
