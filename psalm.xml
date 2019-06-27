@@ -3,7 +3,8 @@
     totallyTyped="true"
     findUnusedCode="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="./vendor/vimeo/psalm/src/config.xsd"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorBaseline="./psalm.baseline.xml"
 >
     <projectFiles>
