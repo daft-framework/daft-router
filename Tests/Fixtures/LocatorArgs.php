@@ -10,7 +10,7 @@ use InvalidArgumentException;
 use SignpostMarv\DaftRouter\TypedArgs;
 
 /**
-* @template T as array{locator:string}
+* @psalm-type T = array{locator:string}
 *
 * @template-extends TypedArgs<T>
 *
@@ -19,14 +19,18 @@ use SignpostMarv\DaftRouter\TypedArgs;
 class LocatorArgs extends TypedArgs
 {
     /**
-    * @template K as key-of<T>
-    *
-    * @param array<K, string> $args
+    * @var T
+    */
+    protected $typed;
+
+    /**
+    * @param T $args
     */
     public function __construct(array $args)
     {
-        $this->typed = [
-            'locator' => $args['locator'],
-        ];
+        /**
+        * @var T
+        */
+        $this->typed = $args;
     }
 }

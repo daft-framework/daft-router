@@ -1189,7 +1189,13 @@ class ImplementationTest extends Base
         }
         if (is_a($source, DaftSource::class, true)) {
             foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
+                if (
+                    is_a($otherSource, DaftRequestInterceptor::class, true) ||
+                    is_a($otherSource, DaftResponseModifier::class, true) ||
+                    is_a($otherSource, DaftSource::class, true)
+                ) {
                 yield from static::YieldMiddlewareFromSource($otherSource);
+                }
             }
         }
     }

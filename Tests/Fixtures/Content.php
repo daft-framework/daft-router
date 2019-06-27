@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template T as array{locator:string}
-* @template TYPED as LocatorArgs
+* @psalm-type T = array{locator:string}
+* @psalm-type TYPED = LocatorArgs
 *
 * @template-implements DaftRoute<T, TYPED>
 */
@@ -46,12 +46,18 @@ class Content implements DaftRoute
         return $args->locator;
     }
 
+    /**
+    * @param T $args
+    */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgs
     {
         static::DaftRouterAutoMethodChecking($method);
 
-        return new LocatorArgs([
-            'locator' => $args['locator'],
-        ]);
+        /**
+        * @var T
+        */
+        $args = $args;
+
+        return new LocatorArgs($args);
     }
 }

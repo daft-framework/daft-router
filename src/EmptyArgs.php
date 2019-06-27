@@ -9,7 +9,7 @@ namespace SignpostMarv\DaftRouter;
 use BadMethodCallException;
 
 /**
-* @template T as array<empty, empty>
+* @psalm-type T = array<empty, empty>
 *
 * @template-extends TypedArgs<T>
 */
@@ -22,11 +22,13 @@ final class EmptyArgs extends TypedArgs
         parent::__construct([]);
     }
 
-    /**
-    * @param key-of<T> $k
-    */
     public function __get(string $k)
     {
+        /**
+        * @var string
+        */
+        $k = $k;
+
         throw new BadMethodCallException(
             __METHOD__ .
             '() cannot be called on ' .

@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files
-  psalm-version="3.4.5@a0866da88e605adaa648e9f1ad37f4990650f55c"
+  psalm-version="3.4.6@6b32565a9bf199049d070a5197c77f266170844d"
+  php-version="php:7.3.6; bcmath:7.3.6; bz2:7.3.6; calendar:7.3.6; Core:7.3.6; ctype:7.3.6; curl:7.3.6; date:7.3.6; dom:20031129; exif:7.3.6; fileinfo:7.3.6; filter:7.3.6; ftp:7.3.6; gd:7.3.6; gettext:7.3.6; hash:7.3.6; iconv:7.3.6; json:1.7.0; libxml:7.3.6; mbstring:7.3.6; mysqli:7.3.6; mysqlnd:mysqlnd 5.0.12-dev - 20150407 - $Id: 7cc7cc96e675f6d72e5cf0f267f48e167c2abb23 $; openssl:7.3.6; pcre:7.3.6; PDO:7.3.6; pdo_mysql:7.3.6; pdo_sqlite:7.3.6; Phar:7.3.6; readline:7.3.6; Reflection:7.3.6; session:7.3.6; SimpleXML:7.3.6; sodium:7.3.6; SPL:7.3.6; standard:7.3.6; tokenizer:7.3.6; wddx:7.3.6; xml:7.3.6; xmlreader:7.3.6; xmlwriter:7.3.6; zip:1.15.4; zlib:7.3.6"
 >
-  <file src="src/DaftRouterZeroArgumentsTrait.php">
+  <file src="Tests/Fixtures/Content.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$args</code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="src/DaftRouterZeroArgumentsTrait.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>EmptyArgs</code>
+    </ImplementedReturnTypeMismatch>
+  </file>
+  <file src="src/EmptyArgs.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$k</code>
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/Router/RouteCollector.php">

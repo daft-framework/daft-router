@@ -19,9 +19,7 @@ use SignpostMarv\DaftRouter\TypedArgs;
 class IntIdArgs extends TypedArgs
 {
     /**
-    * @template K as key-of<T>
-    *
-    * @param array<K, string> $args
+    * @param array{id:string} $args
     */
     public function __construct(array $args)
     {
