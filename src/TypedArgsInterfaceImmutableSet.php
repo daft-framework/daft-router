@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter;
 
 use BadMethodCallException;
-use Countable;
 
 trait TypedArgsInterfaceImmutableSet
 {

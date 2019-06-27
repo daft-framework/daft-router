@@ -6,9 +6,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
-use BadMethodCallException;
-use Countable;
-
 /**
 * @template T as array<string, scalar>
 *
