@@ -1194,7 +1194,7 @@ class ImplementationTest extends Base
                     is_a($otherSource, DaftResponseModifier::class, true) ||
                     is_a($otherSource, DaftSource::class, true)
                 ) {
-                yield from static::YieldMiddlewareFromSource($otherSource);
+                    yield from static::YieldMiddlewareFromSource($otherSource);
                 }
             }
         }
