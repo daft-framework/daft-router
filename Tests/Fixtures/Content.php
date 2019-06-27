@@ -10,6 +10,7 @@ use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\TypedArgs;
+use SignpostMarv\DaftRouter\TypedArgsInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,7 +28,7 @@ class Content implements DaftRoute
 
     const MAX_EXPECTED_ARGS = 2;
 
-    public static function DaftRouterHandleRequest(Request $request, TypedArgs $args) : Response
+    public static function DaftRouterHandleRequest(Request $request, TypedArgsInterface $args) : Response
     {
         return new Response('');
     }
@@ -39,7 +40,7 @@ class Content implements DaftRoute
         ];
     }
 
-    public static function DaftRouterHttpRoute(TypedArgs $args, string $method = 'GET') : string
+    public static function DaftRouterHttpRoute(TypedArgsInterface $args, string $method = 'GET') : string
     {
         static::DaftRouterAutoMethodChecking($method);
 
@@ -49,7 +50,7 @@ class Content implements DaftRoute
     /**
     * @param T $args
     */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgs
+    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgsInterface
     {
         static::DaftRouterAutoMethodChecking($method);
 

@@ -11,15 +11,16 @@ use BadMethodCallException;
 /**
 * @psalm-type T = array<empty, empty>
 *
-* @template-extends TypedArgs<T>
+* @template-implements TypedArgsInterface<T>
 */
-final class EmptyArgs extends TypedArgs
+final class EmptyArgs implements TypedArgsInterface
 {
+    use TypedArgsInterfaceImmutableSet;
+
     const COUNT_EMPTY = 0;
 
     public function __construct()
     {
-        parent::__construct([]);
     }
 
     public function __get(string $k)

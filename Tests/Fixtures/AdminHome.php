@@ -11,6 +11,7 @@ use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouterZeroArgumentsTrait;
 use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\TypedArgs;
+use SignpostMarv\DaftRouter\TypedArgsInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +22,7 @@ class AdminHome implements DaftRoute
 {
     use DaftRouterZeroArgumentsTrait;
 
-    public static function DaftRouterHandleRequest(Request $request, TypedArgs $args) : Response
+    public static function DaftRouterHandleRequest(Request $request, TypedArgsInterface $args) : Response
     {
         return new Response('');
     }
@@ -33,7 +34,7 @@ class AdminHome implements DaftRoute
         ];
     }
 
-    public static function DaftRouterHttpRoute(TypedArgs $args, string $method = 'GET') : string
+    public static function DaftRouterHttpRoute(TypedArgsInterface $args, string $method = 'GET') : string
     {
         return '/admin';
     }

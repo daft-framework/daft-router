@@ -11,9 +11,13 @@ use Countable;
 
 /**
 * @template T as array<string, scalar>
+*
+* @template-implements TypedArgsInterface<T>
 */
-abstract class TypedArgs implements Countable
+abstract class TypedArgs implements TypedArgsInterface
 {
+    use TypedArgsInterfaceImmutableSet;
+
     /**
     * @var T
     */
@@ -44,20 +48,6 @@ abstract class TypedArgs implements Countable
     public function __get(string $k)
     {
         return $this->typed[$k];
-    }
-
-    /**
-    * @param scalar $v
-    */
-    final public function __set(string $k, $v) : void
-    {
-        throw new BadMethodCallException(
-            static::class .
-            '::$' .
-            $k .
-            ' is not writeable, cannot be set to ' .
-            var_export($v, true)
-        );
     }
 
     public function count() : int

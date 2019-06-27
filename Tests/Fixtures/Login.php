@@ -11,6 +11,7 @@ use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\TypedArgs;
+use SignpostMarv\DaftRouter\TypedArgsInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +33,7 @@ class Login implements DaftRoute
         ];
     }
 
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgs
+    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgsInterface
     {
         /**
         * @var T2
@@ -49,7 +50,7 @@ class Login implements DaftRoute
     /**
     * @param T2 $args
     */
-    public static function DaftRouterHttpRoute(TypedArgs $args, string $method = 'GET') : string
+    public static function DaftRouterHttpRoute(TypedArgsInterface $args, string $method = 'GET') : string
     {
         static::DaftRouterAutoMethodChecking($method);
 
@@ -59,7 +60,7 @@ class Login implements DaftRoute
     /**
     * @param T2 $args
     */
-    public static function DaftRouterHandleRequest(Request $request, TypedArgs $args) : Response
+    public static function DaftRouterHandleRequest(Request $request, TypedArgsInterface $args) : Response
     {
         return new Response('');
     }
