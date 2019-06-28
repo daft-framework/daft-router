@@ -8,13 +8,18 @@ namespace SignpostMarv\DaftRouter\Tests;
 
 use Generator;
 use PHPUnit\Framework\TestCase as Base;
+use RuntimeException;
 use SignpostMarv\DaftRouter\DaftRoute;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsEmptyArgs;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsTypedArgs;
+use SignpostMarv\DaftRouter\EmptyArgs;
+use SignpostMarv\DaftRouter\TypedArgs;
 use SignpostMarv\DaftRouter\HttpRouteGenerator;
 
 class ImplementationHttpRouteGeneratorTest extends Base
 {
     /**
-    * @psalm-return array<int, array{0:array<class-string<DaftRoute>, array<int, array<string, string>>>, 1:array<int, string>}>
+    * @psalm-return array<int, array{0:array<class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, array<int, array<string, string>>>, 1:array<int, string>}>
     */
     public function DataProviderForSingleRouteGeneratorGenerator() : array
     {
@@ -61,7 +66,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftRoute>, 1:array<string, string>, 2:string}, mixed, void>
+    * @return Generator<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:string}, mixed, void>
     */
     final public function DataProviderForSingleRouteGeneratorGeneratorManual() : Generator
     {
@@ -114,9 +119,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
             $i = 0;
 
             /**
-            * @var array<string, array<int|string, scalar|array|object|null>>
-            *
-            * @psalm-var array<class-string<DaftRoute>, array<int, array<string, string>>>
+            * @var array<class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, array<int, array<string, string>>>
             */
             $routeArgs = $routeArgs;
 
@@ -131,17 +134,48 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
-    * @param class-string<DaftRoute> $route
-    * @param array<string, string> $args
+    * @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
+    * @param array<string, string>|array<empty, empty> $args
     *
     * @dataProvider DataProviderForSingleRouteGeneratorGeneratorManual
     */
     public function testHttpRouteGeneratorManual(
         string $route,
         array $args,
-        string $expected
+        string $expected,
+        string $method = 'GET'
     ) : void {
-        $result = $route::DaftRouterHttpRoute($route::DaftRouterHttpRouteArgsTyped($args, 'GET'));
+        $typed_args_object = $route::DaftRouterHttpRouteArgsTyped($args, $method);
+
+        if ($typed_args_object instanceof TypedArgs) {
+            if (! is_a($route, DaftRouteAcceptsTypedArgs::class, true)) {
+                throw new RuntimeException(
+                    'Argument 2 passed to ' .
+                    __METHOD__ .
+                    '() resolved to an instance of ' .
+                    TypedArgs::class .
+                    ', but ' .
+                    $route .
+                    ' does not implement ' .
+                    DaftRouteAcceptsTypedArgs::class
+                );
+            }
+
+            $result = $route::DaftRouterHttpRouteWithTypedArgs($typed_args_object, $method);
+        } elseif (! is_a($route, DaftRouteAcceptsEmptyArgs::class, true)) {
+            throw new RuntimeException(
+                'Argument 2 passed to ' .
+                __METHOD__ .
+                '() resolved to an instance of ' .
+                EmptyArgs::class .
+                ', but ' .
+                $route .
+                ' does not implement ' .
+                DaftRouteAcceptsEmptyArgs::class
+            );
+        } else {
+            $result = $route::DaftRouterHttpRouteWithEmptyArgs($method);
+        }
 
         static::assertSame($expected, $result);
     }
@@ -149,7 +183,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
     /**
     * @param array<string, array> $singleRouteGeneratorFromArrayArgs
     *
-    * @psalm-param array<class-string<DaftRoute>, array<int, array<string, string>>> $singleRouteGeneratorFromArrayArgs
+    * @param array<class-string<DaftRouteAcceptsEmptyArgs>, array<int, array<string, string>>>|array<class-string<DaftRouteAcceptsTypedArgs>, array<int, array<string, string>>> $singleRouteGeneratorFromArrayArgs
     *
     * @dataProvider DataProviderForSingleRouteGeneratorGenerator
     */

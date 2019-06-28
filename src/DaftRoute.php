@@ -10,12 +10,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+* This will be flagged as deprecated soon.
+*
 * @template T1 as array<string, scalar>|array<empty, empty>
 * @template T2 as TypedArgs|EmptyArgs
 */
 interface DaftRoute
 {
     /**
+    * @deprecated
+    *
     * @param T2 $args
     */
     public static function DaftRouterHandleRequest(Request $request, $args) : Response;
@@ -26,6 +30,8 @@ interface DaftRoute
     public static function DaftRouterRoutes() : array;
 
     /**
+    * @deprecated
+    *
     * @param T2 $args
     *
     * @throws \InvalidArgumentException if no uri could be found

@@ -14,9 +14,12 @@ use RuntimeException;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
 use SignpostMarv\DaftRouter\DaftRoute;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsEmptyArgs;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouteFilter;
 use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\EmptyArgs;
+use SignpostMarv\DaftRouter\TypedArgs;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
@@ -129,7 +132,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftRoute>, 1:array<string, string>, 2:array<string, mixed>, 3:string, 4:string, 5?:class-string<Throwable>, 6?:string}, mixed, void>
+    * @return Generator<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:array<string, mixed>, 3:string, 4:string, 5?:class-string<Throwable>, 6?:string}, mixed, void>
     */
     public function DataProviderRoutesWithKnownArgs() : Generator
     {
@@ -432,7 +435,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @param class-string<DaftRoute> $className
+    * @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $className
     * @param array<string, string> $args
     *
     * @depends testRoutes
@@ -449,10 +452,42 @@ class ImplementationTest extends Base
         $typed_args_object = $className::DaftRouterHttpRouteArgsTyped($args, $method);
 
         static::assertSame($typedArgs, $typed_args_object->toArray());
+
+        if ($typed_args_object instanceof TypedArgs) {
+            if (! is_a($className, DaftRouteAcceptsTypedArgs::class, true)) {
+                throw new RuntimeException(
+                    'Argument 2 passed to ' .
+                    __METHOD__ .
+                    '() resolved to an instance of ' .
+                    TypedArgs::class .
+                    ', but ' .
+                    $className .
+                    ' does not implement ' .
+                    DaftRouteAcceptsTypedArgs::class
+                );
+            }
+
         static::assertSame(
             $expectedRouteResult,
-            $className::DaftRouterHttpRoute($typed_args_object, $method)
+                $className::DaftRouterHttpRouteWithTypedArgs($typed_args_object, $method)
         );
+        } elseif (! is_a($className, DaftRouteAcceptsEmptyArgs::class, true)) {
+            throw new RuntimeException(
+                'Argument 2 passed to ' .
+                __METHOD__ .
+                '() resolved to an instance of ' .
+                EmptyArgs::class .
+                ', but ' .
+                $className .
+                ' does not implement ' .
+                DaftRouteAcceptsEmptyArgs::class
+            );
+        } else {
+            static::assertSame(
+                $expectedRouteResult,
+                $className::DaftRouterHttpRouteWithEmptyArgs($method)
+            );
+        }
     }
 
     public function testCompilerVerifyAddRouteThrowsException() : void

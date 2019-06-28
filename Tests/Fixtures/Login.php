@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
-use SignpostMarv\DaftRouter\DaftRoute;
+use SignpostMarv\DaftRouter\DaftRouteEmptyOrTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\TypedArgs;
@@ -15,15 +15,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template T1 as array<empty, empty>|array{mode:'admin'}
-* @template T2 as EmptyArgs|AdminModeArgs
+* @psalm-type T1 = array{mode:'admin'}
+* @psalm-type T2 = AdminModeArgs
 *
-* @template-implements DaftRoute<T1, T2>
+* @template-extends DaftRouteEmptyOrTypedArgs<T1, T2>
 */
-class Login implements DaftRoute
+class Login extends DaftRouteEmptyOrTypedArgs
 {
-    use DaftRouterAutoMethodCheckingTrait;
-
     public static function DaftRouterRoutes() : array
     {
         return [
@@ -32,35 +30,59 @@ class Login implements DaftRoute
         ];
     }
 
+    /**
+    * @return T2|EmptyArgs
+    */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method)
     {
-        /**
-        * @var T2
-        */
-        $out = new EmptyArgs();
-
         if ('admin' === ($args['mode'] ?? null)) {
-            $out = new AdminModeArgs();
+            return new AdminModeArgs();
         }
 
-        return $out;
+        return new EmptyArgs();
     }
 
     /**
     * @param T2 $args
     */
-    public static function DaftRouterHttpRoute($args, string $method = 'GET') : string
+    public static function DaftRouterHttpRouteWithEmptyArgs(string $method = 'GET') : string
     {
         static::DaftRouterAutoMethodChecking($method);
 
-        return (0 === count($args)) ? '/login' : '/admin/login';
+        return '/login';
     }
 
     /**
     * @param T2 $args
     */
-    public static function DaftRouterHandleRequest(Request $request, $args) : Response
+    public static function DaftRouterHttpRouteWithTypedArgs(
+        TypedArgs $args,
+        string $method = 'GET'
+    ) : string {
+        static::DaftRouterAutoMethodChecking($method);
+
+        return '/admin/login';
+    }
+
+    /**
+    * @param T2 $args
+    */
+    public static function DaftRouterHandleRequestWithTypedArgs(
+        Request $request,
+        TypedArgs $args
+    ) : Response {
+        static::DaftRouterAutoMethodChecking($request->getMethod());
+
+        return new Response('');
+    }
+
+    /**
+    * @param T2 $args
+    */
+    public static function DaftRouterHandleRequestWithEmptyArgs(Request $request) : Response
     {
+        static::DaftRouterAutoMethodChecking($request->getMethod());
+
         return new Response('');
     }
 }

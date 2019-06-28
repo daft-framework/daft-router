@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
-use SignpostMarv\DaftRouter\DaftRoute;
+use SignpostMarv\DaftRouter\DaftRouteTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type T = array{locator:string}
 * @psalm-type TYPED = LocatorArgs
 *
-* @template-implements DaftRoute<T, TYPED>
+* @template-extends DaftRouteTypedArgs<T, TYPED>
 */
-class Content implements DaftRoute
+class Content extends DaftRouteTypedArgs
 {
     use DaftRouterAutoMethodCheckingTrait;
 
@@ -28,10 +28,12 @@ class Content implements DaftRoute
     const MAX_EXPECTED_ARGS = 2;
 
     /**
-    * @param LocatorArgs $args
+    * @param TYPED $args
     */
-    public static function DaftRouterHandleRequest(Request $request, $args) : Response
-    {
+    public static function DaftRouterHandleRequestWithTypedArgs(
+        Request $request,
+        TypedArgs $args
+    ) : Response {
         return new Response('');
     }
 
@@ -45,10 +47,10 @@ class Content implements DaftRoute
     /**
     * @param TYPED $args
     */
-    public static function DaftRouterHttpRoute($args, string $method = 'GET') : string
-    {
-        static::DaftRouterAutoMethodChecking($method);
-
+    public static function DaftRouterHttpRouteWithTypedArgs(
+        TypedArgs $args,
+        string $method = 'GET'
+    ) : string {
         return $args->locator;
     }
 
@@ -57,7 +59,7 @@ class Content implements DaftRoute
     *
     * @return TYPED
     */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method)
+    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgs
     {
         static::DaftRouterAutoMethodChecking($method);
 

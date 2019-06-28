@@ -11,6 +11,8 @@ use Generator;
 use IteratorAggregate;
 
 /**
+* @deprecated
+*
 * @template-implements IteratorAggregate<int, string>
 */
 class HttpRouteGeneratorToRoutes implements Countable, IteratorAggregate

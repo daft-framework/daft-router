@@ -8,18 +8,24 @@ namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRoute;
+use SignpostMarv\DaftRouter\DaftRouteTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template T as array{id:int}|array{id:int, slug:string}
+* @psalm-type SLUG = array{id:int, slug:string}
+* @psalm-type SANS_SLUG = array{id:int}
+* @psalm-type S_SLUG = array{id:string, slug:string}
+* @psalm-type S_SANS_SLUG = array{id:string}
+*
+* @template T as SLUG|SANS_SLUG
 * @template TYPED as IntIdArgs|IntIdStringSlugArgs
 *
-* @template-implements DaftRoute<T, TYPED>
+* @template-extends DaftRouteTypedArgs<T, TYPED>
 */
-class Profile implements DaftRoute
+class Profile extends DaftRouteTypedArgs
 {
     use DaftRouterAutoMethodCheckingTrait;
 
@@ -30,8 +36,12 @@ class Profile implements DaftRoute
     /**
     * @param TYPED $args
     */
-    public static function DaftRouterHandleRequest(Request $request, $args) : Response
-    {
+    public static function DaftRouterHandleRequestWithTypedArgs(
+        Request $request,
+        TypedArgs $args
+    ) : Response {
+        static::DaftRouterAutoMethodChecking($request->getMethod());
+
         return new Response('');
     }
 
@@ -45,7 +55,7 @@ class Profile implements DaftRoute
     /**
     * @param TYPED $args
     */
-    public static function DaftRouterHttpRoute($args, string $method = 'GET') : string
+    public static function DaftRouterHttpRouteWithTypedArgs(TypedArgs $args, string $method = 'GET') : string
     {
         static::DaftRouterAutoMethodChecking($method);
 
@@ -67,22 +77,23 @@ class Profile implements DaftRoute
             rawurlencode((string) $args->id);
     }
 
+    /**
+    * @param S_SLUG|S_SANS_SLUG $args
+    *
+    * @return TYPED
+    */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method)
     {
         if (isset($args['slug'])) {
             /**
-            * @var array{id:string, slug:string}
+            * @var TYPED
             */
-            $args = $args;
-
             return new IntIdStringSlugArgs($args);
         }
 
         /**
-        * @var array{id:string}
+        * @var TYPED
         */
-        $args = $args;
-
         return new IntIdArgs($args);
     }
 }

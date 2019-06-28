@@ -7,10 +7,15 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Router;
 
 use FastRoute\Dispatcher\GroupCountBased as Base;
+use RuntimeException;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsEmptyArgs;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsTypedArgs;
+use SignpostMarv\DaftRouter\DaftRouteEmptyArgs;
 use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\ResponseException;
+use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -86,13 +91,21 @@ class Dispatcher extends Base
         $resp = $this->RunMiddlewareFirstPass($request, ...$firstPass);
 
         if ( ! ($resp instanceof Response)) {
-            /**
-            * @var Response
-            */
-            $resp = $route::DaftRouterHandleRequest(
-                $request,
-                $routeArgs
-            );
+            if (
+                0 === count($routeArgs) &&
+                is_a($route, DaftRouteAcceptsEmptyArgs::class, true)
+            ) {
+                $resp = $route::DaftRouterHandleRequestWithEmptyArgs($request);
+            } elseif (
+                ($routeArgs instanceof TypedArgs) &&
+                is_a($route, DaftRouteAcceptsTypedArgs::class, true)
+            ) {
+                $resp = $route::DaftRouterHandleRequestWithTypedArgs($request, $routeArgs);
+            } else {
+                throw new RuntimeException(
+                    'Untyped request handling is deprecated!'
+                );
+            }
         }
 
         $resp = $this->RunMiddlewareSecondPass($request, $resp, ...$secondPass);

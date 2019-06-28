@@ -10,6 +10,9 @@ use Countable;
 use Generator;
 use IteratorAggregate;
 
+/**
+* @deprecated
+*/
 interface HttpRouteGenerator extends Countable, IteratorAggregate
 {
     /**

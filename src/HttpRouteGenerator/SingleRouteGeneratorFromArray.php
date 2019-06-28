@@ -8,6 +8,9 @@ namespace SignpostMarv\DaftRouter\HttpRouteGenerator;
 
 use Generator;
 
+/**
+* @deprecated
+*/
 class SingleRouteGeneratorFromArray extends SingleRouteGenerator
 {
     /**
