@@ -41,6 +41,13 @@ class Dispatcher extends Base
         return $routeInfo;
     }
 
+    public function handle(Request $request, string $prefix = '') : Response
+    {
+        $routeInfo = $this->handleDispatch($request, $prefix);
+
+        return $this->handleRouteInfo($request, $routeInfo);
+    }
+
     /**
     * @return array{1:array, 2:array<string, string>}
     */
@@ -63,13 +70,6 @@ class Dispatcher extends Base
         $routeInfo = $this->dispatch($request->getMethod(), $path);
 
         return $routeInfo;
-    }
-
-    public function handle(Request $request, string $prefix = '') : Response
-    {
-        $routeInfo = $this->handleDispatch($request, $prefix);
-
-        return $this->handleRouteInfo($request, $routeInfo);
     }
 
     /**
