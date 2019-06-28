@@ -168,7 +168,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftSource>[], 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
+    * @return Generator<int, array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
     */
     public function DataProviderVerifyHandlerGood() : Generator
     {
@@ -176,7 +176,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftSource>[], 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
+    * @return Generator<int, array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
     */
     public function DataProviderVerifyHandlerBad() : Generator
     {
@@ -854,15 +854,13 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftSource>[] $sources
-    *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     * @depends testCompilerExcludesMiddleware
     *
     * @dataProvider DataProviderVerifyHandlerGood
     *
-    * @param string[] $sources
+    * @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
     * @param array<string, scalar|array|object|null> $expectedHeaders
     */
     public function testHandlerGood(
@@ -885,7 +883,7 @@ class ImplementationTest extends Base
             ...$sources
         );
 
-        $request = static::ReqeuestFromArgs($requestArgs);
+        $request = static::RequestFromArgs($requestArgs);
 
         $response = $dispatcher->handle($request, $prefix);
 
@@ -898,15 +896,83 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftSource>[] $sources
+    * @depends testHandlerGood
     *
+    * @dataProvider DataProviderVerifyHandlerGood
+    *
+    * @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
+    * @param array<string, scalar|array|object|null> $expectedHeaders
+    */
+    public function testHandlerGoodWithFixturesDispatcher(
+        array $sources,
+        string $prefix,
+        int $expectedStatus,
+        string $expectedContent,
+        array $requestArgs,
+        array $expectedHeaders = []
+    ) : void {
+        /**
+        * @var Dispatcher
+        */
+        $dispatcher = Fixtures\CompilerWithFixturesDispatcher::ObtainCompiler()::ObtainDispatcher(
+            [
+                'cacheDisabled' => true,
+                'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
+                'dispatcher' => Fixtures\Dispatcher::class,
+            ],
+            ...$sources
+        );
+
+        $request = static::RequestFromArgs($requestArgs);
+
+        $response = $dispatcher->handle($request, $prefix);
+
+        static::assertSame($expectedStatus, $response->getStatusCode());
+        static::assertSame($expectedContent, $response->getContent());
+
+        foreach ($expectedHeaders as $header => $value) {
+            static::assertSame($response->headers->get($header), $value);
+        }
+    }
+
+    /**
+    * @depends testHandlerGoodWithFixturesDispatcher
+    *
+    * @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
+    */
+    public function testHandlerUntypedRequestHandlingIsDeprecated() : void
+    {
+        /**
+        * @var Fixtures\Dispatcher
+        */
+        $dispatcher = Fixtures\CompilerWithFixturesDispatcher::ObtainCompiler()::ObtainDispatcher(
+            [
+                'cacheDisabled' => true,
+                'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
+                'dispatcher' => Fixtures\Dispatcher::class,
+            ],
+        );
+
+        static::expectException(RuntimeException::class);
+        static::expectExceptionMessage('Untyped request handling is deprecated!');
+
+        $dispatcher->handleRouteInfoResponseParentPublic(
+            static::RequestFromArgs(['https://example.com/']),
+            Fixtures\Home::class,
+            new Fixtures\LocatorArgs(['locator' => 'foo']),
+            [],
+            []
+        );
+    }
+
+    /**
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
     * @depends testCompilerExcludesMiddleware
     *
     * @dataProvider DataProviderVerifyHandlerBad
     *
-    * @param string[] $sources
+    * @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
     */
     public function testHandlerBad(
         array $sources,
@@ -924,7 +990,7 @@ class ImplementationTest extends Base
             ...$sources
         );
 
-        $request = static::ReqeuestFromArgs($requestArgs);
+        $request = static::RequestFromArgs($requestArgs);
 
         $this->expectException(ResponseException::class);
         $this->expectExceptionCode($expectedStatus);
@@ -986,7 +1052,7 @@ class ImplementationTest extends Base
         static::assertSame($a->count(), count($a));
     }
 
-    protected static function ReqeuestFromArgs(array $requestArgs) : Request
+    protected static function RequestFromArgs(array $requestArgs) : Request
     {
         $uri = (string) $requestArgs[0];
         $method = 'GET';
@@ -1036,7 +1102,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftSource>[], 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
+    * @return Generator<int, array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
     */
     protected function DataProviderVerifyHandler(bool $good = true) : Generator
     {
@@ -1048,7 +1114,7 @@ class ImplementationTest extends Base
             list($sources, $prefix, $expectedStatus, $expectedContent, $headers, $uri) = $args;
 
             /**
-            * @psalm-var array{0:class-string<DaftSource>[], 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}
+            * @var array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}
             */
             $yield = [
                 $sources,
@@ -1171,6 +1237,36 @@ class ImplementationTest extends Base
                     'foo' => 'bar',
                 ],
                 'https://example.com/',
+            ],
+            [
+                [
+                    Fixtures\ConfigNoModify::class,
+                ],
+                '',
+                200,
+                '',
+                [],
+                'https://example.com/admin/login?loggedin',
+            ],
+            [
+                [
+                    Fixtures\ConfigNoModify::class,
+                ],
+                '',
+                200,
+                '',
+                [],
+                'https://example.com/login?loggedin',
+            ],
+            [
+                [
+                    Fixtures\ConfigNoModify::class,
+                ],
+                '',
+                200,
+                '',
+                [],
+                'https://example.com/profile/1~foo?loggedin',
             ],
         ];
     }

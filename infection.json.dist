@@ -17,16 +17,28 @@
                 "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorGenerator::getIterator"
             ]
         },
-        "MBString": false,
+        "MBString": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::CreateFilterForMiddlewareThatMatchesAnUri",
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::DoesMiddlewareExcludeSelfFromUri"
+            ]
+        },
         "MethodCallRemoval": {
             "ignore": [
-                "SignpostMarv\\DaftRouter\\EmptyArgs::__construct"
+                "SignpostMarv\\DaftRouter\\DaftRouteEmptyArgs::DaftRouterHandleRequest",
+                "SignpostMarv\\DaftRouter\\DaftRouteEmptyArgs::DaftRouterHttpRoute",
+                "SignpostMarv\\DaftRouter\\DaftRouteEmptyArgs::DaftRouterHttpRouteArgsTyped",
+                "SignpostMarv\\DaftRouter\\DaftRouteEmptyOrTypedArgs::DaftRouterHandleRequest",
+                "SignpostMarv\\DaftRouter\\DaftRouteEmptyOrTypedArgs::DaftRouterHttpRoute",
+                "SignpostMarv\\DaftRouter\\DaftRouteTypedArgs::DaftRouterHandleRequest",
+                "SignpostMarv\\DaftRouter\\DaftRouteTypedArgs::DaftRouterHttpRoute"
             ]
         },
         "ProtectedVisibility": {
             "ignore": [
-                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking",
-                "SignpostMarv\\DaftRouter\\Router\\Compiler::ObtainCollector"
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::ObtainCollector",
+                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleDispatch",
+                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleRouteInfo"
             ]
         },
         "PublicVisibility": {
@@ -36,7 +48,7 @@
         },
         "UnwrapArrayMap": {
             "ignore": [
-                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handle"
+                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleDispatch"
             ]
         }
     }

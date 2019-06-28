@@ -41,7 +41,10 @@ class Dispatcher extends Base
         return $routeInfo;
     }
 
-    public function handle(Request $request, string $prefix = '') : Response
+    /**
+    * @return array{1:array, 2:array<string, string>}
+    */
+    protected function handleDispatch(Request $request, string $prefix = '') : array
     {
         $regex = '/^' . preg_quote($prefix, '/') . '/';
         /**
@@ -59,10 +62,25 @@ class Dispatcher extends Base
         */
         $routeInfo = $this->dispatch($request->getMethod(), $path);
 
+        return $routeInfo;
+    }
+
+    public function handle(Request $request, string $prefix = '') : Response
+    {
+        $routeInfo = $this->handleDispatch($request, $prefix);
+
+        return $this->handleRouteInfo($request, $routeInfo);
+    }
+
+    /**
+    * @param array{1:array, 2:array<string, string>} $routeInfo
+    */
+    protected function handleRouteInfo(Request $request, array $routeInfo) : Response
+    {
         $routeArgs = new EmptyArgs();
 
         /**
-        * @psalm-var class-string<\SignpostMarv\DaftRouter\DaftRoute>
+        * @var class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>
         */
         $route = array_pop($routeInfo[1]) ?: '';
 
@@ -87,6 +105,28 @@ class Dispatcher extends Base
         */
         $secondPass = $routeInfo[1][DaftResponseModifier::class];
 
+        return $this->handleRouteInfoResponse(
+            $request,
+            $route,
+            $routeArgs,
+            $firstPass,
+            $secondPass
+        );
+    }
+
+    /**
+    * @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
+    * @param EmptyArgs|TypedArgs $routeArgs
+    * @param array<int, class-string<DaftRequestInterceptor>> $firstPass
+    * @param array<int, class-string<DaftResponseModifier>> $secondPass
+    */
+    protected function handleRouteInfoResponse(
+        Request $request,
+        string $route,
+        $routeArgs,
+        array $firstPass,
+        array $secondPass
+    ) : Response {
         $resp = $this->RunMiddlewareFirstPass($request, ...$firstPass);
 
         if ( ! ($resp instanceof Response)) {
@@ -115,7 +155,7 @@ class Dispatcher extends Base
     /**
     * @psalm-param class-string<DaftRequestInterceptor> ...$middlewares
     */
-    private function RunMiddlewareFirstPass(Request $request, string ...$middlewares) : ? Response
+    protected function RunMiddlewareFirstPass(Request $request, string ...$middlewares) : ? Response
     {
         $response = null;
 
@@ -132,7 +172,7 @@ class Dispatcher extends Base
     /**
     * @psalm-param class-string<DaftResponseModifier> ...$middlewares
     */
-    private function RunMiddlewareSecondPass(
+    protected function RunMiddlewareSecondPass(
         Request $request,
         Response $response,
         string ...$middlewares
