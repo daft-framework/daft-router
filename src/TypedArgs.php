@@ -6,14 +6,13 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
+use Countable;
 use DateTimeImmutable;
 
 /**
 * @template T as array<string, scalar|DateTimeImmutable>
-*
-* @template-implements TypedArgsInterface<T>
 */
-abstract class TypedArgs implements TypedArgsInterface
+abstract class TypedArgs implements Countable
 {
     use TypedArgsInterfaceImmutableSet;
 

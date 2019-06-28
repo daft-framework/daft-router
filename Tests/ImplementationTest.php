@@ -943,6 +943,14 @@ class ImplementationTest extends Base
         $object->foo;
     }
 
+    public function testCountOfLocatorArgs() : void
+    {
+        $a = new Fixtures\LocatorArgs(['locator' => 'foo']);
+
+        static::assertCount(1, $a);
+        static::assertSame($a->count(), count($a));
+    }
+
     protected static function ReqeuestFromArgs(array $requestArgs) : Request
     {
         $uri = (string) $requestArgs[0];

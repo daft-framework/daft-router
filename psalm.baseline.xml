@@ -13,11 +13,6 @@
       <code>EmptyArgs</code>
     </ImplementedReturnTypeMismatch>
   </file>
-  <file src="src/EmptyArgs.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$k</code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/Router/RouteCollector.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$handler</code>

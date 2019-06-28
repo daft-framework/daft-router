@@ -16,14 +16,14 @@ trait DaftRouterZeroArgumentsTrait
     */
     abstract public static function DaftRouterHandleRequest(
         Request $request,
-        TypedArgsInterface $args
+        $args
     ) : Response;
 
     /**
     * @param EmptyArgs $args
     */
     abstract public static function DaftRouterHttpRoute(
-        TypedArgsInterface $args,
+        $args,
         string $method = 'GET'
     ) : string;
 
@@ -32,7 +32,7 @@ trait DaftRouterZeroArgumentsTrait
     *
     * @return EmptyArgs
     */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgsInterface
+    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method)
     {
         /**
         * @var EmptyArgs

@@ -7,13 +7,9 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter;
 
 use BadMethodCallException;
+use Countable;
 
-/**
-* @psalm-type T = array<empty, empty>
-*
-* @template-implements TypedArgsInterface<T>
-*/
-final class EmptyArgs implements TypedArgsInterface
+final class EmptyArgs implements Countable
 {
     use TypedArgsInterfaceImmutableSet;
 
@@ -25,11 +21,6 @@ final class EmptyArgs implements TypedArgsInterface
 
     public function __get(string $k)
     {
-        /**
-        * @var string
-        */
-        $k = $k;
-
         throw new BadMethodCallException(
             __METHOD__ .
             '() cannot be called on ' .

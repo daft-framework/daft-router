@@ -10,6 +10,9 @@ use BadMethodCallException;
 
 trait TypedArgsInterfaceImmutableSet
 {
+    /**
+    * @param scalar|arary|object|null $v
+    */
     final public function __set(string $k, $v) : void
     {
         throw new BadMethodCallException(
