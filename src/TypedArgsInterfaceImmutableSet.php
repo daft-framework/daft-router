@@ -11,7 +11,7 @@ use BadMethodCallException;
 trait TypedArgsInterfaceImmutableSet
 {
     /**
-    * @param scalar|arary|object|null $v
+    * @param scalar|array|object|null $v
     */
     final public function __set(string $k, $v) : void
     {
