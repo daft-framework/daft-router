@@ -12,7 +12,6 @@ use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsEmptyArgs;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsTypedArgs;
-use SignpostMarv\DaftRouter\DaftRouteEmptyArgs;
 use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\TypedArgs;

@@ -35,6 +35,7 @@ abstract class DaftRouteEmptyOrTypedArgs implements DaftRouteAcceptsEmptyArgs, D
 
         return static::DaftRouterHandleRequestWithEmptyArgs($request);
     }
+
     /**
     * @param T2 $args
     */

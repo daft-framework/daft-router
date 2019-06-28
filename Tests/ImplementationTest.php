@@ -19,10 +19,10 @@ use SignpostMarv\DaftRouter\DaftRouteAcceptsTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouteFilter;
 use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\EmptyArgs;
-use SignpostMarv\DaftRouter\TypedArgs;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
+use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
@@ -454,7 +454,7 @@ class ImplementationTest extends Base
         static::assertSame($typedArgs, $typed_args_object->toArray());
 
         if ($typed_args_object instanceof TypedArgs) {
-            if (! is_a($className, DaftRouteAcceptsTypedArgs::class, true)) {
+            if ( ! is_a($className, DaftRouteAcceptsTypedArgs::class, true)) {
                 throw new RuntimeException(
                     'Argument 2 passed to ' .
                     __METHOD__ .
@@ -471,7 +471,7 @@ class ImplementationTest extends Base
                 $expectedRouteResult,
                 $className::DaftRouterHttpRouteWithTypedArgs($typed_args_object, $method)
             );
-        } elseif (! is_a($className, DaftRouteAcceptsEmptyArgs::class, true)) {
+        } elseif ( ! is_a($className, DaftRouteAcceptsEmptyArgs::class, true)) {
             throw new RuntimeException(
                 'Argument 2 passed to ' .
                 __METHOD__ .

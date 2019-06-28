@@ -9,12 +9,11 @@ namespace SignpostMarv\DaftRouter\Tests;
 use Generator;
 use PHPUnit\Framework\TestCase as Base;
 use RuntimeException;
-use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsEmptyArgs;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsTypedArgs;
 use SignpostMarv\DaftRouter\EmptyArgs;
-use SignpostMarv\DaftRouter\TypedArgs;
 use SignpostMarv\DaftRouter\HttpRouteGenerator;
+use SignpostMarv\DaftRouter\TypedArgs;
 
 class ImplementationHttpRouteGeneratorTest extends Base
 {
@@ -148,7 +147,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
         $typed_args_object = $route::DaftRouterHttpRouteArgsTyped($args, $method);
 
         if ($typed_args_object instanceof TypedArgs) {
-            if (! is_a($route, DaftRouteAcceptsTypedArgs::class, true)) {
+            if ( ! is_a($route, DaftRouteAcceptsTypedArgs::class, true)) {
                 throw new RuntimeException(
                     'Argument 2 passed to ' .
                     __METHOD__ .
@@ -162,7 +161,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
             }
 
             $result = $route::DaftRouterHttpRouteWithTypedArgs($typed_args_object, $method);
-        } elseif (! is_a($route, DaftRouteAcceptsEmptyArgs::class, true)) {
+        } elseif ( ! is_a($route, DaftRouteAcceptsEmptyArgs::class, true)) {
             throw new RuntimeException(
                 'Argument 2 passed to ' .
                 __METHOD__ .
@@ -182,7 +181,6 @@ class ImplementationHttpRouteGeneratorTest extends Base
 
     /**
     * @param array<string, array> $singleRouteGeneratorFromArrayArgs
-    *
     * @param array<class-string<DaftRouteAcceptsEmptyArgs>, array<int, array<string, string>>>|array<class-string<DaftRouteAcceptsTypedArgs>, array<int, array<string, string>>> $singleRouteGeneratorFromArrayArgs
     *
     * @dataProvider DataProviderForSingleRouteGeneratorGenerator
