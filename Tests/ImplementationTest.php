@@ -467,10 +467,10 @@ class ImplementationTest extends Base
                 );
             }
 
-        static::assertSame(
-            $expectedRouteResult,
+            static::assertSame(
+                $expectedRouteResult,
                 $className::DaftRouterHttpRouteWithTypedArgs($typed_args_object, $method)
-        );
+            );
         } elseif (! is_a($className, DaftRouteAcceptsEmptyArgs::class, true)) {
             throw new RuntimeException(
                 'Argument 2 passed to ' .
