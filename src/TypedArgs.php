@@ -10,7 +10,7 @@ use Countable;
 use DateTimeImmutable;
 
 /**
-* @template T as array<string, scalar|DateTimeImmutable>
+* @template T as array<string, scalar|DateTimeImmutable|null>
 */
 abstract class TypedArgs implements Countable
 {
