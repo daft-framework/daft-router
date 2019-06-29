@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template T1 as array<string, scalar|DateTimeImmutable|null>|array<empty, empty>
-* @template T1_STRINGS as array<string, string|null>|array<empty, empty>
+* @template T1 as array<string, scalar|DateTimeImmutable|null>
+* @template T1_STRINGS as array<string, string|null>
 * @template T2 as TypedArgs
 * @template T3 as Response
 *

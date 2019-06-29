@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template T1 as array<string, scalar|DateTimeImmutable|null>|array<empty, empty>
-* @template T1_STRINGS as array<string, string|null>|array<empty, empty>
+* @template T1 as array<string, scalar|DateTimeImmutable|null>
+* @template T1_STRINGS as array<string, string|null>
 * @template T2 as TypedArgs
 * @template T3 as Response
 * @template T4 as Response
@@ -47,6 +47,13 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
         */
         return static::DaftRouterHandleRequestWithEmptyArgs($request);
     }
+
+    /**
+    * @param T1_STRINGS|array<empty, empty> $args
+    *
+    * @return T2|EmptyArgs
+    */
+    abstract public static function DaftRouterHttpRouteArgsTyped(array $args, string $method);
 
     /**
     * @param T2 $args
