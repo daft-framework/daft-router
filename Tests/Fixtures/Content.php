@@ -7,8 +7,8 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
-use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsOnlyTypedArgs;
+use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
