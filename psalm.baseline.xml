@@ -9,7 +9,7 @@
     </DeprecatedMethod>
   </file>
   <file src="Tests/Fixtures/Profile.php">
-    <MoreSpecificImplementedParamType occurrences="3">
+    <MoreSpecificImplementedParamType occurrences="2">
       <code>$args</code>
       <code>$args</code>
       <code>$args</code>
