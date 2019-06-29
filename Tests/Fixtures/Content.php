@@ -8,7 +8,7 @@ namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
-use SignpostMarv\DaftRouter\DaftRouteTypedArgs;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsOnlyTypedArgs;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type T = array{locator:string}
 * @psalm-type TYPED = LocatorArgs
 *
-* @template-extends DaftRouteTypedArgs<T, TYPED>
+* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, TYPED>
 */
-class Content extends DaftRouteTypedArgs
+class Content extends DaftRouteAcceptsOnlyTypedArgs
 {
     use DaftRouterAutoMethodCheckingTrait;
 

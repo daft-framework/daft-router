@@ -8,13 +8,13 @@ namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRoute;
-use SignpostMarv\DaftRouter\DaftRouteEmptyArgs;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsOnlyEmptyArgs;
 use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Home extends DaftRouteEmptyArgs
+class Home extends DaftRouteAcceptsOnlyEmptyArgs
 {
     public static function DaftRouterHandleRequestWithEmptyArgs(Request $request) : Response
     {

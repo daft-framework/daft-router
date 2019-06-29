@@ -23,14 +23,14 @@
   <file src="Tests/ImplementationHttpRouteGeneratorTest.php">
     <DeprecatedClass occurrences="3"/>
   </file>
-  <file src="src/DaftRouteEmptyArgs.php">
+  <file src="src/DaftRouteAcceptsOnlyEmptyArgs.php">
     <MoreSpecificImplementedParamType occurrences="3">
       <code>$args</code>
       <code>$args</code>
       <code>$args</code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src/DaftRouteTypedArgs.php">
+  <file src="src/DaftRouteAcceptsOnlyTypedArgs.php">
     <MoreSpecificImplementedParamType occurrences="2">
       <code>$args</code>
       <code>$args</code>

@@ -25,13 +25,13 @@
         },
         "MethodCallRemoval": {
             "ignore": [
-                "SignpostMarv\\DaftRouter\\DaftRouteEmptyArgs::DaftRouterHandleRequest",
-                "SignpostMarv\\DaftRouter\\DaftRouteEmptyArgs::DaftRouterHttpRoute",
-                "SignpostMarv\\DaftRouter\\DaftRouteEmptyArgs::DaftRouterHttpRouteArgsTyped",
-                "SignpostMarv\\DaftRouter\\DaftRouteEmptyOrTypedArgs::DaftRouterHandleRequest",
-                "SignpostMarv\\DaftRouter\\DaftRouteEmptyOrTypedArgs::DaftRouterHttpRoute",
-                "SignpostMarv\\DaftRouter\\DaftRouteTypedArgs::DaftRouterHandleRequest",
-                "SignpostMarv\\DaftRouter\\DaftRouteTypedArgs::DaftRouterHttpRoute"
+                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyEmptyArgs::DaftRouterHandleRequest",
+                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyEmptyArgs::DaftRouterHttpRoute",
+                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyEmptyArgs::DaftRouterHttpRouteArgsTyped",
+                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsBothEmptyAndTypedArgs::DaftRouterHandleRequest",
+                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsBothEmptyAndTypedArgs::DaftRouterHttpRoute",
+                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyTypedArgs::DaftRouterHandleRequest",
+                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyTypedArgs::DaftRouterHttpRoute"
             ]
         },
         "ProtectedVisibility": {

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 *
 * @template-implements DaftRouteAcceptsTypedArgs<T1, T2>
 */
-abstract class DaftRouteTypedArgs implements DaftRouteAcceptsTypedArgs
+abstract class DaftRouteAcceptsOnlyTypedArgs implements DaftRouteAcceptsTypedArgs
 {
     use DaftRouterAutoMethodCheckingTrait;
 

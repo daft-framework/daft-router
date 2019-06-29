@@ -9,7 +9,7 @@ namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
-use SignpostMarv\DaftRouter\DaftRouteTypedArgs;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsOnlyTypedArgs;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +23,9 @@ use Symfony\Component\HttpFoundation\Response;
 * @template T as SLUG|SANS_SLUG
 * @template TYPED as IntIdArgs|IntIdStringSlugArgs
 *
-* @template-extends DaftRouteTypedArgs<T, TYPED>
+* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, TYPED>
 */
-class Profile extends DaftRouteTypedArgs
+class Profile extends DaftRouteAcceptsOnlyTypedArgs
 {
     use DaftRouterAutoMethodCheckingTrait;
 

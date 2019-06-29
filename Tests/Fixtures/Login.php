@@ -7,7 +7,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
-use SignpostMarv\DaftRouter\DaftRouteEmptyOrTypedArgs;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsBothEmptyAndTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\TypedArgs;
@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type T1 = array{mode:'admin'}
 * @psalm-type T2 = AdminModeArgs
 *
-* @template-extends DaftRouteEmptyOrTypedArgs<T1, T2>
+* @template-extends DaftRouteAcceptsBothEmptyAndTypedArgs<T1, T2>
 */
-class Login extends DaftRouteEmptyOrTypedArgs
+class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 {
     public static function DaftRouterRoutes() : array
     {
