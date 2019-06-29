@@ -15,6 +15,9 @@ use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+* @template-extends DaftRouteAcceptsOnlyEmptyArgs<Response>
+*/
 class AdminHome extends DaftRouteAcceptsOnlyEmptyArgs
 {
     use DaftRouterAutoMethodCheckingTrait;

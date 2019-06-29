@@ -12,8 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 /**
 * @template T1 as array<string, scalar>
 * @template T2 as TypedArgs
+* @template T3 as Response
 *
-* @template-implements DaftRouteAcceptsTypedArgs<T1, T2>
+* @template-implements DaftRouteAcceptsTypedArgs<T1, T2, T3>
 */
 abstract class DaftRouteAcceptsOnlyTypedArgs implements DaftRouteAcceptsTypedArgs
 {
@@ -23,16 +24,23 @@ abstract class DaftRouteAcceptsOnlyTypedArgs implements DaftRouteAcceptsTypedArg
     * @deprecated
     *
     * @param T2 $args
+    *
+    * @return T3
     */
     final public static function DaftRouterHandleRequest(Request $request, $args) : Response
     {
         static::DaftRouterAutoMethodChecking($request->getMethod());
 
+        /**
+        * @var T3
+        */
         return static::DaftRouterHandleRequestWithTypedArgs($request, $args);
     }
 
     /**
     * @param T2 $args
+    *
+    * @return T3
     */
     abstract public static function DaftRouterHandleRequestWithTypedArgs(
         Request $request,

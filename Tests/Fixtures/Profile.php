@@ -19,11 +19,12 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type SANS_SLUG = array{id:int}
 * @psalm-type S_SLUG = array{id:string, slug:string}
 * @psalm-type S_SANS_SLUG = array{id:string}
+* @psalm-type R = Response
 *
 * @template T as SLUG|SANS_SLUG
 * @template TYPED as IntIdArgs|IntIdStringSlugArgs
 *
-* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, TYPED>
+* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, TYPED, R>
 */
 class Profile extends DaftRouteAcceptsOnlyTypedArgs
 {

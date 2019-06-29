@@ -12,8 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 /**
 * @psalm-type T1 = array<empty, empty>
 * @psalm-type T2 = EmptyArgs
+* @template T3 as Response
 *
-* @template-implements DaftRouteAcceptsEmptyArgs<array<string, scalar>, TypedArgs>
+* @template-implements DaftRouteAcceptsEmptyArgs<array<string, scalar>, TypedArgs, T3>
 */
 abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArgs
 {
@@ -23,11 +24,16 @@ abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArg
     * @deprecated
     *
     * @param EmptyArgs $args
+    *
+    * @return T3
     */
     final public static function DaftRouterHandleRequest(Request $request, $args) : Response
     {
         static::DaftRouterAutoMethodChecking($request->getMethod());
 
+        /**
+        * @var T3
+        */
         return static::DaftRouterHandleRequestWithEmptyArgs($request);
     }
 

@@ -12,9 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 /**
 * @template T1 as array<string, scalar>
 * @template T2 as TypedArgs
+* @template T3 as Response
+* @template T4 as Response
 *
-* @template-implements DaftRouteAcceptsEmptyArgs<T1, T2>
-* @template-implements DaftRouteAcceptsTypedArgs<T1, T2>
+* @template-implements DaftRouteAcceptsEmptyArgs<T1, T2, T3>
+* @template-implements DaftRouteAcceptsTypedArgs<T1, T2, T4>
 */
 abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAcceptsEmptyArgs, DaftRouteAcceptsTypedArgs
 {
@@ -22,6 +24,8 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
 
     /**
     * @param T2|EmptyArgs $args
+    *
+    * @return T3|T4
     */
     final public static function DaftRouterHandleRequest(
         Request $request,
@@ -30,14 +34,31 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
         static::DaftRouterAutoMethodChecking($request->getMethod());
 
         if ($args instanceof TypedArgs) {
+            /**
+            * @var T4
+            */
             return static::DaftRouterHandleRequestWithTypedArgs($request, $args);
         }
 
+        /**
+        * @var T3
+        */
         return static::DaftRouterHandleRequestWithEmptyArgs($request);
     }
 
     /**
     * @param T2 $args
+    *
+    * @return T3
+    */
+    abstract public static function DaftRouterHandleRequestWithEmptyArgs(
+        Request $request
+    ) : Response;
+
+    /**
+    * @param T2 $args
+    *
+    * @return T4
     */
     abstract public static function DaftRouterHandleRequestWithTypedArgs(
         Request $request,

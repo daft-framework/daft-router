@@ -17,8 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 /**
 * @psalm-type T1 = array{mode:'admin'}
 * @psalm-type T2 = AdminModeArgs
+* @psalm-type T3 = Response
 *
-* @template-extends DaftRouteAcceptsBothEmptyAndTypedArgs<T1, T2>
+* @template-extends DaftRouteAcceptsBothEmptyAndTypedArgs<T1, T2, T3, T3>
 */
 class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 {

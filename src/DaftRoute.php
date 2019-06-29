@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 *
 * @template T1 as array<string, scalar>|array<empty, empty>
 * @template T2 as TypedArgs|EmptyArgs
+* @template T3 as Response
+* @template T4 as Response
 */
 interface DaftRoute
 {
@@ -21,6 +23,8 @@ interface DaftRoute
     * @deprecated
     *
     * @param T2 $args
+    *
+    * @return T3|T4
     */
     public static function DaftRouterHandleRequest(Request $request, $args) : Response;
 
