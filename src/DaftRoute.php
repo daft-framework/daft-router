@@ -6,13 +6,15 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
+use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
 * This will be flagged as deprecated soon.
 *
-* @template T1 as array<string, scalar>|array<empty, empty>
+* @template T1 as array<string, scalar|DateTimeImmutable|null>|array<empty, empty>
+* @template T1_STRINGS as array<string, string|null>|array<empty, empty>
 * @template T2 as TypedArgs|EmptyArgs
 * @template T3 as Response
 * @template T4 as Response
@@ -43,9 +45,7 @@ interface DaftRoute
     public static function DaftRouterHttpRoute($args, string $method = 'GET') : string;
 
     /**
-    * @template K as key-of<T1>
-    *
-    * @param array<K, string> $args
+    * @param T1_STRINGS $args
     *
     * @return T2
     */

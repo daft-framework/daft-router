@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 * @template T as SLUG|SANS_SLUG
 * @template TYPED as IntIdArgs|IntIdStringSlugArgs
 *
-* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, TYPED, R>
+* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, S_SLUG|S_SANS_SLUG, TYPED, R>
 */
 class Profile extends DaftRouteAcceptsOnlyTypedArgs
 {

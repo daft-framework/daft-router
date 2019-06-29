@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
+use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type T2 = EmptyArgs
 * @template T3 as Response
 *
-* @template-implements DaftRouteAcceptsEmptyArgs<array<string, scalar>, TypedArgs, T3>
+* @template-implements DaftRouteAcceptsEmptyArgs<T1, T1, TypedArgs, T3>
 */
 abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArgs
 {

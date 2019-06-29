@@ -6,15 +6,17 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
+use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template T1 as array<string, scalar>
+* @template T1 as array<string, scalar|DateTimeImmutable|null>|array<empty, empty>
+* @template T1_STRINGS as array<string, string|null>|array<empty, empty>
 * @template T2 as TypedArgs
 * @template T3 as Response
 *
-* @template-extends DaftRoute<T1|array<empty, empty>, T2|EmptyArgs, T3, T3>
+* @template-extends DaftRoute<T1|array<empty, empty>, T1|array<empty, empty>, T2|EmptyArgs, T3, T3>
 */
 interface DaftRouteAcceptsTypedArgs extends DaftRoute
 {
@@ -29,9 +31,7 @@ interface DaftRouteAcceptsTypedArgs extends DaftRoute
     ) : Response;
 
     /**
-    * @template K as key-of<T1>
-    *
-    * @param array<K, string>|array<empty, empty> $args
+    * @param T1_STRINGS $args
     *
     * @return T2|EmptyArgs
     */

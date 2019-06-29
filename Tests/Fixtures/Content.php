@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type TYPED = LocatorArgs
 * @psalm-type R = Response
 *
-* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, TYPED, R>
+* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, T, TYPED, R>
 */
 class Content extends DaftRouteAcceptsOnlyTypedArgs
 {
@@ -56,7 +56,7 @@ class Content extends DaftRouteAcceptsOnlyTypedArgs
     }
 
     /**
-    * @param array{locator:string} $args
+    * @param T $args
     *
     * @return TYPED
     */
