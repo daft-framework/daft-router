@@ -14,11 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 * @template T1 as array<string, scalar|DateTimeImmutable|null>
 * @template T1_STRINGS as array<string, string|null>
 * @template T2 as TypedArgs
-* @template T3 as Response
-* @template T4 as Response
+* @template R_EMPTY as Response
+* @template R_TYPED as Response
 *
-* @template-implements DaftRouteAcceptsEmptyArgs<T1, T1_STRINGS, T2, T3>
-* @template-implements DaftRouteAcceptsTypedArgs<T1, T1_STRINGS, T2, T4>
+* @template-implements DaftRouteAcceptsEmptyArgs<T1, T1_STRINGS, T2, R_EMPTY, R_TYPED>
+* @template-implements DaftRouteAcceptsTypedArgs<T1, T1_STRINGS, T2, R_EMPTY, R_TYPED>
 */
 abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAcceptsEmptyArgs, DaftRouteAcceptsTypedArgs
 {
@@ -27,7 +27,7 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
     /**
     * @param T2|EmptyArgs $args
     *
-    * @return T3|T4
+    * @return R_EMPTY|R_TYPED
     */
     final public static function DaftRouterHandleRequest(
         Request $request,
@@ -37,13 +37,13 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
 
         if ($args instanceof TypedArgs) {
             /**
-            * @var T4
+            * @var R_TYPED
             */
             return static::DaftRouterHandleRequestWithTypedArgs($request, $args);
         }
 
         /**
-        * @var T3
+        * @var R_EMPTY
         */
         return static::DaftRouterHandleRequestWithEmptyArgs($request);
     }
@@ -58,7 +58,7 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
     /**
     * @param T2 $args
     *
-    * @return T3
+    * @return R_EMPTY
     */
     abstract public static function DaftRouterHandleRequestWithEmptyArgs(
         Request $request
@@ -67,7 +67,7 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
     /**
     * @param T2 $args
     *
-    * @return T4
+    * @return R_TYPED
     */
     abstract public static function DaftRouterHandleRequestWithTypedArgs(
         Request $request,

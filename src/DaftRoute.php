@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 * @template T1 as array<string, scalar|DateTimeImmutable|null>
 * @template T1_STRINGS as array<string, string|null>
 * @template T2 as TypedArgs
-* @template T3 as Response
-* @template T4 as Response
+* @template R_EMPTY as Response
+* @template R_TYPED as Response
 */
 interface DaftRoute
 {
@@ -26,7 +26,7 @@ interface DaftRoute
     *
     * @param T2|EmptyArgs $args
     *
-    * @return T3|T4
+    * @return R_EMPTY|R_TYPED
     */
     public static function DaftRouterHandleRequest(Request $request, $args) : Response;
 

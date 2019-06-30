@@ -14,16 +14,17 @@ use Symfony\Component\HttpFoundation\Response;
 * @template T1 as array<string, scalar|DateTimeImmutable|null>
 * @template T1_STRINGS as array<string, string|null>
 * @template T2 as TypedArgs
-* @template T3 as Response
+* @template R_EMPTY as Response
+* @template R_TYPED as Response
 *
-* @template-extends DaftRoute<T1, T1_STRINGS, T2, T3, T3>
+* @template-extends DaftRoute<T1, T1_STRINGS, T2, R_EMPTY, R_TYPED>
 */
 interface DaftRouteAcceptsTypedArgs extends DaftRoute
 {
     /**
     * @param T2 $args
     *
-    * @return T3
+    * @return R_EMPTY
     */
     public static function DaftRouterHandleRequestWithTypedArgs(
         Request $request,
