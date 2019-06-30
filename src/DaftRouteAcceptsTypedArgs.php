@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 * @template T2 as TypedArgs
 * @template T3 as Response
 *
-* @template-extends DaftRoute<T1|array<empty, empty>, T1_STRINGS|array<empty, empty>, T2|EmptyArgs, T3, T3>
+* @template-extends DaftRoute<T1, T1_STRINGS, T2, T3, T3>
 */
 interface DaftRouteAcceptsTypedArgs extends DaftRoute
 {
@@ -31,7 +31,7 @@ interface DaftRouteAcceptsTypedArgs extends DaftRoute
     ) : Response;
 
     /**
-    * @param T1_STRINGS $args
+    * @param T1_STRINGS|array<empty, empty> $args
     *
     * @return T2|EmptyArgs
     */

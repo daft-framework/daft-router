@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 /**
 * This will be flagged as deprecated soon.
 *
-* @template T1 as array<string, scalar|DateTimeImmutable|null>|array<empty, empty>
-* @template T1_STRINGS as array<string, string|null>|array<empty, empty>
-* @template T2 as TypedArgs|EmptyArgs
+* @template T1 as array<string, scalar|DateTimeImmutable|null>
+* @template T1_STRINGS as array<string, string|null>
+* @template T2 as TypedArgs
 * @template T3 as Response
 * @template T4 as Response
 */
@@ -24,7 +24,7 @@ interface DaftRoute
     /**
     * @deprecated
     *
-    * @param T2 $args
+    * @param T2|EmptyArgs $args
     *
     * @return T3|T4
     */
@@ -38,16 +38,16 @@ interface DaftRoute
     /**
     * @deprecated
     *
-    * @param T2 $args
+    * @param T2|EmptyArgs $args
     *
     * @throws \InvalidArgumentException if no uri could be found
     */
     public static function DaftRouterHttpRoute($args, string $method = 'GET') : string;
 
     /**
-    * @param T1_STRINGS $args
+    * @param T1_STRINGS|array<empty, empty> $args
     *
-    * @return T2
+    * @return T2|EmptyArgs
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method);
 }

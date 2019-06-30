@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template T1 as array<string, scalar|DateTimeImmutable|null>|array<empty, empty>
-* @template T1_STRINGS as array<string, string|null>|array<empty, empty>
+* @template T1 as array<string, scalar|DateTimeImmutable|null>
+* @template T1_STRINGS as array<string, string|null>
 * @template T2 as TypedArgs
 * @template T3 as Response
 *
-* @template-extends DaftRoute<T1, T1_STRINGS, T2|EmptyArgs, T3, T3>
+* @template-extends DaftRoute<T1, T1_STRINGS, T2, T3, T3>
 */
 interface DaftRouteAcceptsEmptyArgs extends DaftRoute
 {
