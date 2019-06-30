@@ -20,6 +20,8 @@ abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArg
     use DaftRouterAutoMethodCheckingTrait;
 
     /**
+    * @psalm-suppress MoreSpecificImplementedParamType
+    *
     * @deprecated
     *
     * @param EmptyArgs $args
@@ -37,6 +39,8 @@ abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArg
     }
 
     /**
+    * @psalm-suppress MoreSpecificImplementedParamType
+    *
     * @deprecated
     *
     * @param EmptyArgs $args
@@ -51,6 +55,8 @@ abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArg
     }
 
     /**
+    * @psalm-suppress MoreSpecificImplementedParamType
+    *
     * @param T1 $args
     *
     * @return EmptyArgs

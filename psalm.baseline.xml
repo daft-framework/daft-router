@@ -11,19 +11,6 @@
   <file src="Tests/ImplementationHttpRouteGeneratorTest.php">
     <DeprecatedClass occurrences="3"/>
   </file>
-  <file src="src/DaftRouteAcceptsOnlyEmptyArgs.php">
-    <MoreSpecificImplementedParamType occurrences="3">
-      <code>$args</code>
-      <code>$args</code>
-      <code>$args</code>
-    </MoreSpecificImplementedParamType>
-  </file>
-  <file src="src/DaftRouteAcceptsOnlyTypedArgs.php">
-    <MoreSpecificImplementedParamType occurrences="2">
-      <code>$args</code>
-      <code>$args</code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/HttpRouteGenerator/HttpRouteGeneratorToRoutes.php">
     <DeprecatedMethod occurrences="1">
       <code>$route::DaftRouterHttpRoute($route::DaftRouterHttpRouteArgsTyped($args, 'GET'))</code>

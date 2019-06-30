@@ -25,6 +25,8 @@ abstract class DaftRouteAcceptsOnlyTypedArgs implements DaftRouteAcceptsTypedArg
     /**
     * @deprecated
     *
+    * @psalm-suppress MoreSpecificImplementedParamType
+    *
     * @param T2 $args
     *
     * @return R_TYPED
@@ -50,6 +52,8 @@ abstract class DaftRouteAcceptsOnlyTypedArgs implements DaftRouteAcceptsTypedArg
     ) : Response;
 
     /**
+    * @psalm-suppress MoreSpecificImplementedParamType
+    *
     * @param T2 $args
     *
     * @throws \InvalidArgumentException if no uri could be found
