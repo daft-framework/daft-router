@@ -8,13 +8,6 @@
       <code>$route::DaftRouterHandleRequest($request, $routeArgs)</code>
     </DeprecatedMethod>
   </file>
-  <file src="Tests/Fixtures/Profile.php">
-    <MoreSpecificImplementedParamType occurrences="2">
-      <code>$args</code>
-      <code>$args</code>
-      <code>$args</code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="Tests/ImplementationHttpRouteGeneratorTest.php">
     <DeprecatedClass occurrences="3"/>
   </file>

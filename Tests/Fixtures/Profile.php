@@ -21,10 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type S_SANS_SLUG = array{id:string}
 * @psalm-type R = Response
 *
-* @template T as SLUG|SANS_SLUG
-* @template TYPED as IntIdArgs|IntIdStringSlugArgs
-*
-* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, S_SLUG|S_SANS_SLUG, TYPED, R>
+* @template-extends DaftRouteAcceptsOnlyTypedArgs<SLUG|SANS_SLUG, S_SLUG|S_SANS_SLUG, IntIdArgs|IntIdStringSlugArgs, R>
 */
 class Profile extends DaftRouteAcceptsOnlyTypedArgs
 {
@@ -35,7 +32,7 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
     const MAX_EXPECTED_ARGS = 2;
 
     /**
-    * @param TYPED $args
+    * @param IntIdArgs|IntIdStringSlugArgs $args
     */
     public static function DaftRouterHandleRequestWithTypedArgs(
         Request $request,
@@ -54,7 +51,7 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
     }
 
     /**
-    * @param TYPED $args
+    * @param IntIdArgs|IntIdStringSlugArgs $args
     */
     public static function DaftRouterHttpRouteWithTypedArgs(TypedArgs $args, string $method = 'GET') : string
     {
@@ -81,20 +78,14 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
     /**
     * @param S_SLUG|S_SANS_SLUG $args
     *
-    * @return TYPED
+    * @return IntIdArgs|IntIdStringSlugArgs
     */
     public static function DaftRouterHttpRouteArgsTyped(array $args, string $method)
     {
         if (isset($args['slug'])) {
-            /**
-            * @var TYPED
-            */
             return new IntIdStringSlugArgs($args);
         }
 
-        /**
-        * @var TYPED
-        */
         return new IntIdArgs($args);
     }
 }
