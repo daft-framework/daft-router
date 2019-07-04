@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 * @template T2 as TypedArgs
 * @template R_EMPTY as Response
 * @template R_TYPED as Response
+* @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+* @template HTTP_METHOD_DEFAULT as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
 */
 interface DaftRoute
 {
@@ -31,7 +33,7 @@ interface DaftRoute
     public static function DaftRouterHandleRequest(Request $request, $args) : Response;
 
     /**
-    * @return array<string, array<int, string>> an array of URIs & methods
+    * @return array<string, array<int, HTTP_METHOD>> an array of URIs & methods
     */
     public static function DaftRouterRoutes() : array;
 
@@ -39,15 +41,22 @@ interface DaftRoute
     * @deprecated
     *
     * @param T2|EmptyArgs $args
+    * @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
     *
     * @throws \InvalidArgumentException if no uri could be found
     */
-    public static function DaftRouterHttpRoute($args, string $method = 'GET') : string;
+    public static function DaftRouterHttpRoute($args, string $method = null) : string;
+
+    /**
+    * @return HTTP_METHOD_DEFAULT
+    */
+    public static function DaftRouterHttpRouteDefaultMethod() : string;
 
     /**
     * @param T1_STRINGS|array<empty, empty> $args
+    * @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
     *
     * @return T2|EmptyArgs
     */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method);
+    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null);
 }

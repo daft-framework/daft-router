@@ -16,12 +16,18 @@ use Symfony\Component\HttpFoundation\Response;
 * @template T2 as TypedArgs
 * @template R_EMPTY as Response
 * @template R_TYPED as Response
+* @template HTTP_METHOD_EMPTY as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+* @template HTTP_METHOD_TYPED as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+* @template HTTP_METHOD_DEFAULT as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
 *
-* @template-implements DaftRouteAcceptsEmptyArgs<T1, T1_STRINGS, T2, R_EMPTY, R_TYPED>
-* @template-implements DaftRouteAcceptsTypedArgs<T1, T1_STRINGS, T2, R_EMPTY, R_TYPED>
+* @template-implements DaftRouteAcceptsEmptyArgs<T1, T1_STRINGS, T2, R_EMPTY, R_TYPED, HTTP_METHOD_EMPTY, HTTP_METHOD_DEFAULT>
+* @template-implements DaftRouteAcceptsTypedArgs<T1, T1_STRINGS, T2, R_EMPTY, R_TYPED, HTTP_METHOD_TYPED, HTTP_METHOD_DEFAULT>
 */
 abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAcceptsEmptyArgs, DaftRouteAcceptsTypedArgs
 {
+    /**
+    * @template-use DaftRouterAutoMethodCheckingTrait<HTTP_METHOD_EMPTY|HTTP_METHOD_TYPED>
+    */
     use DaftRouterAutoMethodCheckingTrait;
 
     /**
@@ -50,10 +56,14 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
 
     /**
     * @param T1_STRINGS|array<empty, empty> $args
+    * @param HTTP_METHOD_TYPED|null $method
     *
     * @return T2|EmptyArgs
     */
-    abstract public static function DaftRouterHttpRouteArgsTyped(array $args, string $method);
+    abstract public static function DaftRouterHttpRouteArgsTyped(
+        array $args,
+        string $method = null
+    );
 
     /**
     * @param T2 $args
@@ -76,27 +86,37 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
 
     /**
     * @param T2|EmptyArgs $args
+    * @param HTTP_METHOD_EMPTY|HTTP_METHOD_TYPED|null $method
     */
     final public static function DaftRouterHttpRoute(
         $args,
-        string $method = 'GET'
+        string $method = null
     ) : string {
-        static::DaftRouterAutoMethodChecking($method);
-
         if ($args instanceof TypedArgs) {
+            /**
+            * @var HTTP_METHOD_TYPED|null
+            */
+            $method = $method;
+
             return static::DaftRouterHttpRouteWithTypedArgs($args, $method);
         }
+
+        /**
+        * @var HTTP_METHOD_EMPTY|null
+        */
+        $method = $method;
 
         return static::DaftRouterHttpRouteWithEmptyArgs($method);
     }
 
     /**
     * @param T2 $args
+    * @param HTTP_METHOD_TYPED|null $method
     *
     * @return string
     */
     abstract public static function DaftRouterHttpRouteWithTypedArgs(
         TypedArgs $args,
-        string $method = 'GET'
+        string $method = null
     ) : string;
 }

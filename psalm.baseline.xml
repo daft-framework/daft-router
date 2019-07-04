@@ -11,6 +11,24 @@
   <file src="Tests/ImplementationHttpRouteGeneratorTest.php">
     <DeprecatedClass occurrences="3"/>
   </file>
+  <file src="src/DaftRouteAcceptsBothEmptyAndTypedArgs.php">
+    <InvalidArgument occurrences="1">
+      <code>$method</code>
+    </InvalidArgument>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$method</code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="src/DaftRouteAcceptsOnlyEmptyArgs.php">
+    <InvalidArgument occurrences="1">
+      <code>$method</code>
+    </InvalidArgument>
+  </file>
+  <file src="src/DaftRouterHttpRouteDefaultMethodGet.php">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>HTTP_METHOD_DEFAULT</code>
+    </ImplementedReturnTypeMismatch>
+  </file>
   <file src="src/HttpRouteGenerator/HttpRouteGeneratorToRoutes.php">
     <DeprecatedMethod occurrences="1">
       <code>$route::DaftRouterHttpRoute($route::DaftRouterHttpRouteArgsTyped($args, 'GET'))</code>
@@ -29,6 +47,11 @@
     <DeprecatedInterface occurrences="1">
       <code>SingleRouteGeneratorGenerator</code>
     </DeprecatedInterface>
+  </file>
+  <file src="src/Router/Dispatcher.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$httpMethod</code>
+    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/Router/RouteCollector.php">
     <MoreSpecificImplementedParamType occurrences="1">

@@ -8,10 +8,13 @@ namespace SignpostMarv\DaftRouter;
 
 use InvalidArgumentException;
 
+/**
+* @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+*/
 trait DaftRouterAutoMethodCheckingTrait
 {
     /**
-    * @return array<string, array<int, string>> an array of URIs & methods
+    * @return array<string, array<int, HTTP_METHOD>> an array of URIs & methods
     */
     abstract public static function DaftRouterRoutes() : array;
 

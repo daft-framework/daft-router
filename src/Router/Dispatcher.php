@@ -18,12 +18,15 @@ use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+* @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+*/
 class Dispatcher extends Base
 {
     const INT_ARRAY_INDEX_ROUTE_ARGS = 2;
 
     /**
-    * @param string $httpMethod
+    * @param HTTP_METHOD $httpMethod
     * @param string $uri
     *
     * @return array
@@ -65,9 +68,14 @@ class Dispatcher extends Base
         );
 
         /**
+        * @var HTTP_METHOD
+        */
+        $method = $request->getMethod();
+
+        /**
         * @var array{1:array, 2:array<string, string>}
         */
-        $routeInfo = $this->dispatch($request->getMethod(), $path);
+        $routeInfo = $this->dispatch($method, $path);
 
         return $routeInfo;
     }
@@ -85,9 +93,14 @@ class Dispatcher extends Base
         $route = array_pop($routeInfo[1]) ?: '';
 
         if (isset($routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS])) {
+            /**
+            * @var HTTP_METHOD
+            */
+            $method = $request->getMethod();
+
             $routeArgs = $route::DaftRouterHttpRouteArgsTyped(
                 $routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS],
-                $request->getMethod()
+                $method
             );
         }
 

@@ -46,6 +46,11 @@
                 "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
             ]
         },
+        "Throw_": {
+            "ignore": [
+                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking"
+            ]
+        },
         "UnwrapArrayMap": {
             "ignore": [
                 "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleDispatch"

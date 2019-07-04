@@ -8,7 +8,7 @@ namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
 use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsOnlyTypedArgs;
-use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
+use SignpostMarv\DaftRouter\DaftRouterHttpRouteDefaultMethodGet;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,11 +18,11 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type TYPED = LocatorArgs
 * @psalm-type R = Response
 *
-* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, T, TYPED, R>
+* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, T, TYPED, R, 'GET', 'GET'>
 */
 class Content extends DaftRouteAcceptsOnlyTypedArgs
 {
-    use DaftRouterAutoMethodCheckingTrait;
+    use DaftRouterHttpRouteDefaultMethodGet;
 
     const MIN_EXPECTED_ARGS = 1;
 
@@ -50,20 +50,21 @@ class Content extends DaftRouteAcceptsOnlyTypedArgs
     */
     public static function DaftRouterHttpRouteWithTypedArgs(
         TypedArgs $args,
-        string $method = 'GET'
+        string $method = null
     ) : string {
         return $args->locator;
     }
 
     /**
     * @param T $args
+    * @param 'GET'|null $method
     *
     * @return TYPED
     */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method) : TypedArgs
-    {
-        static::DaftRouterAutoMethodChecking($method);
-
+    public static function DaftRouterHttpRouteArgsTyped(
+        array $args,
+        string $method = null
+    ) : TypedArgs {
         /**
         * @var T
         */

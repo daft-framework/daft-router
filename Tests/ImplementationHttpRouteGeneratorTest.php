@@ -15,6 +15,9 @@ use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\HttpRouteGenerator;
 use SignpostMarv\DaftRouter\TypedArgs;
 
+/**
+* @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+*/
 class ImplementationHttpRouteGeneratorTest extends Base
 {
     /**
@@ -65,7 +68,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
     }
 
     /**
-    * @return Generator<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:string}, mixed, void>
+    * @return Generator<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:string, 3?:HTTP_METHOD}, mixed, void>
     */
     final public function DataProviderForSingleRouteGeneratorGeneratorManual() : Generator
     {
@@ -135,6 +138,7 @@ class ImplementationHttpRouteGeneratorTest extends Base
     /**
     * @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
     * @param array<string, string>|array<empty, empty> $args
+    * @param HTTP_METHOD $method
     *
     * @dataProvider DataProviderForSingleRouteGeneratorGeneratorManual
     */

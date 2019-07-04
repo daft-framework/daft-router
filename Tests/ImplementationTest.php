@@ -26,6 +26,9 @@ use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
+/**
+* @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+*/
 class ImplementationTest extends Base
 {
     /**
@@ -44,11 +47,14 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:string, 3:string, 4:class-string<DaftRoute>, 5:string, 6:string}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:HTTP_METHOD, 3:string, 4:class-string<DaftRoute>, 5:HTTP_METHOD, 6:string}, mixed, void>
     */
     public function DataProviderMiddlewareWithExceptions() : Generator
     {
-        yield from [
+        /**
+        * @var array<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:HTTP_METHOD, 3:string, 4:class-string<DaftRoute>, 5:HTTP_METHOD, 6:string}>
+        */
+        $args = [
             [
                 Fixtures\NotLoggedIn::class,
                 Fixtures\Home::class,
@@ -68,6 +74,8 @@ class ImplementationTest extends Base
                 '/admin/login',
             ],
         ];
+
+        yield from $args;
     }
 
     /**
@@ -132,11 +140,14 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @return Generator<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:array<string, mixed>, 3:string, 4:string, 5?:class-string<Throwable>, 6?:string}, mixed, void>
+    * @return Generator<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:array<string, mixed>, 3:HTTP_METHOD, 4:string, 5?:class-string<Throwable>, 6?:string}, mixed, void>
     */
     public function DataProviderRoutesWithKnownArgs() : Generator
     {
-        yield from [
+        /**
+        * @var array<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:array<string, mixed>, 3:HTTP_METHOD, 4:string, 5?:class-string<Throwable>, 6?:string}>
+        */
+        $args = [
             [
                 Fixtures\Profile::class,
                 ['id' => '1'],
@@ -164,7 +175,20 @@ class ImplementationTest extends Base
                 'GET',
                 '/',
             ],
+            [
+                Fixtures\Login::class,
+                [
+                    'mode' => 'admin',
+                ],
+                [
+                    'mode' => 'admin',
+                ],
+                'POST',
+                '/admin/login',
+            ],
         ];
+
+        yield from $args;
     }
 
     /**
@@ -437,6 +461,7 @@ class ImplementationTest extends Base
     /**
     * @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $className
     * @param array<string, string> $args
+    * @param HTTP_METHOD $method
     *
     * @depends testRoutes
     *
@@ -687,7 +712,9 @@ class ImplementationTest extends Base
     /**
     * @psalm-param class-string<DaftRouteFilter> $middleware
     * @psalm-param class-string<DaftRoute> $presentWith
+    * @param HTTP_METHOD $presentWithMethod
     * @psalm-param class-string<DaftRoute> $notPresentWith
+    * @param HTTP_METHOD $notPresentWithMethod
     *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
@@ -997,14 +1024,6 @@ class ImplementationTest extends Base
         $this->expectExceptionMessage($expectedContent);
 
         $dispatcher->handle($request, $prefix);
-    }
-
-    public function testDaftRouterAutoMethodCheckingTraitFails() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Specified method not supported!');
-
-        Fixtures\Profile::DaftRouterHttpRoute(new Fixtures\IntIdArgs(['id' => '1']), 'POST');
     }
 
     public function testImmutabilityOfTypedArgs() : void

@@ -10,6 +10,7 @@ use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsOnlyTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
+use SignpostMarv\DaftRouter\DaftRouterHttpRouteDefaultMethodGet;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,12 +21,13 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type S_SLUG = array{id:string, slug:string}
 * @psalm-type S_SANS_SLUG = array{id:string}
 * @psalm-type R = Response
+* @psalm-type HTTP_METHOD = 'GET'|'GET'
 *
-* @template-extends DaftRouteAcceptsOnlyTypedArgs<SLUG|SANS_SLUG, S_SLUG|S_SANS_SLUG, IntIdArgs|IntIdStringSlugArgs, R>
+* @template-extends DaftRouteAcceptsOnlyTypedArgs<SLUG|SANS_SLUG, S_SLUG|S_SANS_SLUG, IntIdArgs|IntIdStringSlugArgs, R, HTTP_METHOD, HTTP_METHOD>
 */
 class Profile extends DaftRouteAcceptsOnlyTypedArgs
 {
-    use DaftRouterAutoMethodCheckingTrait;
+    use DaftRouterHttpRouteDefaultMethodGet;
 
     const MIN_EXPECTED_ARGS = 1;
 
@@ -52,9 +54,13 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
 
     /**
     * @param IntIdArgs|IntIdStringSlugArgs $args
+    * @param 'GET'|null $method
     */
-    public static function DaftRouterHttpRouteWithTypedArgs(TypedArgs $args, string $method = 'GET') : string
-    {
+    public static function DaftRouterHttpRouteWithTypedArgs(
+        TypedArgs $args,
+        string $method = null
+    ) : string {
+        $method = $method ?? static::DaftRouterHttpRouteDefaultMethod();
         static::DaftRouterAutoMethodChecking($method);
 
         if ($args instanceof IntIdStringSlugArgs) {
@@ -80,7 +86,7 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
     *
     * @return IntIdArgs|IntIdStringSlugArgs
     */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method)
+    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null)
     {
         if (isset($args['slug'])) {
             return new IntIdStringSlugArgs($args);
