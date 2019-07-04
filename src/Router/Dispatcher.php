@@ -144,7 +144,7 @@ class Dispatcher extends Base
 
         if ( ! ($resp instanceof Response)) {
             if (
-                0 === count($routeArgs) &&
+                ($routeArgs instanceof EmptyArgs) &&
                 is_a($route, DaftRouteAcceptsEmptyArgs::class, true)
             ) {
                 $resp = $route::DaftRouterHandleRequestWithEmptyArgs($request);

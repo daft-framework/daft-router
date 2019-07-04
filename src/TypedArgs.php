@@ -6,13 +6,12 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
-use Countable;
 use DateTimeImmutable;
 
 /**
 * @template T as array<string, scalar|DateTimeImmutable|null>
 */
-abstract class TypedArgs implements Countable
+abstract class TypedArgs
 {
     use TypedArgsInterfaceImmutableSet;
 
@@ -46,11 +45,6 @@ abstract class TypedArgs implements Countable
     public function __get(string $k)
     {
         return $this->typed[$k];
-    }
-
-    public function count() : int
-    {
-        return count($this->typed);
     }
 
     /**
