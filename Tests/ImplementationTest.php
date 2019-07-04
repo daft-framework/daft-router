@@ -712,8 +712,10 @@ class ImplementationTest extends Base
     /**
     * @psalm-param class-string<DaftRouteFilter> $middleware
     * @psalm-param class-string<DaftRoute> $presentWith
+    *
     * @param HTTP_METHOD $presentWithMethod
     * @psalm-param class-string<DaftRoute> $notPresentWith
+    *
     * @param HTTP_METHOD $notPresentWithMethod
     *
     * @depends testCompilerVerifyAddRouteAddsRoutes
