@@ -8,8 +8,9 @@ namespace SignpostMarv\DaftRouter;
 
 use BadMethodCallException;
 use Countable;
+use JsonSerializable;
 
-final class EmptyArgs implements Countable
+final class EmptyArgs implements Countable, JsonSerializable
 {
     use TypedArgsInterfaceImmutableSet;
 
@@ -39,6 +40,11 @@ final class EmptyArgs implements Countable
     }
 
     public function toArray() : array
+    {
+        return [];
+    }
+
+    public function jsonSerialize() : array
     {
         return [];
     }

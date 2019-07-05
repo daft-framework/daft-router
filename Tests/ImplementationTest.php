@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter\Tests;
 
 use BadMethodCallException;
+use DateTimeImmutable;
 use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase as Base;
@@ -1063,6 +1064,86 @@ class ImplementationTest extends Base
         * @psalm-suppress InvalidScalarArgument
         */
         $object->foo;
+    }
+
+    /**
+    * @return Generator<int, array{0:class-string<TypedArgs>|class-string<EmptyArgs>, 1:array<string, scalar|DateTimeImmutable|null>, 2:string, 3:array<string, scalar|null>}, mixed, void>
+    */
+    public function dataProviderJsonSerialize() : Generator
+    {
+        yield from [
+            [
+                Fixtures\AdminModeArgs::class,
+                [
+                    'mode' => 'admin',
+                ],
+                '{"mode":"admin"}',
+                [
+                    'mode' => 'admin',
+                ],
+            ],
+            [
+                Fixtures\DateArgs::class,
+                [
+                    'a' => 'January 1st, 1970',
+                    'b' => 'January 1st, 1970',
+                ],
+                '{"a":"1970-01-01","b":"1970W01"}',
+                [
+                    'a' => '1970-01-01',
+                    'b' => '1970W01',
+                ],
+            ],
+        ];
+    }
+
+    /**
+    * @dataProvider dataProviderJsonSerialize
+    *
+    * @param class-string<TypedArgs>|class-string<EmptyArgs> $type
+    * @param array<string, scalar|DateTimeImmutable|null> $args
+    * @param array<string, scalar|null> $expected_decoded
+    */
+    public function testJsonSerialize(
+        string $type,
+        array $args,
+        string $expected,
+        array $expected_decoded
+    ) : void {
+        $typed_args = new $type($args);
+
+        $for_json = $typed_args->jsonSerialize();
+        $encoded = json_encode($typed_args);
+
+        /**
+        * @var scalar|array<array-key, scalar|array|object|null>|null
+        */
+        $decoded = json_decode($encoded, true);
+
+        static::assertSame($expected_decoded, $decoded);
+
+        static::assertSame($expected, $encoded);
+
+        if (is_a($type, TypedArgs::class, true)) {
+            foreach ($decoded as $property => $decoded_value) {
+                static::assertIsString($property);
+                static::assertTrue(isset($args[$property]));
+                static::assertSame(
+                    $decoded_value,
+                    $for_json[$property]
+                );
+
+                /**
+                * @var scalar|DateTimeImmutable|null
+                */
+                $typed_value = $typed_args->$property;
+
+                static::assertSame(
+                    $decoded[$property],
+                    $type::FormatPropertyForJson($property, $typed_value)
+                );
+            }
+        }
     }
 
     protected static function RequestFromArgs(array $requestArgs) : Request
