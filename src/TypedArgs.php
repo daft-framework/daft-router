@@ -59,6 +59,7 @@ abstract class TypedArgs implements JsonSerializable
     public function jsonSerialize() : array
     {
         $keys = array_keys($this->typed);
+
         return array_combine($keys, array_map(
             (static::class . '::FormatPropertyForJson'),
             $keys,
