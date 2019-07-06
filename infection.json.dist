@@ -10,28 +10,10 @@
     },
     "mutators": {
         "@default": true,
-        "Foreach_": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\HttpRouteGeneratorToRoutes::getIterator",
-                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorFromArray::getIterator",
-                "SignpostMarv\\DaftRouter\\HttpRouteGenerator\\SingleRouteGeneratorGenerator::getIterator"
-            ]
-        },
         "MBString": {
             "ignore": [
                 "SignpostMarv\\DaftRouter\\Router\\Compiler::CreateFilterForMiddlewareThatMatchesAnUri",
                 "SignpostMarv\\DaftRouter\\Router\\Compiler::DoesMiddlewareExcludeSelfFromUri"
-            ]
-        },
-        "MethodCallRemoval": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyEmptyArgs::DaftRouterHandleRequest",
-                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyEmptyArgs::DaftRouterHttpRoute",
-                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyEmptyArgs::DaftRouterHttpRouteArgsTyped",
-                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsBothEmptyAndTypedArgs::DaftRouterHandleRequest",
-                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsBothEmptyAndTypedArgs::DaftRouterHttpRoute",
-                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyTypedArgs::DaftRouterHandleRequest",
-                "SignpostMarv\\DaftRouter\\DaftRouteAcceptsOnlyTypedArgs::DaftRouterHttpRoute"
             ]
         },
         "ProtectedVisibility": {
@@ -43,17 +25,21 @@
         },
         "PublicVisibility": {
             "ignore": [
+                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodCheckingTrait",
+                "SignpostMarv\\DaftRouter\\DaftRouterHttpRouteDefaultMethodGet::DaftRouterHttpRouteDefaultMethod",
                 "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
             ]
         },
         "Throw_": {
             "ignore": [
-                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking"
+                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking",
+                "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
             ]
         },
         "UnwrapArrayMap": {
             "ignore": [
-                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleDispatch"
+                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleDispatch",
+                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleRouteInfo"
             ]
         }
     }

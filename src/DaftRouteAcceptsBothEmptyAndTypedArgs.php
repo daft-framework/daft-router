@@ -31,30 +31,6 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
     use DaftRouterAutoMethodCheckingTrait;
 
     /**
-    * @param T2|EmptyArgs $args
-    *
-    * @return R_EMPTY|R_TYPED
-    */
-    final public static function DaftRouterHandleRequest(
-        Request $request,
-        $args
-    ) : Response {
-        static::DaftRouterAutoMethodChecking($request->getMethod());
-
-        if ($args instanceof TypedArgs) {
-            /**
-            * @var R_TYPED
-            */
-            return static::DaftRouterHandleRequestWithTypedArgs($request, $args);
-        }
-
-        /**
-        * @var R_EMPTY
-        */
-        return static::DaftRouterHandleRequestWithEmptyArgs($request);
-    }
-
-    /**
     * @param T1_STRINGS|array<empty, empty> $args
     * @param HTTP_METHOD_TYPED|null $method
     *

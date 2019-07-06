@@ -24,15 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 interface DaftRoute
 {
     /**
-    * @deprecated
-    *
-    * @param T2|EmptyArgs $args
-    *
-    * @return R_EMPTY|R_TYPED
-    */
-    public static function DaftRouterHandleRequest(Request $request, $args) : Response;
-
-    /**
     * @return array<string, array<int, HTTP_METHOD>> an array of URIs & methods
     */
     public static function DaftRouterRoutes() : array;

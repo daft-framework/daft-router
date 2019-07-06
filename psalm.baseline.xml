@@ -43,18 +43,10 @@
       <code>__construct</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="Tests/ImplementationHttpRouteGeneratorTest.php">
-    <DeprecatedClass occurrences="3"/>
-  </file>
   <file src="Tests/ImplementationTest.php">
     <UnusedVariable occurrences="1">
       <code>$prevKey</code>
     </UnusedVariable>
-  </file>
-  <file src="src/DaftRoute.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>DaftRouterHandleRequest</code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="src/DaftRouteAcceptsBothEmptyAndTypedArgs.php">
     <InvalidArgument occurrences="1">
@@ -68,25 +60,6 @@
     <InvalidArgument occurrences="1">
       <code>$method</code>
     </InvalidArgument>
-  </file>
-  <file src="src/HttpRouteGenerator/HttpRouteGeneratorToRoutes.php">
-    <DeprecatedMethod occurrences="1">
-      <code>$route::DaftRouterHttpRoute($route::DaftRouterHttpRouteArgsTyped($args, 'GET'))</code>
-    </DeprecatedMethod>
-  </file>
-  <file src="src/HttpRouteGenerator/SingleRouteGeneratorFromArray.php">
-    <DeprecatedClass occurrences="2">
-      <code>SingleRouteGenerator</code>
-      <code>parent::__construct($route)</code>
-    </DeprecatedClass>
-    <DeprecatedInterface occurrences="1">
-      <code>SingleRouteGeneratorFromArray</code>
-    </DeprecatedInterface>
-  </file>
-  <file src="src/HttpRouteGenerator/SingleRouteGeneratorGenerator.php">
-    <DeprecatedInterface occurrences="1">
-      <code>SingleRouteGeneratorGenerator</code>
-    </DeprecatedInterface>
   </file>
   <file src="src/Router/Dispatcher.php">
     <MoreSpecificImplementedParamType occurrences="1">

@@ -28,25 +28,6 @@ abstract class DaftRouteAcceptsOnlyTypedArgs implements DaftRouteAcceptsTypedArg
     use DaftRouterAutoMethodCheckingTrait;
 
     /**
-    * @deprecated
-    *
-    * @psalm-suppress MoreSpecificImplementedParamType
-    *
-    * @param T2 $args
-    *
-    * @return R_TYPED
-    */
-    final public static function DaftRouterHandleRequest(Request $request, $args) : Response
-    {
-        static::DaftRouterAutoMethodChecking($request->getMethod());
-
-        /**
-        * @var R_TYPED
-        */
-        return static::DaftRouterHandleRequestWithTypedArgs($request, $args);
-    }
-
-    /**
     * @param T2 $args
     *
     * @return R_TYPED
