@@ -29,12 +29,6 @@
                 "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking",
                 "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
             ]
-        },
-        "UnwrapArrayMap": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleDispatch",
-                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleRouteInfo"
-            ]
         }
     }
 }

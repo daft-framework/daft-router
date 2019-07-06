@@ -25,6 +25,8 @@ class Dispatcher extends Base
 {
     const INT_ARRAY_INDEX_ROUTE_ARGS = 2;
 
+    const MATCH_ONE = 1;
+
     /**
     * @param HTTP_METHOD $httpMethod
     * @param string $uri
@@ -62,10 +64,17 @@ class Dispatcher extends Base
         */
         $path = parse_url($request->getUri(), PHP_URL_PATH);
         $path = preg_replace($regex, '', $path);
-        $path = implode(
-            '/',
-            array_map('rawurldecode', explode('/', str_replace('//', '/', ('/' . $path))))
+        $path = preg_replace_callback(
+            '/\/([^\/]+)/',
+            /**
+            * @param array<int, string> $matches
+            */
+            function (array $matches) : string {
+                return '/' . rawurldecode($matches[self::MATCH_ONE]);
+            },
+            preg_replace('/\/$/', '', preg_replace('/\/+/', '/', $path))
         );
+        $path = '' === $path ? '/' : $path;
 
         /**
         * @var HTTP_METHOD
