@@ -10,12 +10,6 @@
     },
     "mutators": {
         "@default": true,
-        "MBString": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\Router\\Compiler::CreateFilterForMiddlewareThatMatchesAnUri",
-                "SignpostMarv\\DaftRouter\\Router\\Compiler::DoesMiddlewareExcludeSelfFromUri"
-            ]
-        },
         "ProtectedVisibility": {
             "ignore": [
                 "SignpostMarv\\DaftRouter\\Router\\Compiler::ObtainCollector",
