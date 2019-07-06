@@ -69,11 +69,6 @@
       <code>$method</code>
     </InvalidArgument>
   </file>
-  <file src="src/DaftRouterHttpRouteDefaultMethodGet.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>HTTP_METHOD_DEFAULT</code>
-    </ImplementedReturnTypeMismatch>
-  </file>
   <file src="src/HttpRouteGenerator/HttpRouteGeneratorToRoutes.php">
     <DeprecatedMethod occurrences="1">
       <code>$route::DaftRouterHttpRoute($route::DaftRouterHttpRouteArgsTyped($args, 'GET'))</code>

@@ -50,7 +50,7 @@ interface DaftRoute
     /**
     * @return HTTP_METHOD_DEFAULT
     */
-    public static function DaftRouterHttpRouteDefaultMethod() : string;
+    public static function DaftRouterHttpRouteDefaultMethod();
 
     /**
     * @param T1_STRINGS|array<empty, empty> $args
