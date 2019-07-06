@@ -43,11 +43,6 @@
       <code>__construct</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="Tests/Fixtures/Dispatcher.php">
-    <DeprecatedMethod occurrences="1">
-      <code>$route::DaftRouterHandleRequest($request, $routeArgs)</code>
-    </DeprecatedMethod>
-  </file>
   <file src="Tests/ImplementationHttpRouteGeneratorTest.php">
     <DeprecatedClass occurrences="3"/>
   </file>
@@ -55,6 +50,11 @@
     <UnusedVariable occurrences="1">
       <code>$prevKey</code>
     </UnusedVariable>
+  </file>
+  <file src="src/DaftRoute.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>DaftRouterHandleRequest</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/DaftRouteAcceptsBothEmptyAndTypedArgs.php">
     <InvalidArgument occurrences="1">

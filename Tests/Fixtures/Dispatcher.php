@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 
+use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsEmptyArgs;
@@ -56,7 +57,25 @@ class Dispatcher extends Base
         $resp = $this->RunMiddlewareFirstPass($request, ...$firstPass);
 
         if ( ! ($resp instanceof Response)) {
-            $resp = $route::DaftRouterHandleRequest($request, $routeArgs);
+            if ($routeArgs instanceof TypedArgs) {
+                if ( ! is_a($route, DaftRouteAcceptsTypedArgs::class, true)) {
+                    throw new InvalidArgumentException(
+                        'Cannot handle typed request on route that does not implement ' .
+                        DaftRouteAcceptsTypedArgs::class
+                    );
+                }
+
+                $resp = $route::DaftRouterHandleRequestWithTypedArgs($request, $routeArgs);
+            } else {
+                if ( ! is_a($route, DaftRouteAcceptsEmptyArgs::class, true)) {
+                    throw new InvalidArgumentException(
+                        'Cannot handle typed request on route that does not implement ' .
+                        DaftRouteAcceptsEmptyArgs::class
+                    );
+                }
+
+                $resp = $route::DaftRouterHandleRequestWithEmptyArgs($request);
+            }
         }
 
         $resp = $this->RunMiddlewareSecondPass($request, $resp, ...$secondPass);
