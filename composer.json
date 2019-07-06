@@ -52,7 +52,7 @@
         "symfony/http-foundation": "^4.3"
     },
     "require-dev": {
-        "infection/infection": "^0.13.3",
+        "infection/infection": "^0.13.4",
         "maglnet/composer-require-checker": "^2.0",
         "phpunit/phpunit": "^8.2",
         "povils/phpmnd": "^2.1",
