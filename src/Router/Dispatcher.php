@@ -63,7 +63,7 @@ class Dispatcher extends Base
         * @var string
         */
         $path = parse_url($request->getUri(), PHP_URL_PATH);
-        $path = preg_replace($regex, '', $path);
+        $path = preg_replace($regex, '/', $path);
         $path = preg_replace_callback(
             '/\/([^\/]+)/',
             /**
