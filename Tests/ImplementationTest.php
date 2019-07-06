@@ -791,7 +791,6 @@ class ImplementationTest extends Base
         );
 
         /**
-        * @var string|false
         * @var class-string<DaftRoute>|false
         */
         $route = array_pop($dispatchedPresent);
