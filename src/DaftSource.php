@@ -13,7 +13,7 @@ interface DaftSource
     *
     * @return array<int, string>
     *
-    * @psalm-return array<int, class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource>>
+    * @return array<int, class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource>>
     */
     public static function DaftRouterRouteAndMiddlewareSources() : array;
 }

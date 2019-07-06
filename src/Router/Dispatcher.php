@@ -105,16 +105,12 @@ class Dispatcher extends Base
         }
 
         /**
-        * @psalm-var array<int, class-string<DaftRequestInterceptor>>
-        *
-        * @var array<int, string>
+        * @var array<int, class-string<DaftRequestInterceptor>>
         */
         $firstPass = $routeInfo[1][DaftRequestInterceptor::class];
 
         /**
-        * @psalm-var array<int, class-string<DaftResponseModifier>>
-        *
-        * @var array<int, string>
+        * @var array<int, class-string<DaftResponseModifier>>
         */
         $secondPass = $routeInfo[1][DaftResponseModifier::class];
 
@@ -166,7 +162,7 @@ class Dispatcher extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftRequestInterceptor> ...$middlewares
+    * @param class-string<DaftRequestInterceptor> ...$middlewares
     */
     protected function RunMiddlewareFirstPass(Request $request, string ...$middlewares) : ? Response
     {
@@ -183,7 +179,7 @@ class Dispatcher extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftResponseModifier> ...$middlewares
+    * @param class-string<DaftResponseModifier> ...$middlewares
     */
     protected function RunMiddlewareSecondPass(
         Request $request,

@@ -41,9 +41,7 @@ class Compiler
     ];
 
     /**
-    * @var array<int, string>
-    *
-    * @psalm-var array<int, class-string<DaftRoute>>
+    * @var array<int, class-string<DaftRoute>>
     */
     private $routes = [];
 
@@ -92,7 +90,7 @@ class Compiler
     }
 
     /**
-    * @psalm-param class-string<DaftSource>|class-string<DaftRoute>|class-string<DaftRouteFilter> ...$sources
+    * @param class-string<DaftSource>|class-string<DaftRoute>|class-string<DaftRouteFilter> ...$sources
     */
     public function NudgeCompilerWithSources(string ...$sources) : void
     {
@@ -116,7 +114,7 @@ class Compiler
     }
 
     /**
-    * @psalm-param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
+    * @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
     */
     final public function CompileDispatcherClosure(string ...$sources) : Closure
     {
@@ -132,7 +130,7 @@ class Compiler
     }
 
     /**
-    * @psalm-param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
+    * @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
     */
     public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher
     {
@@ -182,7 +180,7 @@ class Compiler
     }
 
     /**
-    * @psalm-param class-string<DaftRouteFilter> $middleware
+    * @param class-string<DaftRouteFilter> $middleware
     */
     private function DoesMiddlewareExcludeSelfFromUri(
         string $middleware,
@@ -203,7 +201,7 @@ class Compiler
     {
         return
             /**
-            * @psalm-param class-string<DaftRouteFilter> $middleware
+            * @param class-string<DaftRouteFilter> $middleware
             */
             function (string $middleware) use ($uri) : bool {
                 if ($this->DoesMiddlewareExcludeSelfFromUri($middleware, $uri)) {
@@ -225,9 +223,9 @@ class Compiler
     }
 
     /**
-    * @return array<string, array<int, string>>
+    * @psalm-type RETURN = array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
     *
-    * @psam-return array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
+    * @return RETURN
     */
     private function MiddlewareNotExcludedFromUri(string $uri) : array
     {
@@ -239,6 +237,9 @@ class Compiler
             $this->CreateFilterForMiddlewareThatMatchesAnUri($uri)
         );
 
+        /**
+        * @var RETURN
+        */
         $out = [
             DaftRequestInterceptor::class => [],
             DaftResponseModifier::class => [],
@@ -258,14 +259,12 @@ class Compiler
     }
 
     /**
-    * @return array<string, array<string, array>>
-    *
-    * @psalm-return array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
+    * @return array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
     */
     private function CompileDispatcherArray() : array
     {
         /**
-        * @psalm-var array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
+        * @var array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
         */
         $out = [];
 
@@ -278,7 +277,7 @@ class Compiler
             foreach ($routes as $uri => $methods) {
                 foreach ($methods as $method) {
                     /**
-                    * @psalm-var array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
+                    * @var array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
                     */
                     $append = $this->MiddlewareNotExcludedFromUri($uri);
 

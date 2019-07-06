@@ -33,7 +33,7 @@ use Throwable;
 class ImplementationTest extends Base
 {
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftSource>}, mixed, void>
+    * @return Generator<int, array{0:class-string<DaftSource>}, mixed, void>
     */
     public function DataProviderGoodSources() : Generator
     {
@@ -48,7 +48,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:HTTP_METHOD, 3:string, 4:class-string<DaftRoute>, 5:HTTP_METHOD, 6:string}, mixed, void>
+    * @return Generator<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:HTTP_METHOD, 3:string, 4:class-string<DaftRoute>, 5:HTTP_METHOD, 6:string}, mixed, void>
     */
     public function DataProviderMiddlewareWithExceptions() : Generator
     {
@@ -80,7 +80,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftRoute>}, mixed, void>
+    * @return Generator<int, array{0:class-string<DaftRoute>}, mixed, void>
     */
     public function DataProviderRoutes() : Generator
     {
@@ -119,7 +119,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<DaftRouteFilter>}, mixed, void>
+    * @return Generator<int, array{0:class-string<DaftRouteFilter>}, mixed, void>
     */
     public function DataProviderMiddleware() : Generator
     {
@@ -209,9 +209,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @return string[][]
-    *
-    * @psalm-return array<int, array{0:string, 1:string, 2:string}>
+    * @return array<int, array{0:string, 1:string, 2:string}>
     */
     public function DataProviderUriReplacement() : array
     {
@@ -237,7 +235,7 @@ class ImplementationTest extends Base
     /**
     * @return mixed[][]
     *
-    * @psalm-return array<int, array{0:mixed}>
+    * @return array<int, array{0:mixed}>
     */
     public function DataProviderEnsureDispatcherIsCorrectlyTypedPublic() : array
     {
@@ -274,7 +272,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftSource> $className
+    * @param class-string<DaftSource> $className
     *
     * @dataProvider DataProviderGoodSources
     */
@@ -355,7 +353,7 @@ class ImplementationTest extends Base
                 }
 
                 /**
-                * @psalm-var class-string
+                * @var class-string
                 */
                 $source = $sources[$k];
 
@@ -377,7 +375,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftRoute> $className
+    * @param class-string<DaftRoute> $className
     *
     * @depends testSources
     *
@@ -590,7 +588,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftRouteFilter> $className
+    * @param class-string<DaftRouteFilter> $className
     *
     * @depends testSources
     *
@@ -637,7 +635,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $className
+    * @param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $className
     *
     * @depends testCompilerVerifyAddMiddlewareThrowsException
     *
@@ -667,7 +665,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftSource> $className
+    * @param class-string<DaftSource> $className
     *
     * @depends testCompilerVerifyAddRouteAddsRoutes
     * @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
@@ -711,11 +709,11 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftRouteFilter> $middleware
-    * @psalm-param class-string<DaftRoute> $presentWith
+    * @param class-string<DaftRouteFilter> $middleware
+    * @param class-string<DaftRoute> $presentWith
     *
     * @param HTTP_METHOD $presentWithMethod
-    * @psalm-param class-string<DaftRoute> $notPresentWith
+    * @param class-string<DaftRoute> $notPresentWith
     *
     * @param HTTP_METHOD $notPresentWithMethod
     *
@@ -798,7 +796,7 @@ class ImplementationTest extends Base
         /**
         * @var string|false
         *
-        * @psalm-var class-string<DaftRoute>|false
+        * @var class-string<DaftRoute>|false
         */
         $route = array_pop($dispatchedPresent);
 
@@ -813,7 +811,7 @@ class ImplementationTest extends Base
         );
 
         /**
-        * @psalm-var class-string<DaftRoute>
+        * @var class-string<DaftRoute>
         */
         $route = $route;
 
@@ -1393,7 +1391,7 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-return Generator<int, class-string<DaftRoute>, mixed, void>
+    * @return Generator<int, class-string<DaftRoute>, mixed, void>
     */
     protected static function YieldRoutesFromSource(string $source) : Generator
     {
@@ -1408,9 +1406,9 @@ class ImplementationTest extends Base
     }
 
     /**
-    * @psalm-param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $source
+    * @param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $source
     *
-    * @psalm-return Generator<int, class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>, mixed, void>
+    * @return Generator<int, class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>, mixed, void>
     */
     protected static function YieldMiddlewareFromSource(string $source) : Generator
     {

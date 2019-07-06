@@ -21,7 +21,7 @@ use SignpostMarv\DaftRouter\TypedArgs;
 class ImplementationHttpRouteGeneratorTest extends Base
 {
     /**
-    * @psalm-return array<int, array{0:array<class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, array<int, array<string, string>>>, 1:array<int, string>}>
+    * @return array<int, array{0:array<class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, array<int, array<string, string>>>, 1:array<int, string>}>
     */
     public function DataProviderForSingleRouteGeneratorGenerator() : array
     {
