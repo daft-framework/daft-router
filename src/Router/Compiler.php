@@ -189,7 +189,7 @@ class Compiler
         $exceptions = $middleware::DaftRouterRoutePrefixExceptions();
 
         foreach ($exceptions as $exception) {
-            if (0 === strpos($uri, $exception)) {
+            if (0 === mb_strpos($uri, $exception)) {
                 return true;
             }
         }
@@ -211,7 +211,7 @@ class Compiler
                 $requirements = $middleware::DaftRouterRoutePrefixRequirements();
 
                 foreach ($requirements as $requirement) {
-                    if (0 === strpos($uri, $requirement)) {
+                    if (0 === mb_strpos($uri, $requirement)) {
                         return true;
                     }
                 }
