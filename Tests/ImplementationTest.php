@@ -1070,8 +1070,6 @@ class ImplementationTest extends Base
     {
         $object = new EmptyArgs();
 
-        static::assertCount(0, $object);
-
         static::expectException(BadMethodCallException::class);
         static::expectExceptionMessage(
             EmptyArgs::class .

@@ -7,14 +7,11 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftRouter;
 
 use BadMethodCallException;
-use Countable;
 use JsonSerializable;
 
-final class EmptyArgs implements Countable, JsonSerializable
+final class EmptyArgs implements JsonSerializable
 {
     use TypedArgsInterfaceImmutableSet;
-
-    const COUNT_EMPTY = 0;
 
     public function __construct()
     {
@@ -32,11 +29,6 @@ final class EmptyArgs implements Countable, JsonSerializable
             static::class .
             ' has no arguments!'
         );
-    }
-
-    public function count() : int
-    {
-        return self::COUNT_EMPTY;
     }
 
     public function toArray() : array
