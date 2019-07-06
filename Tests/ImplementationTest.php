@@ -479,6 +479,22 @@ class ImplementationTest extends Base
         $typed_args_object = $className::DaftRouterHttpRouteArgsTyped($args, $method);
 
         static::assertSame($typedArgs, $typed_args_object->toArray());
+        static::assertTrue(in_array(
+            $className::DaftRouterHttpRouteDefaultMethod(),
+            [
+                'GET',
+                'POST',
+                'CONNECT',
+                'DELETE',
+                'HEAD',
+                'OPTIONS',
+                'PATCH',
+                'PURGE',
+                'PUT',
+                'TRACE',
+            ],
+            true
+        ));
 
         $check_auto_method_checking = (
             in_array(
