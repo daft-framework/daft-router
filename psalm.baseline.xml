@@ -62,6 +62,11 @@
   <file src="Tests/ImplementationHttpRouteGeneratorTest.php">
     <DeprecatedClass occurrences="3"/>
   </file>
+  <file src="Tests/ImplementationTest.php">
+    <UnusedVariable occurrences="1">
+      <code>$prevKey</code>
+    </UnusedVariable>
+  </file>
   <file src="src/DaftRouteAcceptsBothEmptyAndTypedArgs.php">
     <InvalidArgument occurrences="1">
       <code>$method</code>
