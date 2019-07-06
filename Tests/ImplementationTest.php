@@ -15,9 +15,13 @@ use RuntimeException;
 use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
 use SignpostMarv\DaftRouter\DaftRoute;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsBothEmptyAndTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsEmptyArgs;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsOnlyEmptyArgs;
+use SignpostMarv\DaftRouter\DaftRouteAcceptsOnlyTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouteFilter;
+use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\DaftSource;
 use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\ResponseException;
@@ -476,6 +480,17 @@ class ImplementationTest extends Base
 
         static::assertSame($typedArgs, $typed_args_object->toArray());
 
+        $check_auto_method_checking = (
+            in_array(
+                DaftRouterAutoMethodCheckingTrait::class,
+                class_uses($className),
+                true
+            ) ||
+            is_a($className, DaftRouteAcceptsBothEmptyAndTypedArgs::class, true) ||
+            is_a($className, DaftRouteAcceptsOnlyEmptyArgs::class, true) ||
+            is_a($className, DaftRouteAcceptsOnlyTypedArgs::class, true)
+        );
+
         if ($typed_args_object instanceof TypedArgs) {
             if ( ! is_a($className, DaftRouteAcceptsTypedArgs::class, true)) {
                 throw new RuntimeException(
@@ -494,6 +509,13 @@ class ImplementationTest extends Base
                 $expectedRouteResult,
                 $className::DaftRouterHttpRouteWithTypedArgs($typed_args_object, $method)
             );
+
+            if ($check_auto_method_checking) {
+                static::expectException(InvalidArgumentException::class);
+                static::expectExceptionMessage('Specified method not supported!');
+
+                $className::DaftRouterHttpRouteWithTypedArgs($typed_args_object, strrev($method));
+            }
         } elseif ( ! is_a($className, DaftRouteAcceptsEmptyArgs::class, true)) {
             throw new RuntimeException(
                 'Argument 2 passed to ' .
@@ -510,6 +532,13 @@ class ImplementationTest extends Base
                 $expectedRouteResult,
                 $className::DaftRouterHttpRouteWithEmptyArgs($method)
             );
+
+            if ($check_auto_method_checking) {
+                static::expectException(InvalidArgumentException::class);
+                static::expectExceptionMessage('Specified method not supported!');
+
+                $className::DaftRouterHttpRouteWithEmptyArgs(strrev($method));
+            }
         }
     }
 
@@ -1087,6 +1116,12 @@ class ImplementationTest extends Base
                     'b' => '1970W01',
                 ],
             ],
+            [
+                EmptyArgs::class,
+                [],
+                '{}',
+                [],
+            ],
         ];
     }
 
@@ -1106,7 +1141,7 @@ class ImplementationTest extends Base
         $typed_args = new $type($args);
 
         $for_json = $typed_args->jsonSerialize();
-        $encoded = json_encode($typed_args);
+        $encoded = json_encode($typed_args, JSON_FORCE_OBJECT);
 
         /**
         * @var scalar|array<array-key, scalar|array|object|null>|null
@@ -1116,6 +1151,9 @@ class ImplementationTest extends Base
         static::assertSame($expected_decoded, $decoded);
 
         static::assertSame($expected, $encoded);
+
+        $test = new DateTimeImmutable();
+        static::assertSame($test->format('c'), TypedArgs::FormatPropertyForJson('', $test));
 
         if (is_a($type, TypedArgs::class, true)) {
             foreach ($decoded as $property => $decoded_value) {

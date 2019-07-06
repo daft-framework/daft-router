@@ -62,6 +62,10 @@ class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
         TypedArgs $args,
         string $method = null
     ) : string {
+        if ( ! is_null($method)) {
+            static::DaftRouterAutoMethodChecking($method);
+        }
+
         return '/admin/login';
     }
 

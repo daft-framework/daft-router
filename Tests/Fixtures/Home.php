@@ -39,6 +39,10 @@ class Home extends DaftRouteAcceptsOnlyEmptyArgs
     */
     public static function DaftRouterHttpRouteWithEmptyArgs(string $method = null) : string
     {
+        if ( ! is_null($method)) {
+            static::DaftRouterAutoMethodChecking($method);
+        }
+
         return '/';
     }
 }
