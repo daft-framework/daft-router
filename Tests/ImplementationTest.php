@@ -234,7 +234,6 @@ class ImplementationTest extends Base
 
     /**
     * @return mixed[][]
-    *
     * @return array<int, array{0:mixed}>
     */
     public function DataProviderEnsureDispatcherIsCorrectlyTypedPublic() : array
@@ -711,10 +710,8 @@ class ImplementationTest extends Base
     /**
     * @param class-string<DaftRouteFilter> $middleware
     * @param class-string<DaftRoute> $presentWith
-    *
     * @param HTTP_METHOD $presentWithMethod
     * @param class-string<DaftRoute> $notPresentWith
-    *
     * @param HTTP_METHOD $notPresentWithMethod
     *
     * @depends testCompilerVerifyAddRouteAddsRoutes
@@ -795,7 +792,6 @@ class ImplementationTest extends Base
 
         /**
         * @var string|false
-        *
         * @var class-string<DaftRoute>|false
         */
         $route = array_pop($dispatchedPresent);
