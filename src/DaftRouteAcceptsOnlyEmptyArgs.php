@@ -26,21 +26,6 @@ abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArg
     /**
     * @psalm-suppress MoreSpecificImplementedParamType
     *
-    * @deprecated
-    *
-    * @param EmptyArgs $args
-    * @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
-    */
-    final public static function DaftRouterHttpRoute(
-        $args,
-        string $method = null
-    ) : string {
-        return static::DaftRouterHttpRouteWithEmptyArgs($method);
-    }
-
-    /**
-    * @psalm-suppress MoreSpecificImplementedParamType
-    *
     * @param T1 $args
     * @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
     *

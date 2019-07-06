@@ -28,16 +28,6 @@ interface DaftRoute
     public static function DaftRouterRoutes() : array;
 
     /**
-    * @deprecated
-    *
-    * @param T2|EmptyArgs $args
-    * @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
-    *
-    * @throws \InvalidArgumentException if no uri could be found
-    */
-    public static function DaftRouterHttpRoute($args, string $method = null) : string;
-
-    /**
     * @return HTTP_METHOD_DEFAULT
     */
     public static function DaftRouterHttpRouteDefaultMethod();

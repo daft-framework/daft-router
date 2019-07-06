@@ -61,31 +61,6 @@ abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAccepts
     ) : Response;
 
     /**
-    * @param T2|EmptyArgs $args
-    * @param HTTP_METHOD_EMPTY|HTTP_METHOD_TYPED|null $method
-    */
-    final public static function DaftRouterHttpRoute(
-        $args,
-        string $method = null
-    ) : string {
-        if ($args instanceof TypedArgs) {
-            /**
-            * @var HTTP_METHOD_TYPED|null
-            */
-            $method = $method;
-
-            return static::DaftRouterHttpRouteWithTypedArgs($args, $method);
-        }
-
-        /**
-        * @var HTTP_METHOD_EMPTY|null
-        */
-        $method = $method;
-
-        return static::DaftRouterHttpRouteWithEmptyArgs($method);
-    }
-
-    /**
     * @param T2 $args
     * @param HTTP_METHOD_TYPED|null $method
     *

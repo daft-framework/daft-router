@@ -38,19 +38,6 @@ abstract class DaftRouteAcceptsOnlyTypedArgs implements DaftRouteAcceptsTypedArg
     ) : Response;
 
     /**
-    * @psalm-suppress MoreSpecificImplementedParamType
-    *
-    * @param T2 $args
-    * @param HTTP_METHOD|null $method
-    *
-    * @throws \InvalidArgumentException if no uri could be found
-    */
-    final public static function DaftRouterHttpRoute($args, string $method = null) : string
-    {
-        return static::DaftRouterHttpRouteWithTypedArgs($args, $method);
-    }
-
-    /**
     * @param T2 $args
     * @param HTTP_METHOD|null $method
     *
