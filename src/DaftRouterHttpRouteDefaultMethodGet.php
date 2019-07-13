@@ -8,8 +8,8 @@ namespace SignpostMarv\DaftRouter;
 
 trait DaftRouterHttpRouteDefaultMethodGet
 {
-    public static function DaftRouterHttpRouteDefaultMethod()
-    {
-        return 'GET';
-    }
+	public static function DaftRouterHttpRouteDefaultMethod()
+	{
+		return 'GET';
+	}
 }

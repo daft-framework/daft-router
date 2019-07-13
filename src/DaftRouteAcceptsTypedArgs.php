@@ -23,32 +23,32 @@ use Symfony\Component\HttpFoundation\Response;
 */
 interface DaftRouteAcceptsTypedArgs extends DaftRoute
 {
-    /**
-    * @param T2 $args
-    *
-    * @return R_EMPTY
-    */
-    public static function DaftRouterHandleRequestWithTypedArgs(
-        Request $request,
-        TypedArgs $args
-    ) : Response;
+	/**
+	* @param T2 $args
+	*
+	* @return R_EMPTY
+	*/
+	public static function DaftRouterHandleRequestWithTypedArgs(
+		Request $request,
+		TypedArgs $args
+	) : Response;
 
-    /**
-    * @param T1_STRINGS|array<empty, empty> $args
-    * @param HTTP_METHOD|null $method
-    *
-    * @return T2|EmptyArgs
-    */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null);
+	/**
+	* @param T1_STRINGS|array<empty, empty> $args
+	* @param HTTP_METHOD|null $method
+	*
+	* @return T2|EmptyArgs
+	*/
+	public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null);
 
-    /**
-    * @param T2 $args
-    * @param HTTP_METHOD|null $method
-    *
-    * @throws \InvalidArgumentException if no uri could be found
-    */
-    public static function DaftRouterHttpRouteWithTypedArgs(
-        TypedArgs $args,
-        string $method = null
-    ) : string;
+	/**
+	* @param T2 $args
+	* @param HTTP_METHOD|null $method
+	*
+	* @throws \InvalidArgumentException if no uri could be found
+	*/
+	public static function DaftRouterHttpRouteWithTypedArgs(
+		TypedArgs $args,
+		string $method = null
+	) : string;
 }

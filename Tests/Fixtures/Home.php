@@ -20,29 +20,29 @@ use Symfony\Component\HttpFoundation\Response;
 */
 class Home extends DaftRouteAcceptsOnlyEmptyArgs
 {
-    use DaftRouterHttpRouteDefaultMethodGet;
+	use DaftRouterHttpRouteDefaultMethodGet;
 
-    public static function DaftRouterHandleRequestWithEmptyArgs(Request $request) : Response
-    {
-        return new Response('');
-    }
+	public static function DaftRouterHandleRequestWithEmptyArgs(Request $request) : Response
+	{
+		return new Response('');
+	}
 
-    public static function DaftRouterRoutes() : array
-    {
-        return [
-            '/' => ['GET'],
-        ];
-    }
+	public static function DaftRouterRoutes() : array
+	{
+		return [
+			'/' => ['GET'],
+		];
+	}
 
-    /**
-    * @param 'GET'|null $method
-    */
-    public static function DaftRouterHttpRouteWithEmptyArgs(string $method = null) : string
-    {
-        if ( ! is_null($method)) {
-            static::DaftRouterAutoMethodChecking($method);
-        }
+	/**
+	* @param 'GET'|null $method
+	*/
+	public static function DaftRouterHttpRouteWithEmptyArgs(string $method = null) : string
+	{
+		if ( ! is_null($method)) {
+			static::DaftRouterAutoMethodChecking($method);
+		}
 
-        return '/';
-    }
+		return '/';
+	}
 }

@@ -23,15 +23,15 @@ use Symfony\Component\HttpFoundation\Response;
 */
 interface DaftRouteAcceptsEmptyArgs extends DaftRoute
 {
-    /**
-    * @return R_EMPTY
-    */
-    public static function DaftRouterHandleRequestWithEmptyArgs(Request $request) : Response;
+	/**
+	* @return R_EMPTY
+	*/
+	public static function DaftRouterHandleRequestWithEmptyArgs(Request $request) : Response;
 
-    /**
-    * @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
-    *
-    * @throws \InvalidArgumentException if no uri could be found
-    */
-    public static function DaftRouterHttpRouteWithEmptyArgs(string $method = null) : string;
+	/**
+	* @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
+	*
+	* @throws \InvalidArgumentException if no uri could be found
+	*/
+	public static function DaftRouterHttpRouteWithEmptyArgs(string $method = null) : string;
 }

@@ -17,35 +17,35 @@ use SignpostMarv\DaftRouter\Router\RouteCollector;
 
 class Compiler extends Base
 {
-    /**
-    * @var \SignpostMarv\DaftInterfaceCollector\StaticMethodCollector
-    */
-    protected $collector;
+	/**
+	* @var \SignpostMarv\DaftInterfaceCollector\StaticMethodCollector
+	*/
+	protected $collector;
 
-    protected function __construct()
-    {
-        parent::__construct();
-        $this->collector = new BaseStaticMethodCollector(
-            Base::CollectorConfig,
-            Base::CollectorInterfacesConfig
-        );
-    }
+	protected function __construct()
+	{
+		parent::__construct();
+		$this->collector = new BaseStaticMethodCollector(
+			Base::CollectorConfig,
+			Base::CollectorInterfacesConfig
+		);
+	}
 
-    public static function ObtainCompiler() : self
-    {
-        return new static();
-    }
+	public static function ObtainCompiler() : self
+	{
+		return new static();
+	}
 
-    /**
-    * @param mixed $out
-    */
-    public static function EnsureDispatcherIsCorrectlyTypedPublic($out) : BaseDispatcher
-    {
-        return static::EnsureDispatcherIsCorrectlyTyped($out);
-    }
+	/**
+	* @param mixed $out
+	*/
+	public static function EnsureDispatcherIsCorrectlyTypedPublic($out) : BaseDispatcher
+	{
+		return static::EnsureDispatcherIsCorrectlyTyped($out);
+	}
 
-    protected function ObtainCollector() : BaseStaticMethodCollector
-    {
-        return $this->collector;
-    }
+	protected function ObtainCollector() : BaseStaticMethodCollector
+	{
+		return $this->collector;
+	}
 }

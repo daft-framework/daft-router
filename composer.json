@@ -1,65 +1,65 @@
 {
-    "name": "signpostmarv/daft-router",
-    "description": "Daft Router",
-    "type": "library",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "SignpostMarv",
-            "email": "me@signpostmarv.name"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "SignpostMarv\\DaftRouter\\": "./src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "SignpostMarv\\DaftInterfaceCollector\\Tests\\": "./vendor/signpostmarv/daft-interface-collector/Tests/",
-            "SignpostMarv\\DaftRouter\\Tests\\": "./Tests/"
-        }
-    },
-    "config": {
-        "classmap-authoritative": true,
-        "sort-packages": true
-    },
-    "scripts": {
-        "tests": [
-            "phpunit -vvvv --coverage-clover=phpunit.clover",
-            "psalm --shepherd --show-info=false",
-            "phpcpd src",
-            "phpmnd ./ --exclude=./phpunit/ --exclude=./vendor/ --non-zero-exit-on-violation --hint",
-            "composer-require-checker check ./composer.json",
-            "infection --min-msi=100",
-            "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
-        ]
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.1.x-dev"
-        }
-    },
-    "suggest": {
-        "vimeo/psalm": "Useful for static analysis to reduce runtime type checks etc."
-    },
-    "require": {
-        "php": "^7.3",
-        "ext-json": "*",
-        "ext-mbstring": "*",
-        "nikic/fast-route": "^1.3",
-        "signpostmarv/daft-interface-collector": "^2.0",
-        "symfony/http-foundation": "^4.3"
-    },
-    "require-dev": {
-        "infection/infection": "^0.13.4",
-        "maglnet/composer-require-checker": "^2.0",
-        "phpunit/phpunit": "^8.2",
-        "povils/phpmnd": "^2.1",
-        "psalm/plugin-phpunit": "^0.6.0",
-        "roave/security-advisories": "dev-master",
-        "sebastian/phpcpd": "^4.1",
-        "signpostmarv/php-cs-fixer-config": "^0.10.0",
-        "vimeo/psalm": "dev-master"
-    }
+	"name": "signpostmarv/daft-router",
+	"description": "Daft Router",
+	"type": "library",
+	"license": "Apache-2.0",
+	"authors": [
+		{
+			"name": "SignpostMarv",
+			"email": "me@signpostmarv.name"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"SignpostMarv\\DaftRouter\\": "./src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"SignpostMarv\\DaftInterfaceCollector\\Tests\\": "./vendor/signpostmarv/daft-interface-collector/Tests/",
+			"SignpostMarv\\DaftRouter\\Tests\\": "./Tests/"
+		}
+	},
+	"config": {
+		"classmap-authoritative": true,
+		"sort-packages": true
+	},
+	"scripts": {
+		"tests": [
+			"phpunit -vvvv --coverage-clover=phpunit.clover",
+			"psalm --shepherd --show-info=false",
+			"phpcpd src",
+			"phpmnd ./ --exclude=./phpunit/ --exclude=./vendor/ --non-zero-exit-on-violation --hint",
+			"composer-require-checker check ./composer.json",
+			"infection --min-msi=100",
+			"php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
+		]
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "3.1.x-dev"
+		}
+	},
+	"suggest": {
+		"vimeo/psalm": "Useful for static analysis to reduce runtime type checks etc."
+	},
+	"require": {
+		"php": "^7.3",
+		"ext-json": "*",
+		"ext-mbstring": "*",
+		"nikic/fast-route": "^1.3",
+		"signpostmarv/daft-interface-collector": "^2.0",
+		"symfony/http-foundation": "^4.3"
+	},
+	"require-dev": {
+		"infection/infection": "^0.13.4",
+		"maglnet/composer-require-checker": "^2.0",
+		"phpunit/phpunit": "^8.2",
+		"povils/phpmnd": "^2.1",
+		"psalm/plugin-phpunit": "^0.6.0",
+		"roave/security-advisories": "dev-master",
+		"sebastian/phpcpd": "^4.1",
+		"signpostmarv/php-cs-fixer-config": "^0.11.0",
+		"vimeo/psalm": "dev-master"
+	}
 }

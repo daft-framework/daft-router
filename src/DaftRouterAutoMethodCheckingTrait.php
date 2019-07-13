@@ -13,17 +13,17 @@ use InvalidArgumentException;
 */
 trait DaftRouterAutoMethodCheckingTrait
 {
-    /**
-    * @return array<string, array<int, HTTP_METHOD>> an array of URIs & methods
-    */
-    abstract public static function DaftRouterRoutes() : array;
+	/**
+	* @return array<string, array<int, HTTP_METHOD>> an array of URIs & methods
+	*/
+	abstract public static function DaftRouterRoutes() : array;
 
-    protected static function DaftRouterAutoMethodChecking(string $method) : void
-    {
-        $methods = array_merge([], ...array_values(static::DaftRouterRoutes()));
+	protected static function DaftRouterAutoMethodChecking(string $method) : void
+	{
+		$methods = array_merge([], ...array_values(static::DaftRouterRoutes()));
 
-        if ( ! in_array($method, $methods, true)) {
-            throw new InvalidArgumentException('Specified method not supported!');
-        }
-    }
+		if ( ! in_array($method, $methods, true)) {
+			throw new InvalidArgumentException('Specified method not supported!');
+		}
+	}
 }

@@ -22,21 +22,21 @@ use Symfony\Component\HttpFoundation\Response;
 */
 interface DaftRoute
 {
-    /**
-    * @return array<string, array<int, HTTP_METHOD>> an array of URIs & methods
-    */
-    public static function DaftRouterRoutes() : array;
+	/**
+	* @return array<string, array<int, HTTP_METHOD>> an array of URIs & methods
+	*/
+	public static function DaftRouterRoutes() : array;
 
-    /**
-    * @return HTTP_METHOD_DEFAULT
-    */
-    public static function DaftRouterHttpRouteDefaultMethod();
+	/**
+	* @return HTTP_METHOD_DEFAULT
+	*/
+	public static function DaftRouterHttpRouteDefaultMethod();
 
-    /**
-    * @param T1_STRINGS|array<empty, empty> $args
-    * @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
-    *
-    * @return T2|EmptyArgs
-    */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null);
+	/**
+	* @param T1_STRINGS|array<empty, empty> $args
+	* @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
+	*
+	* @return T2|EmptyArgs
+	*/
+	public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null);
 }

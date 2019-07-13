@@ -24,8 +24,8 @@ use Symfony\Component\HttpFoundation\Response;
 */
 abstract class DaftRouteAcceptsBothEmptyAndTypedArgs implements DaftRouteAcceptsEmptyArgs, DaftRouteAcceptsTypedArgs
 {
-    /**
-    * @template-use DaftRouterAutoMethodCheckingTrait<HTTP_METHOD_EMPTY|HTTP_METHOD_TYPED>
-    */
-    use DaftRouterAutoMethodCheckingTrait;
+	/**
+	* @template-use DaftRouterAutoMethodCheckingTrait<HTTP_METHOD_EMPTY|HTTP_METHOD_TYPED>
+	*/
+	use DaftRouterAutoMethodCheckingTrait;
 }

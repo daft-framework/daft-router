@@ -18,19 +18,19 @@ use SignpostMarv\DaftRouter\TypedArgs;
 */
 class LocatorArgs extends TypedArgs
 {
-    /**
-    * @var T
-    */
-    protected $typed;
+	/**
+	* @var T
+	*/
+	protected $typed;
 
-    /**
-    * @param T $args
-    */
-    public function __construct(array $args)
-    {
-        /**
-        * @var T
-        */
-        $this->typed = $args;
-    }
+	/**
+	* @param T $args
+	*/
+	public function __construct(array $args)
+	{
+		/**
+		* @var T
+		*/
+		$this->typed = $args;
+	}
 }

@@ -18,28 +18,28 @@ use SignpostMarv\DaftRouter\TypedArgs;
 */
 class IntIdArgs extends TypedArgs
 {
-    /**
-    * @param array{id:string} $args
-    */
-    public function __construct(array $args)
-    {
-        if ( ! ctype_digit($args['id'])) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                ' must be a string-as-int, ' .
-                var_export($args['id'], true) .
-                ' given!'
-            );
-        }
+	/**
+	* @param array{id:string} $args
+	*/
+	public function __construct(array $args)
+	{
+		if ( ! ctype_digit($args['id'])) {
+			throw new InvalidArgumentException(
+				'Argument 1 passed to ' .
+				__METHOD__ .
+				' must be a string-as-int, ' .
+				var_export($args['id'], true) .
+				' given!'
+			);
+		}
 
-        $args['id'] = (int) $args['id'];
+		$args['id'] = (int) $args['id'];
 
-        /**
-        * @var T
-        */
-        $args = $args;
+		/**
+		* @var T
+		*/
+		$args = $args;
 
-        $this->typed = $args;
-    }
+		$this->typed = $args;
+	}
 }

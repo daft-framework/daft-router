@@ -12,14 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Config implements DaftSource
 {
-    public static function DaftRouterRouteAndMiddlewareSources() : array
-    {
-        return [
-            Home::class,
-            Login::class,
-            NotLoggedIn::class,
-            AppendHeader::class,
-            DoesNothing::class,
-        ];
-    }
+	public static function DaftRouterRouteAndMiddlewareSources() : array
+	{
+		return [
+			Home::class,
+			Login::class,
+			NotLoggedIn::class,
+			AppendHeader::class,
+			DoesNothing::class,
+		];
+	}
 }

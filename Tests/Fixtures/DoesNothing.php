@@ -13,19 +13,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DoesNothing implements DaftRouteFilter
 {
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixExceptions() : array
-    {
-        return [];
-    }
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixExceptions() : array
+	{
+		return [];
+	}
 
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixRequirements() : array
-    {
-        return [];
-    }
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixRequirements() : array
+	{
+		return [];
+	}
 }

@@ -17,18 +17,18 @@ use SignpostMarv\DaftRouter\Router\RouteCollector;
 
 class CompilerWithFixturesDispatcher extends Compiler
 {
-    /**
-    * @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
-    */
-    public static function ObtainDispatcher(array $options, string ...$sources) : BaseDispatcher
-    {
-        $compiler = new self();
-        $options['dispatcher'] = Dispatcher::class;
-        $options['routeCollector'] = RouteCollector::class;
+	/**
+	* @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
+	*/
+	public static function ObtainDispatcher(array $options, string ...$sources) : BaseDispatcher
+	{
+		$compiler = new self();
+		$options['dispatcher'] = Dispatcher::class;
+		$options['routeCollector'] = RouteCollector::class;
 
-        return static::EnsureDispatcherIsCorrectlyTyped(cachedDispatcher(
-            $compiler->CompileDispatcherClosure(...$sources),
-            $options
-        ));
-    }
+		return static::EnsureDispatcherIsCorrectlyTyped(cachedDispatcher(
+			$compiler->CompileDispatcherClosure(...$sources),
+			$options
+		));
+	}
 }

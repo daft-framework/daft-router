@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8872138eb3c5237b6da78087d4776f61",
+    "content-hash": "6b010d464cb784f685bbbef2ac6b6b3f",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -54,16 +54,16 @@
         },
         {
             "name": "signpostmarv/daft-interface-collector",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-interface-collector.git",
-                "reference": "cc2919c7f4c8535722d11ea66ed6119c35a9c817"
+                "reference": "16559454460fe4c91a5d5286f3763e902d23e04e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-interface-collector/zipball/cc2919c7f4c8535722d11ea66ed6119c35a9c817",
-                "reference": "cc2919c7f4c8535722d11ea66ed6119c35a9c817",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-interface-collector/zipball/16559454460fe4c91a5d5286f3763e902d23e04e",
+                "reference": "16559454460fe4c91a5d5286f3763e902d23e04e",
                 "shasum": ""
             },
             "require": {
@@ -71,15 +71,17 @@
             },
             "require-dev": {
                 "bmitch/churn-php": "^1.0",
+                "ext-mbstring": "*",
                 "infection/infection": "^0.13.4",
                 "maglnet/composer-require-checker": "^2.0",
+                "php-coveralls/php-coveralls": "^2.1",
                 "phpunit/phpunit": "^8.2",
                 "povils/phpmnd": "^2.1",
-                "psalm/plugin-phpunit": "^0.6.0",
+                "psalm/plugin-phpunit": "^0.7.0",
                 "roave/security-advisories": "dev-master",
                 "sebastian/phpcpd": "^4.1",
-                "signpostmarv/php-cs-fixer-config": "^0.10.0",
-                "vimeo/psalm": "^3.4"
+                "signpostmarv/php-cs-fixer-config": "^0.11.0",
+                "vimeo/psalm": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -98,7 +100,7 @@
                 }
             ],
             "description": "interface collector. daft reasons again.",
-            "time": "2019-07-07T09:45:32+00:00"
+            "time": "2019-07-13T09:04:03+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -3649,16 +3651,16 @@
         },
         {
             "name": "signpostmarv/php-cs-fixer-config",
-            "version": "v0.10.0",
+            "version": "v0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/PHP-CS-Fixer-Config.git",
-                "reference": "27f52c065c92ddb65e89db454bec3540653b7576"
+                "reference": "406e18c690c06d454d975733610cb3e853986ab0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/PHP-CS-Fixer-Config/zipball/27f52c065c92ddb65e89db454bec3540653b7576",
-                "reference": "27f52c065c92ddb65e89db454bec3540653b7576",
+                "url": "https://api.github.com/repos/SignpostMarv/PHP-CS-Fixer-Config/zipball/406e18c690c06d454d975733610cb3e853986ab0",
+                "reference": "406e18c690c06d454d975733610cb3e853986ab0",
                 "shasum": ""
             },
             "require": {
@@ -3689,7 +3691,7 @@
                 }
             ],
             "description": "PHP-CS-Fixer Config",
-            "time": "2019-06-08T22:52:15+00:00"
+            "time": "2019-07-12T21:00:45+00:00"
         },
         {
             "name": "symfony/console",

@@ -13,34 +13,34 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NotLoggedIn implements DaftRequestInterceptor
 {
-    public static function DaftRouterMiddlewareHandler(
-        Request $request,
-        ? Response $response
-    ) : ? Response {
-        if ( ! ($response instanceof Response) && ! $request->query->has('loggedin')) {
-            return new RedirectResponse('/login');
-        }
+	public static function DaftRouterMiddlewareHandler(
+		Request $request,
+		? Response $response
+	) : ? Response {
+		if ( ! ($response instanceof Response) && ! $request->query->has('loggedin')) {
+			return new RedirectResponse('/login');
+		}
 
-        return $response;
-    }
+		return $response;
+	}
 
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixExceptions() : array
-    {
-        return [
-            '/login',
-        ];
-    }
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixExceptions() : array
+	{
+		return [
+			'/login',
+		];
+	}
 
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixRequirements() : array
-    {
-        return [
-            '/',
-        ];
-    }
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixRequirements() : array
+	{
+		return [
+			'/',
+		];
+	}
 }

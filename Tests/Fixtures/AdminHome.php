@@ -20,25 +20,25 @@ use Symfony\Component\HttpFoundation\Response;
 */
 class AdminHome extends DaftRouteAcceptsOnlyEmptyArgs
 {
-    use DaftRouterHttpRouteDefaultMethodGet;
+	use DaftRouterHttpRouteDefaultMethodGet;
 
-    public static function DaftRouterHandleRequestWithEmptyArgs(Request $request) : Response
-    {
-        return new Response('');
-    }
+	public static function DaftRouterHandleRequestWithEmptyArgs(Request $request) : Response
+	{
+		return new Response('');
+	}
 
-    public static function DaftRouterRoutes() : array
-    {
-        return [
-            '/admin' => ['GET'],
-        ];
-    }
+	public static function DaftRouterRoutes() : array
+	{
+		return [
+			'/admin' => ['GET'],
+		];
+	}
 
-    /**
-    * @param 'GET'|null $method
-    */
-    public static function DaftRouterHttpRouteWithEmptyArgs(string $method = null) : string
-    {
-        return '/admin';
-    }
+	/**
+	* @param 'GET'|null $method
+	*/
+	public static function DaftRouterHttpRouteWithEmptyArgs(string $method = null) : string
+	{
+		return '/admin';
+	}
 }

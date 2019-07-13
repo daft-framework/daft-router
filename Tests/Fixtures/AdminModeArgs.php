@@ -15,11 +15,11 @@ use SignpostMarv\DaftRouter\TypedArgs;
 */
 class AdminModeArgs extends StringModeArgs
 {
-    /**
-    * @param T $args
-    */
-    public function __construct(array $args = ['mode' => 'admin'])
-    {
-        parent::__construct($args);
-    }
+	/**
+	* @param T $args
+	*/
+	public function __construct(array $args = ['mode' => 'admin'])
+	{
+		parent::__construct($args);
+	}
 }

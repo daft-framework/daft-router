@@ -18,11 +18,11 @@ use SignpostMarv\DaftRouter\TypedArgs;
 */
 class IntIdStringSlugArgs extends IntIdArgs
 {
-    /**
-    * @param array{id:string, slug:string} $args
-    */
-    public function __construct(array $args)
-    {
-        parent::__construct($args);
-    }
+	/**
+	* @param array{id:string, slug:string} $args
+	*/
+	public function __construct(array $args)
+	{
+		parent::__construct($args);
+	}
 }

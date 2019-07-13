@@ -27,71 +27,71 @@ use Symfony\Component\HttpFoundation\Response;
 */
 class Profile extends DaftRouteAcceptsOnlyTypedArgs
 {
-    use DaftRouterHttpRouteDefaultMethodGet;
+	use DaftRouterHttpRouteDefaultMethodGet;
 
-    const MIN_EXPECTED_ARGS = 1;
+	const MIN_EXPECTED_ARGS = 1;
 
-    const MAX_EXPECTED_ARGS = 2;
+	const MAX_EXPECTED_ARGS = 2;
 
-    /**
-    * @param IntIdArgs|IntIdStringSlugArgs $args
-    */
-    public static function DaftRouterHandleRequestWithTypedArgs(
-        Request $request,
-        TypedArgs $args
-    ) : Response {
-        static::DaftRouterAutoMethodChecking($request->getMethod());
+	/**
+	* @param IntIdArgs|IntIdStringSlugArgs $args
+	*/
+	public static function DaftRouterHandleRequestWithTypedArgs(
+		Request $request,
+		TypedArgs $args
+	) : Response {
+		static::DaftRouterAutoMethodChecking($request->getMethod());
 
-        return new Response('');
-    }
+		return new Response('');
+	}
 
-    public static function DaftRouterRoutes() : array
-    {
-        return [
-            '/profile/{id:\d+}[~{slug:[^\/]+}]' => ['GET'],
-        ];
-    }
+	public static function DaftRouterRoutes() : array
+	{
+		return [
+			'/profile/{id:\d+}[~{slug:[^\/]+}]' => ['GET'],
+		];
+	}
 
-    /**
-    * @param IntIdArgs|IntIdStringSlugArgs $args
-    * @param 'GET'|null $method
-    */
-    public static function DaftRouterHttpRouteWithTypedArgs(
-        TypedArgs $args,
-        string $method = null
-    ) : string {
-        $method = $method ?? static::DaftRouterHttpRouteDefaultMethod();
-        static::DaftRouterAutoMethodChecking($method);
+	/**
+	* @param IntIdArgs|IntIdStringSlugArgs $args
+	* @param 'GET'|null $method
+	*/
+	public static function DaftRouterHttpRouteWithTypedArgs(
+		TypedArgs $args,
+		string $method = null
+	) : string {
+		$method = $method ?? static::DaftRouterHttpRouteDefaultMethod();
+		static::DaftRouterAutoMethodChecking($method);
 
-        if ($args instanceof IntIdStringSlugArgs) {
-            return
-                '/profile/' .
-                rawurlencode((string) $args->id) .
-                '~' .
-                rawurlencode($args->slug);
-        }
+		if ($args instanceof IntIdStringSlugArgs) {
+			return
+				'/profile/' .
+				rawurlencode((string) $args->id) .
+				'~' .
+				rawurlencode($args->slug);
+		}
 
-        /**
-        * @var IntIdArgs
-        */
-        $args = $args;
+		/**
+		* @var IntIdArgs
+		*/
+		$args = $args;
 
-        return
-            '/profile/' .
-            rawurlencode((string) $args->id);
-    }
+		return
+			'/profile/' .
+			rawurlencode((string) $args->id);
+	}
 
-    /**
-    * @param S_SLUG|S_SANS_SLUG $args
-    *
-    * @return IntIdArgs|IntIdStringSlugArgs
-    */
-    public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null)
-    {
-        if (isset($args['slug'])) {
-            return new IntIdStringSlugArgs($args);
-        }
+	/**
+	* @param S_SLUG|S_SANS_SLUG $args
+	*
+	* @return IntIdArgs|IntIdStringSlugArgs
+	*/
+	public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null)
+	{
+		if (isset($args['slug'])) {
+			return new IntIdStringSlugArgs($args);
+		}
 
-        return new IntIdArgs($args);
-    }
+		return new IntIdArgs($args);
+	}
 }

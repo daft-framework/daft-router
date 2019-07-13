@@ -19,37 +19,37 @@ use SignpostMarv\DaftRouter\TypedArgs;
 */
 class DateArgs extends TypedArgs
 {
-    /**
-    * @var T
-    */
-    protected $typed;
+	/**
+	* @var T
+	*/
+	protected $typed;
 
-    /**
-    * @param array{a:string, b:string} $data
-    */
-    public function __construct(array $data)
-    {
-        /**
-        * @var T
-        */
-        $typed = [
-            'a' => new DateTimeImmutable($data['a']),
-            'b' => new DateTimeImmutable($data['b']),
-        ];
+	/**
+	* @param array{a:string, b:string} $data
+	*/
+	public function __construct(array $data)
+	{
+		/**
+		* @var T
+		*/
+		$typed = [
+			'a' => new DateTimeImmutable($data['a']),
+			'b' => new DateTimeImmutable($data['b']),
+		];
 
-        $this->typed = $typed;
-    }
+		$this->typed = $typed;
+	}
 
-    /**
-    * @param 'a'|'b' $property
-    * @param DateTimeImmutable $value
-    */
-    public static function FormatPropertyForJson(string $property, $value)
-    {
-        if ('a' === $property) {
-            return $value->format('Y-m-d');
-        }
+	/**
+	* @param 'a'|'b' $property
+	* @param DateTimeImmutable $value
+	*/
+	public static function FormatPropertyForJson(string $property, $value)
+	{
+		if ('a' === $property) {
+			return $value->format('Y-m-d');
+		}
 
-        return $value->format('Y\WW');
-    }
+		return $value->format('Y\WW');
+	}
 }

@@ -13,32 +13,32 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AppendHeader implements DaftResponseModifier
 {
-    public static function DaftRouterMiddlewareModifier(
-        Request $request,
-        Response $response
-    ) : Response {
-        $response->headers->set('foo', 'bar');
+	public static function DaftRouterMiddlewareModifier(
+		Request $request,
+		Response $response
+	) : Response {
+		$response->headers->set('foo', 'bar');
 
-        return $response;
-    }
+		return $response;
+	}
 
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixExceptions() : array
-    {
-        return [
-            '/login',
-        ];
-    }
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixExceptions() : array
+	{
+		return [
+			'/login',
+		];
+	}
 
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixRequirements() : array
-    {
-        return [
-            '/',
-        ];
-    }
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixRequirements() : array
+	{
+		return [
+			'/',
+		];
+	}
 }

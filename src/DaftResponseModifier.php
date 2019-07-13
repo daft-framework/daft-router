@@ -15,13 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 */
 interface DaftResponseModifier extends DaftRouteFilter
 {
-    /**
-    * @param T1 $response
-    *
-    * @return T2
-    */
-    public static function DaftRouterMiddlewareModifier(
-        Request $request,
-        Response $response
-    ) : Response;
+	/**
+	* @param T1 $response
+	*
+	* @return T2
+	*/
+	public static function DaftRouterMiddlewareModifier(
+		Request $request,
+		Response $response
+	) : Response;
 }

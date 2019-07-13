@@ -22,54 +22,54 @@ use Symfony\Component\HttpFoundation\Response;
 */
 class Content extends DaftRouteAcceptsOnlyTypedArgs
 {
-    use DaftRouterHttpRouteDefaultMethodGet;
+	use DaftRouterHttpRouteDefaultMethodGet;
 
-    const MIN_EXPECTED_ARGS = 1;
+	const MIN_EXPECTED_ARGS = 1;
 
-    const MAX_EXPECTED_ARGS = 2;
+	const MAX_EXPECTED_ARGS = 2;
 
-    /**
-    * @param TYPED $args
-    */
-    public static function DaftRouterHandleRequestWithTypedArgs(
-        Request $request,
-        TypedArgs $args
-    ) : Response {
-        return new Response('');
-    }
+	/**
+	* @param TYPED $args
+	*/
+	public static function DaftRouterHandleRequestWithTypedArgs(
+		Request $request,
+		TypedArgs $args
+	) : Response {
+		return new Response('');
+	}
 
-    public static function DaftRouterRoutes() : array
-    {
-        return [
-            '{locator:/.+}' => ['GET'],
-        ];
-    }
+	public static function DaftRouterRoutes() : array
+	{
+		return [
+			'{locator:/.+}' => ['GET'],
+		];
+	}
 
-    /**
-    * @param TYPED $args
-    */
-    public static function DaftRouterHttpRouteWithTypedArgs(
-        TypedArgs $args,
-        string $method = null
-    ) : string {
-        return $args->locator;
-    }
+	/**
+	* @param TYPED $args
+	*/
+	public static function DaftRouterHttpRouteWithTypedArgs(
+		TypedArgs $args,
+		string $method = null
+	) : string {
+		return $args->locator;
+	}
 
-    /**
-    * @param T $args
-    * @param 'GET'|null $method
-    *
-    * @return TYPED
-    */
-    public static function DaftRouterHttpRouteArgsTyped(
-        array $args,
-        string $method = null
-    ) : TypedArgs {
-        /**
-        * @var T
-        */
-        $args = $args;
+	/**
+	* @param T $args
+	* @param 'GET'|null $method
+	*
+	* @return TYPED
+	*/
+	public static function DaftRouterHttpRouteArgsTyped(
+		array $args,
+		string $method = null
+	) : TypedArgs {
+		/**
+		* @var T
+		*/
+		$args = $args;
 
-        return new LocatorArgs($args);
-    }
+		return new LocatorArgs($args);
+	}
 }

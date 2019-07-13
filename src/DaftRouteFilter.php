@@ -8,13 +8,13 @@ namespace SignpostMarv\DaftRouter;
 
 interface DaftRouteFilter
 {
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixExceptions() : array;
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixExceptions() : array;
 
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixRequirements() : array;
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixRequirements() : array;
 }

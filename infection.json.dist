@@ -1,40 +1,40 @@
 {
-    "timeout": 10,
-    "source": {
-        "directories": [
-            "src"
-        ]
-    },
-    "logs": {
-        "text": "infection.log"
-    },
-    "mutators": {
-        "@default": true,
-        "MBString": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\Router\\Compiler::CreateFilterForMiddlewareThatMatchesAnUri",
-                "SignpostMarv\\DaftRouter\\Router\\Compiler::DoesMiddlewareExcludeSelfFromUri"
-            ]
-        },
-        "ProtectedVisibility": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\Router\\Compiler::ObtainCollector",
-                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleDispatch",
-                "SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleRouteInfo"
-            ]
-        },
-        "PublicVisibility": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodCheckingTrait",
-                "SignpostMarv\\DaftRouter\\DaftRouterHttpRouteDefaultMethodGet::DaftRouterHttpRouteDefaultMethod",
-                "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
-            ]
-        },
-        "Throw_": {
-            "ignore": [
-                "SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking",
-                "SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
-            ]
-        }
-    }
+	"timeout": 10,
+	"source": {
+		"directories": [
+			"src"
+		]
+	},
+	"logs": {
+		"text": "infection.log"
+	},
+	"mutators": {
+		"@default": true,
+		"MBString": {
+			"ignore": [
+				"SignpostMarv\\DaftRouter\\Router\\Compiler::CreateFilterForMiddlewareThatMatchesAnUri",
+				"SignpostMarv\\DaftRouter\\Router\\Compiler::DoesMiddlewareExcludeSelfFromUri"
+			]
+		},
+		"ProtectedVisibility": {
+			"ignore": [
+				"SignpostMarv\\DaftRouter\\Router\\Compiler::ObtainCollector",
+				"SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleDispatch",
+				"SignpostMarv\\DaftRouter\\Router\\Dispatcher::handleRouteInfo"
+			]
+		},
+		"PublicVisibility": {
+			"ignore": [
+				"SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodCheckingTrait",
+				"SignpostMarv\\DaftRouter\\DaftRouterHttpRouteDefaultMethodGet::DaftRouterHttpRouteDefaultMethod",
+				"SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
+			]
+		},
+		"Throw_": {
+			"ignore": [
+				"SignpostMarv\\DaftRouter\\DaftRouterAutoMethodCheckingTrait::DaftRouterAutoMethodChecking",
+				"SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherClosure"
+			]
+		}
+	}
 }

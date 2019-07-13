@@ -18,23 +18,23 @@ use Symfony\Component\HttpFoundation\Response;
 */
 abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArgs
 {
-    /**
-    * @template-use DaftRouterAutoMethodCheckingTrait<HTTP_METHOD>
-    */
-    use DaftRouterAutoMethodCheckingTrait;
+	/**
+	* @template-use DaftRouterAutoMethodCheckingTrait<HTTP_METHOD>
+	*/
+	use DaftRouterAutoMethodCheckingTrait;
 
-    /**
-    * @psalm-suppress MoreSpecificImplementedParamType
-    *
-    * @param T1 $args
-    * @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
-    *
-    * @return EmptyArgs
-    */
-    final public static function DaftRouterHttpRouteArgsTyped(
-        array $args,
-        string $method = null
-    ) {
-        return new EmptyArgs();
-    }
+	/**
+	* @psalm-suppress MoreSpecificImplementedParamType
+	*
+	* @param T1 $args
+	* @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
+	*
+	* @return EmptyArgs
+	*/
+	final public static function DaftRouterHttpRouteArgsTyped(
+		array $args,
+		string $method = null
+	) {
+		return new EmptyArgs();
+	}
 }

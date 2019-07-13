@@ -13,34 +13,34 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminNotLoggedIn implements DaftRequestInterceptor
 {
-    public static function DaftRouterMiddlewareHandler(
-        Request $request,
-        ? Response $response
-    ) : ? Response {
-        if ( ! ($response instanceof Response) && ! $request->query->has('loggedin')) {
-            return new RedirectResponse('/login');
-        }
+	public static function DaftRouterMiddlewareHandler(
+		Request $request,
+		? Response $response
+	) : ? Response {
+		if ( ! ($response instanceof Response) && ! $request->query->has('loggedin')) {
+			return new RedirectResponse('/login');
+		}
 
-        return $response;
-    }
+		return $response;
+	}
 
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixExceptions() : array
-    {
-        return [
-            '/admin/login',
-        ];
-    }
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixExceptions() : array
+	{
+		return [
+			'/admin/login',
+		];
+	}
 
-    /**
-    * @return array<int, string> URI prefixes
-    */
-    public static function DaftRouterRoutePrefixRequirements() : array
-    {
-        return [
-            '/admin',
-        ];
-    }
+	/**
+	* @return array<int, string> URI prefixes
+	*/
+	public static function DaftRouterRoutePrefixRequirements() : array
+	{
+		return [
+			'/admin',
+		];
+	}
 }
