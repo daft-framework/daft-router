@@ -1,9 +1,9 @@
-Copyright 2018 SignpostMarv
+Copyright 2019 SignpostMarv
 
 # daft-router
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SignpostMarv/daft-router/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SignpostMarv/daft-router/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/SignpostMarv/daft-router/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/SignpostMarv/daft-router/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/SignpostMarv/daft-router/badges/build.png?b=master)](https://scrutinizer-ci.com/g/SignpostMarv/daft-router/build-status/master)
+[![Coverage Status](https://coveralls.io/repos/github/SignpostMarv/daft-router/badge.svg?branch=master)](https://coveralls.io/github/SignpostMarv/daft-router?branch=master)
+[![Build Status](https://travis-ci.org/SignpostMarv/daft-router.svg?branch=master)](https://travis-ci.org/SignpostMarv/daft-router)
+[![Type Coverage](https://shepherd.dev/github/signpostmarv/daft-router/coverage.svg)](https://shepherd.dev/github/signpostmarv/daft-router)
 
 I needed an excuse to write a non-psr7 router. Because reasons.
 
