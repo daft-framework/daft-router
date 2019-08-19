@@ -8,36 +8,65 @@ namespace SignpostMarv\DaftRouter;
 
 use BadMethodCallException;
 use JsonSerializable;
+use SignpostMarv\DaftTypedObject\DaftTypedObject;
 
-final class EmptyArgs implements JsonSerializable
+/**
+* @template T as array<empty, empty>
+* @template S as array<empty, empty>
+*
+* @template-implements DaftTypedObject<T, S>
+*/
+final class EmptyArgs implements DaftTypedObject
 {
-	use TypedArgsInterfaceImmutableSet;
-
-	public function __construct()
+	public function __construct(array $data = [])
 	{
 	}
 
-	public function __get(string $k)
-	{
-		throw new BadMethodCallException(
-			__METHOD__ .
-			'() cannot be called on ' .
-			static::class .
-			' with ' .
-			$k .
-			', ' .
-			static::class .
-			' has no arguments!'
-		);
-	}
-
-	public function toArray() : array
+	/**
+	* @return S
+	*/
+	public function __toArray() : array
 	{
 		return [];
 	}
 
+	/**
+	* @return S
+	*/
 	public function jsonSerialize() : array
 	{
 		return [];
+	}
+
+	/**
+	* @param S $array
+	*/
+	public static function __fromArray(array $array = []) : DaftTypedObject
+	{
+		return new EmptyArgs([]);
+	}
+
+	/**
+	* @param null $value
+	*
+	* @return null
+	*/
+	public static function PropertyValueToScalarOrNull(
+		string $_property,
+		$value
+	) {
+		return null;
+	}
+
+	/**
+	* @param null $value
+	*
+	* @return null
+	*/
+	public static function PropertyScalarOrNullToValue(
+		string $_property,
+		$value
+	) {
+		return null;
 	}
 }

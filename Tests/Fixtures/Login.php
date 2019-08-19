@@ -41,10 +41,12 @@ class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 	public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null)
 	{
 		if ('admin' === ($args['mode'] ?? null)) {
-			return new AdminModeArgs();
+			return AdminModeArgs::__fromArray([
+				'mode' => 'admin',
+			]);
 		}
 
-		return new EmptyArgs();
+		return EmptyArgs::__fromArray([]);
 	}
 
 	/**

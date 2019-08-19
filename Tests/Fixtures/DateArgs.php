@@ -11,45 +11,90 @@ use SignpostMarv\DaftRouter\TypedArgs;
 
 /**
 * @template T as array{a:DateTimeImmutable, b:DateTimeImmutable}
+* @template S as array{a:string, b:string}
 *
-* @template-extends TypedArgs<T>
-*
-* @property-read DateTimeImmutable $a
-* @property-read DateTimeImmutable $b
+* @template-extends TypedArgs<T, S>
 */
 class DateArgs extends TypedArgs
 {
-	/**
-	* @var T
-	*/
-	protected $typed;
+	const TYPED_PROPERTIES = [
+		'a',
+		'b',
+	];
 
 	/**
-	* @param array{a:string, b:string} $data
+	* @readonly
+	*
+	* @var DateTimeImmutable
+	*/
+	public $a;
+
+	/**
+	* @readonly
+	*
+	* @var DateTimeImmutable
+	*/
+	public $b;
+
+	/**
+	* @param T $data
 	*/
 	public function __construct(array $data)
 	{
-		/**
-		* @var T
-		*/
-		$typed = [
-			'a' => new DateTimeImmutable($data['a']),
-			'b' => new DateTimeImmutable($data['b']),
-		];
-
-		$this->typed = $typed;
+		$this->a = $data['a'];
+		$this->b = $data['b'];
 	}
 
 	/**
-	* @param 'a'|'b' $property
-	* @param DateTimeImmutable $value
+	* @template K as key-of<T>
+	*
+	* @param K $property
+	* @param T[K] $value
+	*
+	* @return S[K]
 	*/
-	public static function FormatPropertyForJson(string $property, $value)
-	{
+	public static function PropertyValueToScalarOrNull(
+		string $property,
+		$value
+	) {
+		/**
+		* @var string
+		*/
+		$property = $property;
+
 		if ('a' === $property) {
+			/**
+			* @var S[K]
+			*/
 			return $value->format('Y-m-d');
 		}
 
+		/**
+		* @var S[K]
+		*/
 		return $value->format('Y\WW');
+	}
+
+	/**
+	* @template K as key-of<T>
+	*
+	* @param K $_property
+	* @param S[K] $value
+	*
+	* @return T[K]
+	*/
+	public static function PropertyScalarOrNullToValue(
+		string $_property,
+		$value
+	) {
+		/**
+		* @var string
+		*/
+		$value = $value;
+
+		/**
+		* @var T[K]
+		*/
+		return new DateTimeImmutable($value);
 	}
 }

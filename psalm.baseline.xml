@@ -37,11 +37,23 @@
 >
   <file src="Tests/Fixtures/DateArgs.php">
     <MoreSpecificImplementedParamType occurrences="1">
-      <code>$property</code>
+      <code>$data</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyUnusedMethod occurrences="1">
-      <code>__construct</code>
-    </PossiblyUnusedMethod>
+  </file>
+  <file src="Tests/Fixtures/IntIdArgs.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$args</code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="Tests/Fixtures/IntIdStringSlugArgs.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$args</code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="Tests/Fixtures/StringModeArgs.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$data</code>
+    </MoreSpecificImplementedParamType>
   </file>
   <file src="Tests/ImplementationTest.php">
     <ArgumentTypeCoercion occurrences="2">
@@ -51,6 +63,12 @@
     <UnusedVariable occurrences="1">
       <code>$prevKey</code>
     </UnusedVariable>
+  </file>
+  <file src="src/EmptyArgs.php">
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>$_property</code>
+      <code>$_property</code>
+    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/Router/Dispatcher.php">
     <MoreSpecificImplementedParamType occurrences="1">

@@ -94,7 +94,7 @@ class Dispatcher extends Base
 	*/
 	protected function handleRouteInfo(Request $request, array $routeInfo) : Response
 	{
-		$routeArgs = new EmptyArgs();
+		$routeArgs = EmptyArgs::__fromArray([]);
 
 		/**
 		* @var class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>

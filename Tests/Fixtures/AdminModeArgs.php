@@ -10,16 +10,10 @@ use SignpostMarv\DaftRouter\TypedArgs;
 
 /**
 * @template T as array{mode:'admin'}
+* @template S as array{mode:'admin'}
 *
-* @template-extends StringModeArgs<T>
+* @template-extends StringModeArgs<T, S>
 */
 class AdminModeArgs extends StringModeArgs
 {
-	/**
-	* @param T $args
-	*/
-	public function __construct(array $args = ['mode' => 'admin'])
-	{
-		parent::__construct($args);
-	}
 }

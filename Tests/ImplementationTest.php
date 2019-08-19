@@ -33,6 +33,8 @@ use Throwable;
 
 /**
 * @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+* @template T as array<string, scalar|DateTimeImmutable|null>
+* @template S as array<string, scalar|null>
 */
 class ImplementationTest extends Base
 {
@@ -478,7 +480,7 @@ class ImplementationTest extends Base
 	) : void {
 		$typed_args_object = $className::DaftRouterHttpRouteArgsTyped($args, $method);
 
-		static::assertSame($typedArgs, $typed_args_object->toArray());
+		static::assertSame($args, $typed_args_object->__toArray());
 		static::assertTrue(in_array(
 			$className::DaftRouterHttpRouteDefaultMethod(),
 			[
@@ -495,6 +497,12 @@ class ImplementationTest extends Base
 			],
 			true
 		));
+
+		/**
+		* @var class-string<TypedArgs>
+		*/
+		$type = get_class($typed_args_object);
+		static::assertSame($args, (new $type($typedArgs))->__toArray());
 
 		$check_auto_method_checking = (
 			in_array(
@@ -1027,7 +1035,7 @@ class ImplementationTest extends Base
 		$dispatcher->handleRouteInfoResponseParentPublic(
 			static::RequestFromArgs(['https://example.com/']),
 			Fixtures\Home::class,
-			new Fixtures\LocatorArgs(['locator' => 'foo']),
+			Fixtures\LocatorArgs::__fromArray(['locator' => 'foo']),
 			[],
 			[]
 		);
@@ -1067,43 +1075,8 @@ class ImplementationTest extends Base
 		$dispatcher->handle($request, $prefix);
 	}
 
-	public function testImmutabilityOfTypedArgs() : void
-	{
-		$object = new Fixtures\IntIdArgs(['id' => '1']);
-
-		static::assertSame(1, $object->id);
-
-		static::expectException(BadMethodCallException::class);
-		static::expectExceptionMessage(
-			Fixtures\IntIdArgs::class .
-			'::$id is not writeable, cannot be set to 2'
-		);
-
-		$object->id = 2;
-	}
-
-	public function testImmutabilityOfEmptyArgs() : void
-	{
-		$object = new EmptyArgs();
-
-		static::expectException(BadMethodCallException::class);
-		static::expectExceptionMessage(
-			EmptyArgs::class .
-			'::__get() cannot be called on ' .
-			EmptyArgs::class .
-			' with foo, ' .
-			EmptyArgs::class .
-			' has no arguments!'
-		);
-
-		/**
-		* @psalm-suppress InvalidScalarArgument
-		*/
-		$object->foo;
-	}
-
 	/**
-	* @return Generator<int, array{0:class-string<TypedArgs>|class-string<EmptyArgs>, 1:array<string, scalar|DateTimeImmutable|null>, 2:string, 3:array<string, scalar|null>}, mixed, void>
+	* @return Generator<int, array{0:class-string<TypedArgs>|class-string<EmptyArgs>, 1:array<string, scalar|null>|array<empty, empty>, 2:string, 3:array<string, scalar|null>}, mixed, void>
 	*/
 	public function dataProviderJsonSerialize() : Generator
 	{
@@ -1142,9 +1115,11 @@ class ImplementationTest extends Base
 	/**
 	* @dataProvider dataProviderJsonSerialize
 	*
+	* @template K as key-of<T>
+	*
 	* @param class-string<TypedArgs>|class-string<EmptyArgs> $type
-	* @param array<string, scalar|DateTimeImmutable|null> $args
-	* @param array<string, scalar|null> $expected_decoded
+	* @param S $args
+	* @param S $expected_decoded
 	*/
 	public function testJsonSerialize(
 		string $type,
@@ -1152,13 +1127,24 @@ class ImplementationTest extends Base
 		string $expected,
 		array $expected_decoded
 	) : void {
-		$typed_args = new $type($args);
+		if (EmptyArgs::class === $type) {
+			$typed_args = $type::__fromArray();
+			static::assertNull($type::PropertyValueToScalarOrNull('', null));
+			static::assertNull($type::PropertyScalarOrNullToValue('', null));
+		} else {
+			/**
+			* @var class-string<TypedArgs>
+			*/
+			$type = $type;
+
+		$typed_args = $type::__fromArray($args);
+		}
 
 		$for_json = $typed_args->jsonSerialize();
 		$encoded = json_encode($typed_args, JSON_FORCE_OBJECT);
 
 		/**
-		* @var scalar|array<array-key, scalar|array|object|null>|null
+		* @var S
 		*/
 		$decoded = json_decode($encoded, true);
 
@@ -1166,12 +1152,8 @@ class ImplementationTest extends Base
 
 		static::assertSame($expected, $encoded);
 
-		$test = new DateTimeImmutable();
-		static::assertSame($test->format('c'), TypedArgs::FormatPropertyForJson('', $test));
-
 		if (is_a($type, TypedArgs::class, true)) {
 			foreach ($decoded as $property => $decoded_value) {
-				static::assertIsString($property);
 				static::assertTrue(isset($args[$property]));
 				static::assertSame(
 					$decoded_value,
@@ -1179,13 +1161,13 @@ class ImplementationTest extends Base
 				);
 
 				/**
-				* @var scalar|DateTimeImmutable|null
+				* @var T[K]
 				*/
 				$typed_value = $typed_args->$property;
 
 				static::assertSame(
 					$decoded[$property],
-					$type::FormatPropertyForJson($property, $typed_value)
+					$type::PropertyValueToScalarOrNull($property, $typed_value)
 				);
 			}
 		}

@@ -65,11 +65,6 @@ class Content extends DaftRouteAcceptsOnlyTypedArgs
 		array $args,
 		string $method = null
 	) : TypedArgs {
-		/**
-		* @var T
-		*/
-		$args = $args;
-
-		return new LocatorArgs($args);
+		return LocatorArgs::__fromArray($args);
 	}
 }

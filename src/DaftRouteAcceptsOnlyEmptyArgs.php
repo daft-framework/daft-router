@@ -35,6 +35,6 @@ abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArg
 		array $args,
 		string $method = null
 	) {
-		return new EmptyArgs();
+		return EmptyArgs::__fromArray([]);
 	}
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cdc087cbc2f27e60b2c0bbc8ea2a5cce",
+    "content-hash": "f67c7f7ba789bbffcb250356b3fbd1a8",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -101,6 +101,54 @@
             ],
             "description": "interface collector. daft reasons again.",
             "time": "2019-07-13T09:04:03+00:00"
+        },
+        {
+            "name": "signpostmarv/daft-typed-object",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SignpostMarv/Daft-Typed-Object.git",
+                "reference": "62c7275c29c1f95cbfdc7f8ce780f20a45a3a9a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SignpostMarv/Daft-Typed-Object/zipball/62c7275c29c1f95cbfdc7f8ce780f20a45a3a9a1",
+                "reference": "62c7275c29c1f95cbfdc7f8ce780f20a45a3a9a1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.3"
+            },
+            "require-dev": {
+                "maglnet/composer-require-checker": "^2.0",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^8.2",
+                "povils/phpmnd": "^2.1",
+                "psalm/plugin-phpunit": "^0.7.0",
+                "roave/security-advisories": "dev-master",
+                "sebastian/phpcpd": "^4.1",
+                "signpostmarv/php-cs-fixer-config": "^0.11.0",
+                "vimeo/psalm": "3.x-dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SignpostMarv\\DaftTypedObject\\": "./src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "SignpostMarv",
+                    "email": "me@signpostmarv.name"
+                }
+            ],
+            "description": "Typed Object, a simplified version of signpostmarv/daft-object",
+            "time": "2019-08-18T10:28:24+00:00"
         },
         {
             "name": "symfony/http-foundation",

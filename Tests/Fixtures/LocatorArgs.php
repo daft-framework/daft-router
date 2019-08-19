@@ -11,26 +11,28 @@ use SignpostMarv\DaftRouter\TypedArgs;
 
 /**
 * @psalm-type T = array{locator:string}
+* @psalm-type S = array{locator:string}
 *
-* @template-extends TypedArgs<T>
-*
-* @property-read string $locator
+* @template-extends TypedArgs<T, S>
 */
 class LocatorArgs extends TypedArgs
 {
+	const TYPED_PROPERTIES = [
+		'locator',
+	];
+
 	/**
-	* @var T
+	* @readonly
+	*
+	* @var string
 	*/
-	protected $typed;
+	public $locator;
 
 	/**
 	* @param T $args
 	*/
 	public function __construct(array $args)
 	{
-		/**
-		* @var T
-		*/
-		$this->typed = $args;
+		$this->locator = $args['locator'];
 	}
 }

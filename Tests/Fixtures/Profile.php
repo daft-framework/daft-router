@@ -89,9 +89,9 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
 	public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null)
 	{
 		if (isset($args['slug'])) {
-			return new IntIdStringSlugArgs($args);
+			return IntIdStringSlugArgs::__fromArray($args);
 		}
 
-		return new IntIdArgs($args);
+		return IntIdArgs::__fromArray($args);
 	}
 }

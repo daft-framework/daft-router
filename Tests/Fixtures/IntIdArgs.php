@@ -11,35 +11,108 @@ use SignpostMarv\DaftRouter\TypedArgs;
 
 /**
 * @template T as array{id:int}
+* @template S as array{id:string}
 *
-* @template-extends TypedArgs<T>
-*
-* @property-read int $id
+* @template-extends TypedArgs<T, S>
 */
 class IntIdArgs extends TypedArgs
 {
+	const TYPED_PROPERTIES = [
+		'id',
+	];
+
 	/**
-	* @param array{id:string} $args
+	* @readonly
+	*
+	* @var int
+	*/
+	public $id;
+
+	/**
+	* @param T $args
 	*/
 	public function __construct(array $args)
 	{
-		if ( ! ctype_digit($args['id'])) {
-			throw new InvalidArgumentException(
-				'Argument 1 passed to ' .
-				__METHOD__ .
-				' must be a string-as-int, ' .
-				var_export($args['id'], true) .
-				' given!'
-			);
+		$this->id = $args['id'];
+	}
+
+	/**
+	* @template K as key-of<T>
+	*
+	* @param K $property
+	* @param T[K] $value
+	*
+	* @return S[K]
+	*/
+	public static function PropertyValueToScalarOrNull(
+		string $property,
+		$value
+	) {
+		/**
+		* @var string
+		*/
+		$property = $property;
+
+		if ('id' === $property) {
+			/**
+			* @var int
+			*/
+			$value = $value;
+
+			/**
+			* @var S[K]
+			*/
+			return (string) $value;
 		}
 
-		$args['id'] = (int) $args['id'];
+		/**
+		* @var S[K]
+		*/
+		return parent::PropertyValueToScalarOrNull($property, $value);
+	}
+
+	/**
+	* @template K as key-of<T>
+	*
+	* @param K $property
+	* @param S[K] $value
+	*
+	* @return T[K]
+	*/
+	public static function PropertyScalarOrNullToValue(
+		string $property,
+		$value
+	) {
+		/**
+		* @var string
+		*/
+		$property = $property;
+
+		if ('id' === $property) {
+			/**
+			* @var string
+			*/
+			$value = $value;
+
+			if ( ! ctype_digit($value)) {
+				throw new InvalidArgumentException(
+					'Argument 1 passed to ' .
+					__METHOD__ .
+					' must be a string-as-int, ' .
+					var_export($value, true) .
+					' given!'
+				);
+			}
+
+			/**
+			* @var T[K]
+			*/
+			return (int) $value;
+		}
 
 		/**
-		* @var T
+		* @var T[K]
 		*/
-		$args = $args;
-
-		$this->typed = $args;
+		return parent::PropertyScalarOrNullToValue($property, $value);
 	}
 }

@@ -10,19 +10,31 @@ use SignpostMarv\DaftRouter\TypedArgs;
 
 /**
 * @template T as array{id:int, slug:string}
+* @template S as array{id:string, slug:string}
 *
-* @template-extends IntIdArgs<T>
-*
-* @property-read int $id
-* @property-read string $slug
+* @template-extends IntIdArgs<T, S>
 */
 class IntIdStringSlugArgs extends IntIdArgs
 {
+	const TYPED_PROPERTIES = [
+		'id',
+		'slug',
+	];
+
 	/**
-	* @param array{id:string, slug:string} $args
+	* @readonly
+	*
+	* @var string
+	*/
+	public $slug;
+
+	/**
+	* @param T $args
 	*/
 	public function __construct(array $args)
 	{
 		parent::__construct($args);
+
+		$this->slug = $args['slug'];
 	}
 }
