@@ -65,6 +65,10 @@
     </UnusedVariable>
   </file>
   <file src="src/EmptyArgs.php">
+    <InvalidReturnType occurrences="2">
+      <code>PropertyValueToScalarOrNull</code>
+      <code>PropertyScalarOrNullToValue</code>
+    </InvalidReturnType>
     <MoreSpecificImplementedParamType occurrences="2">
       <code>$_property</code>
       <code>$_property</code>
