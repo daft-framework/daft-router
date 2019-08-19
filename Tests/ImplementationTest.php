@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter\Tests;
 
-use BadMethodCallException;
 use DateTimeImmutable;
 use Generator;
 use InvalidArgumentException;
@@ -1137,7 +1136,7 @@ class ImplementationTest extends Base
 			*/
 			$type = $type;
 
-		$typed_args = $type::__fromArray($args);
+			$typed_args = $type::__fromArray($args);
 		}
 
 		$for_json = $typed_args->jsonSerialize();

@@ -6,8 +6,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
-use BadMethodCallException;
-use JsonSerializable;
 use SignpostMarv\DaftTypedObject\DaftTypedObject;
 
 /**
@@ -31,14 +29,6 @@ final class EmptyArgs implements DaftTypedObject
 	}
 
 	/**
-	* @return S
-	*/
-	public function jsonSerialize() : array
-	{
-		return [];
-	}
-
-	/**
 	* @param S $array
 	*/
 	public static function __fromArray(array $array = []) : DaftTypedObject
@@ -47,26 +37,28 @@ final class EmptyArgs implements DaftTypedObject
 	}
 
 	/**
+	* @return S
+	*/
+	public function jsonSerialize() : array
+	{
+		return [];
+	}
+
+	/**
 	* @param null $value
-	*
-	* @return null
 	*/
 	public static function PropertyValueToScalarOrNull(
 		string $_property,
 		$value
 	) {
-		return null;
 	}
 
 	/**
 	* @param null $value
-	*
-	* @return null
 	*/
 	public static function PropertyScalarOrNullToValue(
 		string $_property,
 		$value
 	) {
-		return null;
 	}
 }
