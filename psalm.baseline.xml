@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files
-  psalm-version="dev-master@94f934627c6901e2e85e2cf7dc1384e2af9a0909"
+  psalm-version="dev-master@a3e9dec925d595b1701bc0669b7d3364749be0e4"
   php-version="
-    php:7.3.6;
-    bcmath:7.3.6;
-    calendar:7.3.6;
-    Core:7.3.6;
-    ctype:7.3.6;
-    date:7.3.6;
+    php:7.3.8;
+    bcmath:7.3.8;
+    calendar:7.3.8;
+    Core:7.3.8;
+    ctype:7.3.8;
+    date:7.3.8;
     dom:20031129;
-    filter:7.3.6;
-    hash:7.3.6;
-    iconv:7.3.6;
+    filter:7.3.8;
+    hash:7.3.8;
+    iconv:7.3.8;
     json:1.7.0;
-    libxml:7.3.6;
-    mbstring:7.3.6;
+    libxml:7.3.8;
+    mbstring:7.3.8;
     mysqlnd:mysqlnd 5.0.12-dev - 20150407 - $Id: 7cc7cc96e675f6d72e5cf0f267f48e167c2abb23 $;
-    openssl:7.3.6;
-    pcre:7.3.6;
-    PDO:7.3.6;
-    Phar:7.3.6;
-    readline:7.3.6;
-    Reflection:7.3.6;
-    session:7.3.6;
-    SimpleXML:7.3.6;
-    SPL:7.3.6;
-    standard:7.3.6;
-    tokenizer:7.3.6;
-    wddx:7.3.6;
-    xml:7.3.6;
-    xmlreader:7.3.6;
-    xmlwriter:7.3.6;
+    openssl:7.3.8;
+    pcre:7.3.8;
+    PDO:7.3.8;
+    Phar:7.3.8;
+    readline:7.3.8;
+    Reflection:7.3.8;
+    session:7.3.8;
+    SimpleXML:7.3.8;
+    SPL:7.3.8;
+    standard:7.3.8;
+    tokenizer:7.3.8;
+    wddx:7.3.8;
+    xml:7.3.8;
+    xmlreader:7.3.8;
+    xmlwriter:7.3.8;
     zip:1.15.4;
-    zlib:7.3.6
+    zlib:7.3.8
   "
 >
   <file src="Tests/Fixtures/DateArgs.php">
