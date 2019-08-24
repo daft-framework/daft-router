@@ -41,7 +41,7 @@ class Dispatcher extends Base
 
 	/**
 	* @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
-	* @param null|TypedArgs $routeArgs
+	* @param TypedArgs|null $routeArgs
 	* @param array<int, class-string<DaftRequestInterceptor>> $firstPass
 	* @param array<int, class-string<DaftResponseModifier>> $secondPass
 	*/
