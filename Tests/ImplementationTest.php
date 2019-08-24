@@ -138,7 +138,9 @@ class ImplementationTest extends Base
 				));
 			}
 
-			foreach (static::YieldMiddlewareFromSource($source) as $middleware) {
+			foreach (
+				static::YieldMiddlewareFromSource($source) as $middleware
+			) {
 				yield [$middleware];
 			}
 		}
@@ -440,9 +442,17 @@ class ImplementationTest extends Base
 		foreach ($routes as $routesToCheck) {
 			$initialCount = count($routesToCheck);
 
-			static::assertGreaterThan(0, $initialCount, 'URIs must have at least one method!');
+			static::assertGreaterThan(
+				0,
+				$initialCount,
+				'URIs must have at least one method!'
+			);
 
-			$routesToCheck = array_filter($routesToCheck, 'is_int', ARRAY_FILTER_USE_KEY);
+			$routesToCheck = array_filter(
+				$routesToCheck,
+				'is_int',
+				ARRAY_FILTER_USE_KEY
+			);
 
 			static::assertCount(
 				$initialCount,
@@ -476,12 +486,15 @@ class ImplementationTest extends Base
 		string $method,
 		string $expectedRouteResult
 	) : void {
-		$typed_args_object = $className::DaftRouterHttpRouteArgsTyped($args, $method);
+		$typed_args_object = $className::DaftRouterHttpRouteArgsTyped(
+			$args,
+			$method
+		);
 
 		if (is_null($typed_args_object)) {
 			static::assertCount(0, $args);
 		} else {
-		static::assertSame($args, $typed_args_object->__toArray());
+			static::assertSame($args, $typed_args_object->__toArray());
 
 			/**
 			* @var class-string<TypedArgs>
@@ -513,7 +526,11 @@ class ImplementationTest extends Base
 				class_uses($className),
 				true
 			) ||
-			is_a($className, DaftRouteAcceptsBothEmptyAndTypedArgs::class, true) ||
+			is_a(
+				$className,
+				DaftRouteAcceptsBothEmptyAndTypedArgs::class,
+				true
+			) ||
 			is_a($className, DaftRouteAcceptsOnlyEmptyArgs::class, true) ||
 			is_a($className, DaftRouteAcceptsOnlyTypedArgs::class, true)
 		);
@@ -534,16 +551,26 @@ class ImplementationTest extends Base
 
 			static::assertSame(
 				$expectedRouteResult,
-				$className::DaftRouterHttpRouteWithTypedArgs($typed_args_object, $method)
+				$className::DaftRouterHttpRouteWithTypedArgs(
+					$typed_args_object,
+					$method
+				)
 			);
 
 			if ($check_auto_method_checking) {
 				static::expectException(InvalidArgumentException::class);
-				static::expectExceptionMessage('Specified method not supported!');
+				static::expectExceptionMessage(
+					'Specified method not supported!'
+				);
 
-				$className::DaftRouterHttpRouteWithTypedArgs($typed_args_object, strrev($method));
+				$className::DaftRouterHttpRouteWithTypedArgs(
+					$typed_args_object,
+					strrev($method)
+				);
 			}
-		} elseif ( ! is_a($className, DaftRouteAcceptsEmptyArgs::class, true)) {
+		} elseif (
+			! is_a($className, DaftRouteAcceptsEmptyArgs::class, true)
+		) {
 			throw new RuntimeException(
 				'Argument 2 passed to ' .
 				__METHOD__ .
@@ -560,7 +587,9 @@ class ImplementationTest extends Base
 
 			if ($check_auto_method_checking) {
 				static::expectException(InvalidArgumentException::class);
-				static::expectExceptionMessage('Specified method not supported!');
+				static::expectExceptionMessage(
+					'Specified method not supported!'
+				);
 
 				$className::DaftRouterHttpRouteWithEmptyArgs(strrev($method));
 			}
@@ -589,8 +618,9 @@ class ImplementationTest extends Base
 	*
 	* @dataProvider DataProviderGoodSources
 	*/
-	public function testCompilerVerifyAddRouteAddsRoutes(string $className) : void
-	{
+	public function testCompilerVerifyAddRouteAddsRoutes(
+		string $className
+	) : void {
 		$routes = [];
 		$compiler = Fixtures\Compiler::ObtainCompiler();
 
@@ -694,25 +724,31 @@ class ImplementationTest extends Base
 	*
 	* @dataProvider DataProviderGoodSources
 	*/
-	public function testCompilerVerifyAddMiddlewareAddsMiddlewares(string $className) : void
-	{
+	public function testCompilerVerifyAddMiddlewareAddsMiddlewares(
+		string $className
+	) : void {
 		/**
 		* @var string[]
 		*/
 		$middlewares = [];
 		$compiler = Fixtures\Compiler::ObtainCompiler();
 
-		foreach (static::YieldMiddlewareFromSource($className) as $middleware) {
+		foreach (
+			static::YieldMiddlewareFromSource($className) as $middleware
+		) {
 			$middlewares[] = $middleware;
 			$compiler->AddMiddleware($middleware);
 		}
 
 		$middlewares[] = DaftRouteFilter::class;
-		$middlewares = array_filter($middlewares, function (string $middleware) : bool {
-			return
-				is_a($middleware, DaftRequestInterceptor::class, true) ||
-				is_a($middleware, DaftResponseModifier::class, true);
-		});
+		$middlewares = array_filter(
+			$middlewares,
+			function (string $middleware) : bool {
+				return
+					is_a($middleware, DaftRequestInterceptor::class, true) ||
+					is_a($middleware, DaftResponseModifier::class, true);
+			}
+		);
 
 		static::assertSame($middlewares, $compiler->ObtainMiddleware());
 	}
@@ -725,8 +761,9 @@ class ImplementationTest extends Base
 	*
 	* @dataProvider DataProviderGoodSources
 	*/
-	public function testCompilerDoesNotDuplicateConfigEntries(string $className) : void
-	{
+	public function testCompilerDoesNotDuplicateConfigEntries(
+		string $className
+	) : void {
 		$compiler = Fixtures\Compiler::ObtainCompiler();
 		$routes = [];
 		$middlewares = [];
@@ -740,7 +777,9 @@ class ImplementationTest extends Base
 		/**
 		* @var string
 		*/
-		foreach (static::YieldMiddlewareFromSource($className) as $middleware) {
+		foreach (
+			static::YieldMiddlewareFromSource($className) as $middleware
+		) {
 			$middlewares[] = $middleware;
 		}
 
@@ -824,11 +863,15 @@ class ImplementationTest extends Base
 		];
 
 		if (is_a($middleware, DaftRequestInterceptor::class, true)) {
-			$expectedWithMiddleware[DaftRequestInterceptor::class][] = $middleware;
+			$expectedWithMiddleware[
+				DaftRequestInterceptor::class
+			][] = $middleware;
 		}
 
 		if (is_a($middleware, DaftResponseModifier::class, true)) {
-			$expectedWithMiddleware[DaftResponseModifier::class][] = $middleware;
+			$expectedWithMiddleware[
+				DaftResponseModifier::class
+			][] = $middleware;
 		}
 
 		static::assertSame(
@@ -870,9 +913,15 @@ class ImplementationTest extends Base
 		));
 
 		static::assertCount(2, $dispatchedPresent);
-		static::assertTrue(isset($dispatchedPresent[DaftRequestInterceptor::class]));
-		static::assertTrue(isset($dispatchedPresent[DaftResponseModifier::class]));
-		static::assertIsArray($dispatchedPresent[DaftRequestInterceptor::class]);
+		static::assertTrue(isset(
+			$dispatchedPresent[DaftRequestInterceptor::class]
+		));
+		static::assertTrue(isset(
+			$dispatchedPresent[DaftResponseModifier::class]
+		));
+		static::assertIsArray(
+			$dispatchedPresent[DaftRequestInterceptor::class]
+		);
 		static::assertIsArray($dispatchedPresent[DaftResponseModifier::class]);
 
 		/**
@@ -916,17 +965,31 @@ class ImplementationTest extends Base
 		$modifiers = array_values($modifiers);
 
 		foreach ($interceptors as $interceptor) {
-			static::assertTrue(is_a($interceptor, DaftRequestInterceptor::class, true), sprintf(
-				'Leading entries from a dispatcher should be %s',
-				DaftRequestInterceptor::class
-			));
+			static::assertTrue(
+				is_a(
+					$interceptor,
+					DaftRequestInterceptor::class,
+					true
+				),
+				sprintf(
+					'Leading entries from a dispatcher should be %s',
+					DaftRequestInterceptor::class
+				)
+			);
 		}
 
 		foreach ($modifiers as $modifier) {
-			static::assertTrue(is_a($modifier, DaftResponseModifier::class, true), sprintf(
-				'Leading entries from a dispatcher should be %s',
-				DaftResponseModifier::class
-			));
+			static::assertTrue(
+				is_a(
+					$modifier,
+					DaftResponseModifier::class,
+					true
+				),
+				sprintf(
+					'Leading entries from a dispatcher should be %s',
+					DaftResponseModifier::class
+				)
+			);
 		}
 	}
 
@@ -991,7 +1054,8 @@ class ImplementationTest extends Base
 		/**
 		* @var Dispatcher
 		*/
-		$dispatcher = Fixtures\CompilerWithFixturesDispatcher::ObtainCompiler()::ObtainDispatcher(
+		$dispatcher = Fixtures\CompilerWithFixturesDispatcher::ObtainCompiler(
+		)::ObtainDispatcher(
 			[
 				'cacheDisabled' => true,
 				'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
@@ -1022,7 +1086,8 @@ class ImplementationTest extends Base
 		/**
 		* @var Fixtures\Dispatcher
 		*/
-		$dispatcher = Fixtures\CompilerWithFixturesDispatcher::ObtainCompiler()::ObtainDispatcher(
+		$dispatcher = Fixtures\CompilerWithFixturesDispatcher::ObtainCompiler(
+		)::ObtainDispatcher(
 			[
 				'cacheDisabled' => true,
 				'cacheFile' => tempnam(sys_get_temp_dir(), static::class),
@@ -1031,7 +1096,9 @@ class ImplementationTest extends Base
 		);
 
 		static::expectException(RuntimeException::class);
-		static::expectExceptionMessage('Untyped request handling is deprecated!');
+		static::expectExceptionMessage(
+			'Untyped request handling is deprecated!'
+		);
 
 		$dispatcher->handleRouteInfoResponseParentPublic(
 			static::RequestFromArgs(['https://example.com/']),
@@ -1140,8 +1207,8 @@ class ImplementationTest extends Base
 
 			$typed_args = $type::__fromArray($args);
 
-		$for_json = $typed_args->jsonSerialize();
-		$encoded = json_encode($typed_args, JSON_FORCE_OBJECT);
+			$for_json = $typed_args->jsonSerialize();
+			$encoded = json_encode($typed_args, JSON_FORCE_OBJECT);
 		}
 
 		/**
@@ -1185,6 +1252,7 @@ class ImplementationTest extends Base
 		$cookies = [];
 		$files = [];
 		$server = [];
+
 		/**
 		* @var null
 		*/
@@ -1236,7 +1304,14 @@ class ImplementationTest extends Base
 		* @var mixed[]
 		*/
 		foreach ($argsSource as $args) {
-			list($sources, $prefix, $expectedStatus, $expectedContent, $headers, $uri) = $args;
+			[
+				$sources,
+				$prefix,
+				$expectedStatus,
+				$expectedContent,
+				$headers,
+				$uri,
+			] = $args;
 
 			/**
 			* @var array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}
@@ -1431,8 +1506,11 @@ class ImplementationTest extends Base
 		if (is_a($source, DaftRoute::class, true)) {
 			yield $source;
 		}
+
 		if (is_a($source, DaftSource::class, true)) {
-			foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
+			foreach (
+				$source::DaftRouterRouteAndMiddlewareSources() as $otherSource
+			) {
 				yield from static::YieldRoutesFromSource($otherSource);
 			}
 		}
@@ -1443,16 +1521,20 @@ class ImplementationTest extends Base
 	*
 	* @return Generator<int, class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>, mixed, void>
 	*/
-	protected static function YieldMiddlewareFromSource(string $source) : Generator
-	{
+	protected static function YieldMiddlewareFromSource(
+		string $source
+	) : Generator {
 		if (
 			is_a($source, DaftRequestInterceptor::class, true) ||
 			is_a($source, DaftResponseModifier::class, true)
 		) {
 			yield $source;
 		}
+
 		if (is_a($source, DaftSource::class, true)) {
-			foreach ($source::DaftRouterRouteAndMiddlewareSources() as $otherSource) {
+			foreach (
+				$source::DaftRouterRouteAndMiddlewareSources() as $otherSource
+			) {
 				if (
 					is_a($otherSource, DaftRequestInterceptor::class, true) ||
 					is_a($otherSource, DaftResponseModifier::class, true) ||
