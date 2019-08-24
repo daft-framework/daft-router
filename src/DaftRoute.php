@@ -36,7 +36,10 @@ interface DaftRoute
 	* @param T1_STRINGS|array<empty, empty> $args
 	* @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
 	*
-	* @return T2|EmptyArgs
+	* @return T2|null
 	*/
-	public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null);
+	public static function DaftRouterHttpRouteArgsTyped(
+		array $args,
+		string $method = null
+	) : ? TypedArgs;
 }

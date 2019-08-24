@@ -37,9 +37,12 @@ interface DaftRouteAcceptsTypedArgs extends DaftRoute
 	* @param T1_STRINGS|array<empty, empty> $args
 	* @param HTTP_METHOD|null $method
 	*
-	* @return T2|EmptyArgs
+	* @return T2|null
 	*/
-	public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null);
+	public static function DaftRouterHttpRouteArgsTyped(
+		array $args,
+		string $method = null
+	) : ? TypedArgs;
 
 	/**
 	* @param T2 $args

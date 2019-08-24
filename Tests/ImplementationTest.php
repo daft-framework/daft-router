@@ -22,7 +22,6 @@ use SignpostMarv\DaftRouter\DaftRouteAcceptsTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouteFilter;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\DaftSource;
-use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
@@ -479,7 +478,18 @@ class ImplementationTest extends Base
 	) : void {
 		$typed_args_object = $className::DaftRouterHttpRouteArgsTyped($args, $method);
 
+		if (is_null($typed_args_object)) {
+			static::assertCount(0, $args);
+		} else {
 		static::assertSame($args, $typed_args_object->__toArray());
+
+			/**
+			* @var class-string<TypedArgs>
+			*/
+			$type = get_class($typed_args_object);
+			static::assertSame($args, (new $type($typedArgs))->__toArray());
+		}
+
 		static::assertTrue(in_array(
 			$className::DaftRouterHttpRouteDefaultMethod(),
 			[
@@ -496,12 +506,6 @@ class ImplementationTest extends Base
 			],
 			true
 		));
-
-		/**
-		* @var class-string<TypedArgs>
-		*/
-		$type = get_class($typed_args_object);
-		static::assertSame($args, (new $type($typedArgs))->__toArray());
 
 		$check_auto_method_checking = (
 			in_array(
@@ -543,9 +547,7 @@ class ImplementationTest extends Base
 			throw new RuntimeException(
 				'Argument 2 passed to ' .
 				__METHOD__ .
-				'() resolved to an instance of ' .
-				EmptyArgs::class .
-				', but ' .
+				'() resolved to null, but ' .
 				$className .
 				' does not implement ' .
 				DaftRouteAcceptsEmptyArgs::class
@@ -1075,7 +1077,7 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return Generator<int, array{0:class-string<TypedArgs>|class-string<EmptyArgs>, 1:array<string, scalar|null>|array<empty, empty>, 2:string, 3:array<string, scalar|null>}, mixed, void>
+	* @return Generator<int, array{0:class-string<TypedArgs>|null, 1:array<string, scalar|null>|array<empty, empty>, 2:string, 3:array<string, scalar|null>}, mixed, void>
 	*/
 	public function dataProviderJsonSerialize() : Generator
 	{
@@ -1103,7 +1105,7 @@ class ImplementationTest extends Base
 				],
 			],
 			[
-				EmptyArgs::class,
+				null,
 				[],
 				'{}',
 				[],
@@ -1116,20 +1118,20 @@ class ImplementationTest extends Base
 	*
 	* @template K as key-of<T>
 	*
-	* @param class-string<TypedArgs>|class-string<EmptyArgs> $type
+	* @param class-string<TypedArgs>|null $type
 	* @param S $args
 	* @param S $expected_decoded
 	*/
 	public function testJsonSerialize(
-		string $type,
+		? string $type,
 		array $args,
 		string $expected,
 		array $expected_decoded
 	) : void {
-		if (EmptyArgs::class === $type) {
-			$typed_args = $type::__fromArray();
-			static::assertNull($type::PropertyValueToScalarOrNull('', null));
-			static::assertNull($type::PropertyScalarOrNullToValue('', null));
+		if (is_null($type)) {
+			$typed_args = null;
+			$encoded = '{}';
+			$for_json = [];
 		} else {
 			/**
 			* @var class-string<TypedArgs>
@@ -1137,10 +1139,10 @@ class ImplementationTest extends Base
 			$type = $type;
 
 			$typed_args = $type::__fromArray($args);
-		}
 
 		$for_json = $typed_args->jsonSerialize();
 		$encoded = json_encode($typed_args, JSON_FORCE_OBJECT);
+		}
 
 		/**
 		* @var S
@@ -1151,7 +1153,7 @@ class ImplementationTest extends Base
 
 		static::assertSame($expected, $encoded);
 
-		if (is_a($type, TypedArgs::class, true)) {
+		if ($typed_args instanceof TypedArgs) {
 			foreach ($decoded as $property => $decoded_value) {
 				static::assertTrue(isset($args[$property]));
 				static::assertSame(
@@ -1166,7 +1168,10 @@ class ImplementationTest extends Base
 
 				static::assertSame(
 					$decoded[$property],
-					$type::PropertyValueToScalarOrNull($property, $typed_value)
+					$typed_args::PropertyValueToScalarOrNull(
+						$property,
+						$typed_value
+					)
 				);
 			}
 		}

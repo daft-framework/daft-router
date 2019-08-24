@@ -10,7 +10,6 @@ use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsBothEmptyAndTypedArgs;
 use SignpostMarv\DaftRouter\DaftRouterAutoMethodCheckingTrait;
 use SignpostMarv\DaftRouter\DaftRouterHttpRouteDefaultMethodGet;
-use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,17 +35,19 @@ class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 	}
 
 	/**
-	* @return T2|EmptyArgs
+	* @return T2|null
 	*/
-	public static function DaftRouterHttpRouteArgsTyped(array $args, string $method = null)
-	{
+	public static function DaftRouterHttpRouteArgsTyped(
+		array $args,
+		string $method = null
+	) : ? TypedArgs {
 		if ('admin' === ($args['mode'] ?? null)) {
 			return AdminModeArgs::__fromArray([
 				'mode' => 'admin',
 			]);
 		}
 
-		return EmptyArgs::__fromArray([]);
+		return null;
 	}
 
 	/**

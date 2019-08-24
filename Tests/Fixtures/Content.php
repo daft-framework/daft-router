@@ -64,7 +64,7 @@ class Content extends DaftRouteAcceptsOnlyTypedArgs
 	public static function DaftRouterHttpRouteArgsTyped(
 		array $args,
 		string $method = null
-	) : TypedArgs {
+	) : ? TypedArgs {
 		return LocatorArgs::__fromArray($args);
 	}
 }

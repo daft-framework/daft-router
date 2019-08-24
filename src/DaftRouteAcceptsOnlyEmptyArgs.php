@@ -29,12 +29,12 @@ abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArg
 	* @param T1 $args
 	* @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
 	*
-	* @return EmptyArgs
+	* @return null
 	*/
 	final public static function DaftRouterHttpRouteArgsTyped(
 		array $args,
 		string $method = null
-	) {
-		return EmptyArgs::__fromArray([]);
+	) : ? TypedArgs {
+		return null;
 	}
 }

@@ -12,7 +12,6 @@ use SignpostMarv\DaftRouter\DaftRequestInterceptor;
 use SignpostMarv\DaftRouter\DaftResponseModifier;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsEmptyArgs;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsTypedArgs;
-use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,7 +93,10 @@ class Dispatcher extends Base
 	*/
 	protected function handleRouteInfo(Request $request, array $routeInfo) : Response
 	{
-		$routeArgs = EmptyArgs::__fromArray([]);
+		/**
+		* @var TypedArgs|null
+		*/
+		$routeArgs = null;
 
 		/**
 		* @var class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>
@@ -134,14 +136,13 @@ class Dispatcher extends Base
 
 	/**
 	* @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
-	* @param EmptyArgs|TypedArgs $routeArgs
 	* @param array<int, class-string<DaftRequestInterceptor>> $firstPass
 	* @param array<int, class-string<DaftResponseModifier>> $secondPass
 	*/
 	protected function handleRouteInfoResponse(
 		Request $request,
 		string $route,
-		$routeArgs,
+		? TypedArgs $routeArgs,
 		array $firstPass,
 		array $secondPass
 	) : Response {
@@ -149,7 +150,7 @@ class Dispatcher extends Base
 
 		if ( ! ($resp instanceof Response)) {
 			if (
-				($routeArgs instanceof EmptyArgs) &&
+				is_null($routeArgs) &&
 				is_a($route, DaftRouteAcceptsEmptyArgs::class, true)
 			) {
 				$resp = $route::DaftRouterHandleRequestWithEmptyArgs($request);

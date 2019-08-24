@@ -10,7 +10,6 @@ use InvalidArgumentException;
 use SignpostMarv\DaftRouter\DaftRoute;
 use SignpostMarv\DaftRouter\DaftRouteAcceptsOnlyEmptyArgs;
 use SignpostMarv\DaftRouter\DaftRouterHttpRouteDefaultMethodGet;
-use SignpostMarv\DaftRouter\EmptyArgs;
 use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
