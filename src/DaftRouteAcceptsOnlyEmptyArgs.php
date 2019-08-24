@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
 * @psalm-type T1 = array<empty, empty>
+* @psalm-type T2 = null
 * @template R_EMPTY as Response
 * @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
 * @template HTTP_METHOD_DEFAULT as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
@@ -28,6 +29,8 @@ abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArg
 	*
 	* @param T1 $args
 	* @param HTTP_METHOD|null $method If null, use DaftRoute::DaftRouterHttpRouteDefaultMethod()
+	*
+	* @return T2
 	*/
 	final public static function DaftRouterHttpRouteArgsTyped(
 		array $args,
