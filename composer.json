@@ -26,12 +26,15 @@
 	},
 	"scripts": {
 		"tests": [
-			"phpunit -vvvv --coverage-clover=phpunit.clover",
+			"phpunit",
+			"infection --min-msi=100",
+			"@static-analysis"
+		],
+		"static-analysis": [
 			"psalm --shepherd --show-info=false",
 			"phpcpd src",
 			"phpmnd ./ --exclude=./phpunit/ --exclude=./vendor/ --non-zero-exit-on-violation --hint",
 			"composer-require-checker check ./composer.json",
-			"infection --min-msi=100",
 			"php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
 		]
 	},

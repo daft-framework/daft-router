@@ -108,12 +108,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daft-framework/Daft-Typed-Object.git",
-                "reference": "cccb75e236d0e6e00991e6a60009a28544cef317"
+                "reference": "4b9b7177b112a554cf89828837024fb3f563c2f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daft-framework/Daft-Typed-Object/zipball/cccb75e236d0e6e00991e6a60009a28544cef317",
-                "reference": "cccb75e236d0e6e00991e6a60009a28544cef317",
+                "url": "https://api.github.com/repos/daft-framework/Daft-Typed-Object/zipball/4b9b7177b112a554cf89828837024fb3f563c2f0",
+                "reference": "4b9b7177b112a554cf89828837024fb3f563c2f0",
                 "shasum": ""
             },
             "require": {
@@ -160,7 +160,7 @@
                 }
             ],
             "description": "Typed Object, a simplified version of signpostmarv/daft-object",
-            "time": "2019-08-25T10:18:34+00:00"
+            "time": "2019-08-25T11:07:22+00:00"
         },
         {
             "name": "symfony/http-foundation",
