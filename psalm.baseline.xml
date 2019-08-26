@@ -64,16 +64,6 @@
       <code>$prevKey</code>
     </UnusedVariable>
   </file>
-  <file src="src/EmptyArgs.php">
-    <InvalidReturnType occurrences="2">
-      <code>PropertyValueToScalarOrNull</code>
-      <code>PropertyScalarOrNullToValue</code>
-    </InvalidReturnType>
-    <MoreSpecificImplementedParamType occurrences="2">
-      <code>$_property</code>
-      <code>$_property</code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/Router/Dispatcher.php">
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$httpMethod</code>
