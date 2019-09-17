@@ -821,10 +821,6 @@ class ImplementationTest extends Base
 		string $notPresentWithMethod,
 		string $notPresentWithUri
 	) : void {
-		static::assertTrue(is_a($middleware, DaftRouteFilter::class, true));
-		static::assertTrue(is_a($presentWith, DaftRoute::class, true));
-		static::assertTrue(is_a($notPresentWith, DaftRoute::class, true));
-
 		$dispatcher = Fixtures\Compiler::ObtainCompiler()::ObtainDispatcher(
 			[
 				'cacheDisabled' => true,
@@ -887,9 +883,6 @@ class ImplementationTest extends Base
 			$dispatchedNotPresent
 		);
 
-		/**
-		* @var class-string<DaftRoute>|false
-		*/
 		$route = array_pop($dispatchedPresent);
 
 		/**
@@ -901,11 +894,6 @@ class ImplementationTest extends Base
 			$route,
 			'Last entry from a dispatcher should be a string'
 		);
-
-		/**
-		* @var class-string<DaftRoute>
-		*/
-		$route = $route;
 
 		static::assertTrue(is_a($route, DaftRoute::class, true), sprintf(
 			'Last entry from a dispatcher should be %s',
