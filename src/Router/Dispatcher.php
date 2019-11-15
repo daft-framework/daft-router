@@ -179,9 +179,6 @@ class Dispatcher extends Base
 		$response = null;
 
 		foreach ($middlewares as $middleware) {
-			/**
-			* @var Response|null
-			*/
 			$response = $middleware::DaftRouterMiddlewareHandler($request, $response);
 		}
 
@@ -197,9 +194,6 @@ class Dispatcher extends Base
 		string ...$middlewares
 	) : Response {
 		foreach ($middlewares as $middleware) {
-			/**
-			* @var Response
-			*/
 			$response = $middleware::DaftRouterMiddlewareModifier($request, $response);
 		}
 

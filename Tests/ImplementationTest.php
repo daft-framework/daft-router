@@ -301,11 +301,6 @@ class ImplementationTest extends Base
 
 		static::assertIsArray($sources);
 
-		/**
-		* @var array
-		*/
-		$sources = $sources;
-
 		if (count($sources) < 1) {
 			static::markTestSkipped('No sources to test!');
 		} else {
@@ -322,9 +317,6 @@ class ImplementationTest extends Base
 				'DaftSource::DaftRouterRouteAndMiddlewareSources() must be of the form array<int, mixed>'
 			);
 
-			/**
-			* @var array<int, string>
-			*/
 			$sources = array_filter($sources, 'is_string');
 
 			static::assertCount(
@@ -428,9 +420,6 @@ class ImplementationTest extends Base
 			'All route uris must begin with a forward slash, or an argument that begins with such!'
 		);
 
-		/**
-		* @var array<string, array>
-		*/
 		$routes = array_filter($routes, 'is_array');
 
 		static::assertCount(
@@ -690,16 +679,10 @@ class ImplementationTest extends Base
 			);
 		}
 
-		/**
-		* @var scalar[]
-		*/
 		$uriPrefixes = $className::DaftRouterRoutePrefixExceptions();
 
 		$initialCount = count($uriPrefixes);
 
-		/**
-		* @var string[]
-		*/
 		$uriPrefixes = array_filter($uriPrefixes, 'is_string');
 
 		static::assertCount(
@@ -912,21 +895,12 @@ class ImplementationTest extends Base
 		);
 		static::assertIsArray($dispatchedPresent[DaftResponseModifier::class]);
 
-		/**
-		* @var array
-		*/
 		$interceptors = $dispatchedPresent[DaftRequestInterceptor::class];
 
-		/**
-		* @var array
-		*/
 		$modifiers = $dispatchedPresent[DaftResponseModifier::class];
 
 		$initialCount = count($interceptors);
 
-		/**
-		* @var string[]
-		*/
 		$interceptors = array_filter($interceptors, 'is_string');
 
 		static::assertCount($initialCount, $interceptors);
@@ -939,9 +913,6 @@ class ImplementationTest extends Base
 
 		$initialCount = count($modifiers);
 
-		/**
-		* @var string[]
-		*/
 		$modifiers = array_filter($modifiers, 'is_string');
 
 		static::assertCount($initialCount, $modifiers);
@@ -999,9 +970,6 @@ class ImplementationTest extends Base
 		array $requestArgs,
 		array $expectedHeaders = []
 	) : void {
-		/**
-		* @var Dispatcher
-		*/
 		$dispatcher = Fixtures\Compiler::ObtainCompiler()::ObtainDispatcher(
 			[
 				'cacheDisabled' => true,
@@ -1039,9 +1007,6 @@ class ImplementationTest extends Base
 		array $requestArgs,
 		array $expectedHeaders = []
 	) : void {
-		/**
-		* @var Dispatcher
-		*/
 		$dispatcher = Fixtures\CompilerWithFixturesDispatcher::ObtainCompiler(
 		)::ObtainDispatcher(
 			[
@@ -1174,8 +1139,8 @@ class ImplementationTest extends Base
 	* @template K as key-of<T>
 	*
 	* @param class-string<TypedArgs>|null $type
-	* @param S $args
-	* @param S $expected_decoded
+	* @param array<string, scalar|null> $args
+	* @param array<string, scalar|null> $expected_decoded
 	*/
 	public function testJsonSerialize(
 		? string $type,
@@ -1188,11 +1153,6 @@ class ImplementationTest extends Base
 			$encoded = '{}';
 			$for_json = [];
 		} else {
-			/**
-			* @var class-string<TypedArgs>
-			*/
-			$type = $type;
-
 			$typed_args = $type::__fromArray($args);
 
 			$for_json = $typed_args->jsonSerialize();
@@ -1200,7 +1160,7 @@ class ImplementationTest extends Base
 		}
 
 		/**
-		* @var S
+		* @var array<string, scalar|null>
 		*/
 		$decoded = json_decode($encoded, true);
 
@@ -1241,9 +1201,6 @@ class ImplementationTest extends Base
 		$files = [];
 		$server = [];
 
-		/**
-		* @var null
-		*/
 		$content = null;
 
 		if (isset($requestArgs[1]) && is_string($requestArgs[1])) {

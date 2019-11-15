@@ -274,9 +274,6 @@ class Compiler
 
 			foreach ($routes as $uri => $methods) {
 				foreach ($methods as $method) {
-					/**
-					* @var array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
-					*/
 					$append = $this->MiddlewareNotExcludedFromUri($uri);
 
 					$append[0] = $route;

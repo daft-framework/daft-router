@@ -71,11 +71,6 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
 				rawurlencode($args->slug);
 		}
 
-		/**
-		* @var IntIdArgs
-		*/
-		$args = $args;
-
 		return
 			'/profile/' .
 			rawurlencode((string) $args->id);
