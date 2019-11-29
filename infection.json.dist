@@ -10,6 +10,11 @@
 	},
 	"mutators": {
 		"@default": true,
+		"ArrayOneItem": {
+			"ignore": [
+				"SignpostMarv\\DaftRouter\\Router\\Compiler::CompileDispatcherArray"
+			]
+		},
 		"MBString": {
 			"ignore": [
 				"SignpostMarv\\DaftRouter\\Router\\Compiler::CreateFilterForMiddlewareThatMatchesAnUri",

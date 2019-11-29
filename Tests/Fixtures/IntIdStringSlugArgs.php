@@ -23,10 +23,8 @@ class IntIdStringSlugArgs extends IntIdArgs
 
 	/**
 	* @readonly
-	*
-	* @var string
 	*/
-	public $slug;
+	public string $slug;
 
 	/**
 	* @param T $args

@@ -43,17 +43,14 @@ class Compiler
 	/**
 	* @var array<int, class-string<DaftRoute>>
 	*/
-	private $routes = [];
+	private array $routes = [];
 
 	/**
 	* @var array<int, string>
 	*/
-	private $middleware = [DaftRouteFilter::class];
+	private array $middleware = [DaftRouteFilter::class];
 
-	/**
-	* @var StaticMethodCollector
-	*/
-	private $collector;
+	private StaticMethodCollector $collector;
 
 	protected function __construct()
 	{

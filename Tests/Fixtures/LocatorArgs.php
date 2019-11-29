@@ -23,10 +23,8 @@ class LocatorArgs extends TypedArgs
 
 	/**
 	* @readonly
-	*
-	* @var string
 	*/
-	public $locator;
+	public string $locator;
 
 	/**
 	* @param T $args

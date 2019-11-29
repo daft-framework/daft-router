@@ -22,10 +22,8 @@ class StringModeArgs extends TypedArgs
 
 	/**
 	* @readonly
-	*
-	* @var string
 	*/
-	public $mode;
+	public string $mode;
 
 	/**
 	* @param T $data

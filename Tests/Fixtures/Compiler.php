@@ -17,10 +17,7 @@ use SignpostMarv\DaftRouter\Router\RouteCollector;
 
 class Compiler extends Base
 {
-	/**
-	* @var \SignpostMarv\DaftInterfaceCollector\StaticMethodCollector
-	*/
-	protected $collector;
+	protected BaseStaticMethodCollector $collector;
 
 	protected function __construct()
 	{

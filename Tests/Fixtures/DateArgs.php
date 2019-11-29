@@ -24,17 +24,13 @@ class DateArgs extends TypedArgs
 
 	/**
 	* @readonly
-	*
-	* @var DateTimeImmutable
 	*/
-	public $a;
+	public DateTimeImmutable $a;
 
 	/**
 	* @readonly
-	*
-	* @var DateTimeImmutable
 	*/
-	public $b;
+	public DateTimeImmutable $b;
 
 	/**
 	* @param T $data

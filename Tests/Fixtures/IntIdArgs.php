@@ -23,10 +23,8 @@ class IntIdArgs extends TypedArgs
 
 	/**
 	* @readonly
-	*
-	* @var int
 	*/
-	public $id;
+	public int $id;
 
 	/**
 	* @param T $args
