@@ -16,14 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+* @psalm-type THTTP = 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
 * @psalm-type SLUG = array{id:int, slug:string}
 * @psalm-type SANS_SLUG = array{id:int}
 * @psalm-type S_SLUG = array{id:string, slug:string}
 * @psalm-type S_SANS_SLUG = array{id:string}
 * @psalm-type R = Response
 * @psalm-type HTTP_METHOD = 'GET'|'GET'
-*
-* @template-extends DaftRouteAcceptsOnlyTypedArgs<SLUG|SANS_SLUG, S_SLUG|S_SANS_SLUG, IntIdArgs|IntIdStringSlugArgs, R, HTTP_METHOD, HTTP_METHOD>
 */
 class Profile extends DaftRouteAcceptsOnlyTypedArgs
 {
@@ -40,7 +39,11 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
 		Request $request,
 		TypedArgs $args
 	) : Response {
-		static::DaftRouterAutoMethodChecking($request->getMethod());
+		/**
+		* @var THTTP
+		*/
+		$method = $request->getMethod();
+		static::DaftRouterAutoMethodChecking($method);
 
 		return new Response('');
 	}

@@ -15,12 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
+* @psalm-type THTTP = 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
 * @psalm-type T1 = array{mode:'admin'}
 * @psalm-type T2 = AdminModeArgs
 * @psalm-type T3 = Response
 * @psalm-type HTTP_METHOD = 'GET'|'POST'
-*
-* @template-extends DaftRouteAcceptsBothEmptyAndTypedArgs<T1, T1, T2, T3, T3, HTTP_METHOD, HTTP_METHOD, 'GET'>
 */
 class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 {
@@ -60,6 +59,7 @@ class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 
 	/**
 	* @param T2 $args
+	* @param THTTP|null $method
 	*/
 	public static function DaftRouterHttpRouteWithTypedArgs(
 		TypedArgs $args,

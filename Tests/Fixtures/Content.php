@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 * @psalm-type T = array{locator:string}
 * @psalm-type TYPED = LocatorArgs
 * @psalm-type R = Response
-*
-* @template-extends DaftRouteAcceptsOnlyTypedArgs<T, T, TYPED, R, 'GET', 'GET'>
 */
 class Content extends DaftRouteAcceptsOnlyTypedArgs
 {

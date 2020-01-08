@@ -14,9 +14,6 @@ use SignpostMarv\DaftRouter\TypedArgs;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
-* @template-extends DaftRouteAcceptsOnlyEmptyArgs<Response, 'GET', 'GET'>
-*/
 class Home extends DaftRouteAcceptsOnlyEmptyArgs
 {
 	use DaftRouterHttpRouteDefaultMethodGet;
