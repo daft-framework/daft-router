@@ -6,9 +6,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
-use DateTimeImmutable;
-use Symfony\Component\HttpFoundation\Response;
-
 /**
 * This should be flagged as deprecated soon.
 *

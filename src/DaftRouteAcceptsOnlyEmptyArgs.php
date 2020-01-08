@@ -6,8 +6,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
-use Symfony\Component\HttpFoundation\Response;
-
 abstract class DaftRouteAcceptsOnlyEmptyArgs implements DaftRouteAcceptsEmptyArgs
 {
 	use DaftRouterAutoMethodCheckingTrait;
