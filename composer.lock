@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50a128225b537104ffaa13a337dd7f4c",
+    "content-hash": "cf066186e4326297679c9e95db5016c7",
     "packages": [
         {
             "name": "nikic/fast-route",
@@ -54,23 +54,23 @@
         },
         {
             "name": "signpostmarv/daft-interface-collector",
-            "version": "v2.1.2",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/daft-framework/daft-interface-collector.git",
-                "reference": "e277eadbc8cb56eb386394ba0d9d62e36f3e2cf3"
+                "reference": "a742973739faefefd4fb7320b74641f0bdf57492"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daft-framework/daft-interface-collector/zipball/e277eadbc8cb56eb386394ba0d9d62e36f3e2cf3",
-                "reference": "e277eadbc8cb56eb386394ba0d9d62e36f3e2cf3",
+                "url": "https://api.github.com/repos/daft-framework/daft-interface-collector/zipball/a742973739faefefd4fb7320b74641f0bdf57492",
+                "reference": "a742973739faefefd4fb7320b74641f0bdf57492",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4"
             },
             "conflict": {
-                "vimeo/psalm": "<3.8"
+                "vimeo/psalm": "<3.8.3"
             },
             "require-dev": {
                 "bmitch/churn-php": "^1.0",
@@ -83,7 +83,7 @@
                 "psalm/plugin-phpunit": "^0.8.0",
                 "roave/security-advisories": "dev-master",
                 "sebastian/phpcpd": "^4.1",
-                "signpostmarv/php-cs-fixer-config": "^0.14.0",
+                "signpostmarv/php-cs-fixer-config": "^0.16.3",
                 "vimeo/psalm": "^3.8"
             },
             "type": "library",
@@ -103,20 +103,20 @@
                 }
             ],
             "description": "interface collector. daft reasons again.",
-            "time": "2020-01-08T19:01:38+00:00"
+            "time": "2020-01-20T18:32:36+00:00"
         },
         {
             "name": "signpostmarv/daft-typed-object",
-            "version": "dev-master",
+            "version": "v0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/daft-framework/Daft-Typed-Object.git",
-                "reference": "a16331d97e0248408f11e6cf08806d17951f3a1f"
+                "reference": "909e9c39b417330bdad952c2f4aa231a0f9e568b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daft-framework/Daft-Typed-Object/zipball/a16331d97e0248408f11e6cf08806d17951f3a1f",
-                "reference": "a16331d97e0248408f11e6cf08806d17951f3a1f",
+                "url": "https://api.github.com/repos/daft-framework/Daft-Typed-Object/zipball/909e9c39b417330bdad952c2f4aa231a0f9e568b",
+                "reference": "909e9c39b417330bdad952c2f4aa231a0f9e568b",
                 "shasum": ""
             },
             "require": {
@@ -124,7 +124,7 @@
                 "php": "^7.4"
             },
             "conflict": {
-                "vimeo/psalm": "<3.8"
+                "vimeo/psalm": "<3.8.3"
             },
             "require-dev": {
                 "ext-xdebug": "*",
@@ -136,7 +136,7 @@
                 "psalm/plugin-phpunit": "^0.8.0",
                 "roave/security-advisories": "dev-master",
                 "sebastian/phpcpd": "^4.1",
-                "signpostmarv/php-cs-fixer-config": "^0.14.0",
+                "signpostmarv/php-cs-fixer-config": "^0.16.3",
                 "vimeo/psalm": "^3.8"
             },
             "suggest": {
@@ -164,7 +164,7 @@
                 }
             ],
             "description": "Typed Object, a simplified version of signpostmarv/daft-object",
-            "time": "2020-01-08T18:38:51+00:00"
+            "time": "2020-01-19T11:38:08+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -5280,7 +5280,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "signpostmarv/daft-typed-object": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
