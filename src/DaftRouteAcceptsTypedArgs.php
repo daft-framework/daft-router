@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftRouter;
 
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +23,7 @@ interface DaftRouteAcceptsTypedArgs extends DaftRoute
 	/**
 	* @param THTTP|null $method
 	*
-	* @throws \InvalidArgumentException if no uri could be found
+	* @throws InvalidArgumentException if no uri could be found
 	*/
 	public static function DaftRouterHttpRouteWithTypedArgs(
 		TypedArgs $args,

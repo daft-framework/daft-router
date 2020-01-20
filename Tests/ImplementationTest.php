@@ -26,6 +26,7 @@ use SignpostMarv\DaftRouter\ResponseException;
 use SignpostMarv\DaftRouter\Router\Compiler;
 use SignpostMarv\DaftRouter\Router\Dispatcher;
 use SignpostMarv\DaftRouter\TypedArgs;
+use stdClass;
 use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
@@ -249,7 +250,7 @@ class ImplementationTest extends Base
 			[1],
 			[2.0],
 			[[3, 3, 3]],
-			[new \stdClass()],
+			[new stdClass()],
 			[null],
 		];
 	}
@@ -257,7 +258,7 @@ class ImplementationTest extends Base
 	/**
 	* @dataProvider DataProviderUriReplacement
 	*/
-	public function testUriReplacement(
+	public function test_uri_replacement(
 		string $uri,
 		string $prefix,
 		string $expected
@@ -281,7 +282,7 @@ class ImplementationTest extends Base
 	*
 	* @dataProvider DataProviderGoodSources
 	*/
-	public function testSources(string $className) : void
+	public function test_sources(string $className) : void
 	{
 		if ( ! is_a($className, DaftSource::class, true)) {
 			static::assertTrue(
@@ -374,11 +375,11 @@ class ImplementationTest extends Base
 	/**
 	* @param class-string<DaftRoute> $className
 	*
-	* @depends testSources
+	* @depends test_sources
 	*
 	* @dataProvider DataProviderRoutes
 	*/
-	public function testRoutes(string $className) : void
+	public function test_routes(string $className) : void
 	{
 		if ( ! is_a($className, DaftRoute::class, true)) {
 			static::assertTrue(
@@ -408,7 +409,7 @@ class ImplementationTest extends Base
 
 		$routes = array_filter(
 			$routes,
-			function (string $uri) : bool {
+			static function (string $uri) : bool {
 				return 1 === preg_match('/^(?:\/|{[a-z][a-z0-9]*:\/)/', $uri);
 			},
 			ARRAY_FILTER_USE_KEY
@@ -464,11 +465,11 @@ class ImplementationTest extends Base
 	* @param array<string, string> $args
 	* @param HTTP_METHOD $method
 	*
-	* @depends testRoutes
+	* @depends test_routes
 	*
 	* @dataProvider DataProviderRoutesWithKnownArgs
 	*/
-	public function testRoutesWithArgs(
+	public function test_routes_with_args(
 		string $className,
 		array $args,
 		array $typedArgs,
@@ -585,7 +586,7 @@ class ImplementationTest extends Base
 		}
 	}
 
-	public function testCompilerVerifyAddRouteThrowsException() : void
+	public function test_compiler_verify_add_route_throws_exception() : void
 	{
 		$compiler = Fixtures\Compiler::ObtainCompiler();
 
@@ -603,11 +604,11 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends testCompilerVerifyAddRouteThrowsException
+	* @depends test_compiler_verify_add_route_throws_exception
 	*
 	* @dataProvider DataProviderGoodSources
 	*/
-	public function testCompilerVerifyAddRouteAddsRoutes(
+	public function test_compiler_verify_add_route_adds_routes(
 		string $className
 	) : void {
 		$routes = [];
@@ -624,7 +625,7 @@ class ImplementationTest extends Base
 		static::assertSame($routes, $compiler->ObtainRoutes());
 	}
 
-	public function testCompilerVerifyAddMiddlewareThrowsException() : void
+	public function test_compiler_verify_add_middleware_throws_exception() : void
 	{
 		$compiler = Fixtures\Compiler::ObtainCompiler();
 
@@ -644,7 +645,7 @@ class ImplementationTest extends Base
 	*
 	* @dataProvider DataProviderEnsureDispatcherIsCorrectlyTypedPublic
 	*/
-	public function testCompilerVerifyEnsureDispatcherIsCorrectlyTypedThrowsException(
+	public function test_compiler_verify_ensure_dispatcher_is_correctly_typed_throws_exception(
 		$maybe
 	) : void {
 		$compiler = Fixtures\Compiler::ObtainCompiler();
@@ -662,11 +663,11 @@ class ImplementationTest extends Base
 	/**
 	* @param class-string<DaftRouteFilter> $className
 	*
-	* @depends testSources
+	* @depends test_sources
 	*
 	* @dataProvider DataProviderMiddleware
 	*/
-	public function testMiddlware(string $className) : void
+	public function test_middlware(string $className) : void
 	{
 		if ( ! is_a($className, DaftRouteFilter::class, true)) {
 			static::assertTrue(
@@ -703,11 +704,11 @@ class ImplementationTest extends Base
 	/**
 	* @param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $className
 	*
-	* @depends testCompilerVerifyAddMiddlewareThrowsException
+	* @depends test_compiler_verify_add_middleware_throws_exception
 	*
 	* @dataProvider DataProviderGoodSources
 	*/
-	public function testCompilerVerifyAddMiddlewareAddsMiddlewares(
+	public function test_compiler_verify_add_middleware_adds_middlewares(
 		string $className
 	) : void {
 		/**
@@ -726,7 +727,7 @@ class ImplementationTest extends Base
 		$middlewares[] = DaftRouteFilter::class;
 		$middlewares = array_filter(
 			$middlewares,
-			function (string $middleware) : bool {
+			static function (string $middleware) : bool {
 				return
 					is_a($middleware, DaftRequestInterceptor::class, true) ||
 					is_a($middleware, DaftResponseModifier::class, true);
@@ -739,12 +740,12 @@ class ImplementationTest extends Base
 	/**
 	* @param class-string<DaftSource> $className
 	*
-	* @depends testCompilerVerifyAddRouteAddsRoutes
-	* @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
+	* @depends test_compiler_verify_add_route_adds_routes
+	* @depends test_compiler_verify_add_middleware_adds_middlewares
 	*
 	* @dataProvider DataProviderGoodSources
 	*/
-	public function testCompilerDoesNotDuplicateConfigEntries(
+	public function test_compiler_does_not_duplicate_config_entries(
 		string $className
 	) : void {
 		$compiler = Fixtures\Compiler::ObtainCompiler();
@@ -790,12 +791,12 @@ class ImplementationTest extends Base
 	* @param class-string<DaftRoute> $notPresentWith
 	* @param HTTP_METHOD $notPresentWithMethod
 	*
-	* @depends testCompilerVerifyAddRouteAddsRoutes
-	* @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
+	* @depends test_compiler_verify_add_route_adds_routes
+	* @depends test_compiler_verify_add_middleware_adds_middlewares
 	*
 	* @dataProvider DataProviderMiddlewareWithExceptions
 	*/
-	public function testCompilerExcludesMiddleware(
+	public function test_compiler_excludes_middleware(
 		string $middleware,
 		string $presentWith,
 		string $presentWithMethod,
@@ -953,16 +954,16 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends testCompilerVerifyAddRouteAddsRoutes
-	* @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
-	* @depends testCompilerExcludesMiddleware
+	* @depends test_compiler_verify_add_route_adds_routes
+	* @depends test_compiler_verify_add_middleware_adds_middlewares
+	* @depends test_compiler_excludes_middleware
 	*
 	* @dataProvider DataProviderVerifyHandlerGood
 	*
 	* @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
 	* @param array<string, scalar|array|object|null> $expectedHeaders
 	*/
-	public function testHandlerGood(
+	public function test_handler_good(
 		array $sources,
 		string $prefix,
 		int $expectedStatus,
@@ -992,14 +993,14 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends testHandlerGood
+	* @depends test_handler_good
 	*
 	* @dataProvider DataProviderVerifyHandlerGood
 	*
 	* @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
 	* @param array<string, scalar|array|object|null> $expectedHeaders
 	*/
-	public function testHandlerGoodWithFixturesDispatcher(
+	public function test_handler_good_with_fixtures_dispatcher(
 		array $sources,
 		string $prefix,
 		int $expectedStatus,
@@ -1030,11 +1031,11 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends testHandlerGoodWithFixturesDispatcher
+	* @depends test_handler_good_with_fixtures_dispatcher
 	*
 	* @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
 	*/
-	public function testHandlerUntypedRequestHandlingIsDeprecated() : void
+	public function test_handler_untyped_request_handling_is_deprecated() : void
 	{
 		/**
 		* @var Fixtures\Dispatcher
@@ -1063,15 +1064,15 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends testCompilerVerifyAddRouteAddsRoutes
-	* @depends testCompilerVerifyAddMiddlewareAddsMiddlewares
-	* @depends testCompilerExcludesMiddleware
+	* @depends test_compiler_verify_add_route_adds_routes
+	* @depends test_compiler_verify_add_middleware_adds_middlewares
+	* @depends test_compiler_excludes_middleware
 	*
 	* @dataProvider DataProviderVerifyHandlerBad
 	*
 	* @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
 	*/
-	public function testHandlerBad(
+	public function test_handler_bad(
 		array $sources,
 		string $prefix,
 		int $expectedStatus,
@@ -1142,7 +1143,7 @@ class ImplementationTest extends Base
 	* @param array<string, scalar|null> $args
 	* @param array<string, scalar|null> $expected_decoded
 	*/
-	public function testJsonSerialize(
+	public function test_json_serialize(
 		? string $type,
 		array $args,
 		string $expected,

@@ -148,7 +148,7 @@ class Compiler
 
 	final public function ObtainMiddleware() : array
 	{
-		return array_values(array_filter($this->middleware, function (string $middleware) : bool {
+		return array_values(array_filter($this->middleware, static function (string $middleware) : bool {
 			return
 				is_a($middleware, DaftRequestInterceptor::class, true) ||
 				is_a($middleware, DaftResponseModifier::class, true);

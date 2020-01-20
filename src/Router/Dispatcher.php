@@ -68,7 +68,7 @@ class Dispatcher extends Base
 			/**
 			* @param array<int, string> $matches
 			*/
-			function (array $matches) : string {
+			static function (array $matches) : string {
 				return '/' . rawurldecode($matches[self::MATCH_ONE]);
 			},
 			preg_replace('/\/$/', '', preg_replace('/\/+/', '/', $path))
