@@ -11,5 +11,9 @@ I needed an excuse to write a non-psr7 router. Because reasons.
 
 1) daft ones.
 
+## Examples
+* [example using a single route to provide different outputs depending on route arguments](https://github.com/daft-framework/Daft-Router-Example)
+
 ## references
 * [nikic/fast-route](https://github.com/nikic/fastroute)
+* [fzaninotto/faker](https://github.com/fzaninotto/Faker) (for the example repository)
