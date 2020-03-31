@@ -58,6 +58,9 @@ class DateArgs extends TypedArgs
 		*/
 		$property = $property;
 
+		/** @var DateTimeImmutable */
+		$value = $value;
+
 		if ('a' === $property) {
 			/**
 			* @var S[K]

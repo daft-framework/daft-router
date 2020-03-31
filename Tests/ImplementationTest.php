@@ -1163,11 +1163,16 @@ class ImplementationTest extends Base
 		*/
 		$decoded = json_decode($encoded, true);
 
+		static::assertCount(count($for_json), $decoded);
+
 		static::assertSame($expected_decoded, $decoded);
 
 		static::assertSame($expected, $encoded);
 
 		if ($typed_args instanceof TypedArgs) {
+			/** @var non-empty-array<string, scalar|null> */
+			$for_json = $for_json;
+
 			foreach ($decoded as $property => $decoded_value) {
 				static::assertTrue(isset($args[$property]));
 				static::assertSame(
