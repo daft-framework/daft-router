@@ -486,10 +486,8 @@ class ImplementationTest extends Base
 		} else {
 			static::assertSame($args, $typed_args_object->__toArray());
 
-			/**
-			* @var class-string<TypedArgs>
-			*/
 			$type = get_class($typed_args_object);
+
 			static::assertSame($args, (new $type($typedArgs))->__toArray());
 		}
 
