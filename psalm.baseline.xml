@@ -47,10 +47,11 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="Tests/Fixtures/Content.php">
-    <MoreSpecificImplementedParamType occurrences="3">
+    <MoreSpecificImplementedParamType occurrences="4">
       <code>$args</code>
       <code>$args</code>
       <code>$args</code>
+      <code>$method</code>
     </MoreSpecificImplementedParamType>
   </file>
   <file src="Tests/Fixtures/Home.php">
@@ -65,9 +66,10 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="Tests/Fixtures/Profile.php">
-    <MoreSpecificImplementedParamType occurrences="3">
+    <MoreSpecificImplementedParamType occurrences="4">
       <code>$args</code>
       <code>$args</code>
+      <code>$method</code>
       <code>$args</code>
     </MoreSpecificImplementedParamType>
   </file>
