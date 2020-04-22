@@ -34,8 +34,8 @@ class Compiler extends Base
 	}
 
 	/**
-	* @param mixed $out
-	*/
+	 * @param mixed $out
+	 */
 	public static function EnsureDispatcherIsCorrectlyTypedPublic($out) : BaseDispatcher
 	{
 		return static::EnsureDispatcherIsCorrectlyTyped($out);

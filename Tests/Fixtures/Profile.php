@@ -16,14 +16,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @psalm-type THTTP = 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
-* @psalm-type SLUG = array{id:int, slug:string}
-* @psalm-type SANS_SLUG = array{id:int}
-* @psalm-type S_SLUG = array{id:string, slug:string}
-* @psalm-type S_SANS_SLUG = array{id:string}
-* @psalm-type R = Response
-* @psalm-type HTTP_METHOD = 'GET'|'GET'
-*/
+ * @psalm-type THTTP = 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+ * @psalm-type SLUG = array{id:int, slug:string}
+ * @psalm-type SANS_SLUG = array{id:int}
+ * @psalm-type S_SLUG = array{id:string, slug:string}
+ * @psalm-type S_SANS_SLUG = array{id:string}
+ * @psalm-type R = Response
+ * @psalm-type HTTP_METHOD = 'GET'|'GET'
+ */
 class Profile extends DaftRouteAcceptsOnlyTypedArgs
 {
 	use DaftRouterHttpRouteDefaultMethodGet;
@@ -33,15 +33,15 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
 	const MAX_EXPECTED_ARGS = 2;
 
 	/**
-	* @param IntIdArgs|IntIdStringSlugArgs $args
-	*/
+	 * @param IntIdArgs|IntIdStringSlugArgs $args
+	 */
 	public static function DaftRouterHandleRequestWithTypedArgs(
 		Request $request,
 		TypedArgs $args
 	) : Response {
 		/**
-		* @var THTTP
-		*/
+		 * @var THTTP
+		 */
 		$method = $request->getMethod();
 		static::DaftRouterAutoMethodChecking($method);
 
@@ -56,9 +56,9 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
 	}
 
 	/**
-	* @param IntIdArgs|IntIdStringSlugArgs $args
-	* @param 'GET'|null $method
-	*/
+	 * @param IntIdArgs|IntIdStringSlugArgs $args
+	 * @param 'GET'|null $method
+	 */
 	public static function DaftRouterHttpRouteWithTypedArgs(
 		TypedArgs $args,
 		string $method = null
@@ -80,10 +80,10 @@ class Profile extends DaftRouteAcceptsOnlyTypedArgs
 	}
 
 	/**
-	* @param S_SLUG|S_SANS_SLUG $args
-	*
-	* @return IntIdArgs|IntIdStringSlugArgs
-	*/
+	 * @param S_SLUG|S_SANS_SLUG $args
+	 *
+	 * @return IntIdArgs|IntIdStringSlugArgs
+	 */
 	public static function DaftRouterHttpRouteArgsTyped(
 		array $args,
 		string $method = null

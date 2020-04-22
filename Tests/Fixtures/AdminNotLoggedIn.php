@@ -25,8 +25,8 @@ class AdminNotLoggedIn implements DaftRequestInterceptor
 	}
 
 	/**
-	* @return array<int, string> URI prefixes
-	*/
+	 * @return array<int, string> URI prefixes
+	 */
 	public static function DaftRouterRoutePrefixExceptions() : array
 	{
 		return [
@@ -35,8 +35,8 @@ class AdminNotLoggedIn implements DaftRequestInterceptor
 	}
 
 	/**
-	* @return array<int, string> URI prefixes
-	*/
+	 * @return array<int, string> URI prefixes
+	 */
 	public static function DaftRouterRoutePrefixRequirements() : array
 	{
 		return [

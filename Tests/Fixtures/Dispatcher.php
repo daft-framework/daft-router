@@ -19,10 +19,10 @@ use Symfony\Component\HttpFoundation\Response;
 class Dispatcher extends Base
 {
 	/**
-	* @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
-	* @param array<int, class-string<DaftRequestInterceptor>> $firstPass
-	* @param array<int, class-string<DaftResponseModifier>> $secondPass
-	*/
+	 * @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
+	 * @param array<int, class-string<DaftRequestInterceptor>> $firstPass
+	 * @param array<int, class-string<DaftResponseModifier>> $secondPass
+	 */
 	public function handleRouteInfoResponseParentPublic(
 		Request $request,
 		string $route,
@@ -40,10 +40,10 @@ class Dispatcher extends Base
 	}
 
 	/**
-	* @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
-	* @param array<int, class-string<DaftRequestInterceptor>> $firstPass
-	* @param array<int, class-string<DaftResponseModifier>> $secondPass
-	*/
+	 * @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
+	 * @param array<int, class-string<DaftRequestInterceptor>> $firstPass
+	 * @param array<int, class-string<DaftResponseModifier>> $secondPass
+	 */
 	protected function handleRouteInfoResponse(
 		Request $request,
 		string $route,

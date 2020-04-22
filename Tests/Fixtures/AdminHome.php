@@ -31,8 +31,8 @@ class AdminHome extends DaftRouteAcceptsOnlyEmptyArgs
 	}
 
 	/**
-	* @param 'GET'|null $method
-	*/
+	 * @param 'GET'|null $method
+	 */
 	public static function DaftRouterHttpRouteWithEmptyArgs(string $method = null) : string
 	{
 		return '/admin';

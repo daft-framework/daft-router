@@ -15,12 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @psalm-type THTTP = 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
-* @psalm-type T1 = array{mode:'admin'}
-* @psalm-type T2 = AdminModeArgs
-* @psalm-type T3 = Response
-* @psalm-type HTTP_METHOD = 'GET'|'POST'
-*/
+ * @psalm-type THTTP = 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+ * @psalm-type T1 = array{mode:'admin'}
+ * @psalm-type T2 = AdminModeArgs
+ * @psalm-type T3 = Response
+ * @psalm-type HTTP_METHOD = 'GET'|'POST'
+ */
 class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 {
 	use DaftRouterHttpRouteDefaultMethodGet;
@@ -34,8 +34,8 @@ class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 	}
 
 	/**
-	* @return T2|null
-	*/
+	 * @return T2|null
+	 */
 	public static function DaftRouterHttpRouteArgsTyped(
 		array $args,
 		string $method = null
@@ -50,17 +50,17 @@ class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 	}
 
 	/**
-	* @param T2 $args
-	*/
+	 * @param T2 $args
+	 */
 	public static function DaftRouterHttpRouteWithEmptyArgs(string $method = null) : string
 	{
 		return '/login';
 	}
 
 	/**
-	* @param T2 $args
-	* @param THTTP|null $method
-	*/
+	 * @param T2 $args
+	 * @param THTTP|null $method
+	 */
 	public static function DaftRouterHttpRouteWithTypedArgs(
 		TypedArgs $args,
 		string $method = null
@@ -73,15 +73,15 @@ class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 	}
 
 	/**
-	* @param T2 $args
-	*/
+	 * @param T2 $args
+	 */
 	public static function DaftRouterHandleRequestWithTypedArgs(
 		Request $request,
 		TypedArgs $args
 	) : Response {
 		/**
-		* @var 'GET'|'POST'
-		*/
+		 * @var 'GET'|'POST'
+		 */
 		$method = $request->getMethod();
 		static::DaftRouterAutoMethodChecking($method);
 
@@ -89,13 +89,13 @@ class Login extends DaftRouteAcceptsBothEmptyAndTypedArgs
 	}
 
 	/**
-	* @param T2 $args
-	*/
+	 * @param T2 $args
+	 */
 	public static function DaftRouterHandleRequestWithEmptyArgs(Request $request) : Response
 	{
 		/**
-		* @var 'GET'|'POST'
-		*/
+		 * @var 'GET'|'POST'
+		 */
 		$method = $request->getMethod();
 		static::DaftRouterAutoMethodChecking($method);
 

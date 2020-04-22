@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
-*/
+ * @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+ */
 class Dispatcher extends Base
 {
 	const INT_ARRAY_INDEX_ROUTE_ARGS = 2;
@@ -27,11 +27,11 @@ class Dispatcher extends Base
 	const MATCH_ONE = 1;
 
 	/**
-	* @param HTTP_METHOD $httpMethod
-	* @param string $uri
-	*
-	* @return array
-	*/
+	 * @param HTTP_METHOD $httpMethod
+	 * @param string $uri
+	 *
+	 * @return array
+	 */
 	final public function dispatch($httpMethod, $uri)
 	{
 		$routeInfo = parent::dispatch($httpMethod, $uri);
@@ -53,21 +53,21 @@ class Dispatcher extends Base
 	}
 
 	/**
-	* @return array{1:array, 2:array<string, string>}
-	*/
+	 * @return array{1:array, 2:array<string, string>}
+	 */
 	protected function handleDispatch(Request $request, string $prefix = '') : array
 	{
 		$regex = '/^' . preg_quote($prefix, '/') . '/';
 		/**
-		* @var string
-		*/
+		 * @var string
+		 */
 		$path = parse_url($request->getUri(), PHP_URL_PATH);
 		$path = preg_replace($regex, '/', $path);
 		$path = preg_replace_callback(
 			'/\/([^\/]+)/',
 			/**
-			* @param array<int, string> $matches
-			*/
+			 * @param array<int, string> $matches
+			 */
 			static function (array $matches) : string {
 				return '/' . rawurldecode($matches[self::MATCH_ONE]);
 			},
@@ -76,37 +76,37 @@ class Dispatcher extends Base
 		$path = '' === $path ? '/' : $path;
 
 		/**
-		* @var HTTP_METHOD
-		*/
+		 * @var HTTP_METHOD
+		 */
 		$method = $request->getMethod();
 
 		/**
-		* @var array{1:array, 2:array<string, string>}
-		*/
+		 * @var array{1:array, 2:array<string, string>}
+		 */
 		$routeInfo = $this->dispatch($method, $path);
 
 		return $routeInfo;
 	}
 
 	/**
-	* @param array{1:array, 2:array<string, string>} $routeInfo
-	*/
+	 * @param array{1:array, 2:array<string, string>} $routeInfo
+	 */
 	protected function handleRouteInfo(Request $request, array $routeInfo) : Response
 	{
 		/**
-		* @var TypedArgs|null
-		*/
+		 * @var TypedArgs|null
+		 */
 		$routeArgs = null;
 
 		/**
-		* @var class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>
-		*/
+		 * @var class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>
+		 */
 		$route = array_pop($routeInfo[1]) ?: '';
 
 		if (isset($routeInfo[self::INT_ARRAY_INDEX_ROUTE_ARGS])) {
 			/**
-			* @var HTTP_METHOD
-			*/
+			 * @var HTTP_METHOD
+			 */
 			$method = $request->getMethod();
 
 			$routeArgs = $route::DaftRouterHttpRouteArgsTyped(
@@ -116,13 +116,13 @@ class Dispatcher extends Base
 		}
 
 		/**
-		* @var array<int, class-string<DaftRequestInterceptor>>
-		*/
+		 * @var array<int, class-string<DaftRequestInterceptor>>
+		 */
 		$firstPass = $routeInfo[1][DaftRequestInterceptor::class];
 
 		/**
-		* @var array<int, class-string<DaftResponseModifier>>
-		*/
+		 * @var array<int, class-string<DaftResponseModifier>>
+		 */
 		$secondPass = $routeInfo[1][DaftResponseModifier::class];
 
 		return $this->handleRouteInfoResponse(
@@ -135,10 +135,10 @@ class Dispatcher extends Base
 	}
 
 	/**
-	* @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
-	* @param array<int, class-string<DaftRequestInterceptor>> $firstPass
-	* @param array<int, class-string<DaftResponseModifier>> $secondPass
-	*/
+	 * @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $route
+	 * @param array<int, class-string<DaftRequestInterceptor>> $firstPass
+	 * @param array<int, class-string<DaftResponseModifier>> $secondPass
+	 */
 	protected function handleRouteInfoResponse(
 		Request $request,
 		string $route,
@@ -172,8 +172,8 @@ class Dispatcher extends Base
 	}
 
 	/**
-	* @param class-string<DaftRequestInterceptor> ...$middlewares
-	*/
+	 * @param class-string<DaftRequestInterceptor> ...$middlewares
+	 */
 	protected function RunMiddlewareFirstPass(Request $request, string ...$middlewares) : ? Response
 	{
 		$response = null;
@@ -186,8 +186,8 @@ class Dispatcher extends Base
 	}
 
 	/**
-	* @param class-string<DaftResponseModifier> ...$middlewares
-	*/
+	 * @param class-string<DaftResponseModifier> ...$middlewares
+	 */
 	protected function RunMiddlewareSecondPass(
 		Request $request,
 		Response $response,

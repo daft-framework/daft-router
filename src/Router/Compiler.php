@@ -41,13 +41,13 @@ class Compiler
 	];
 
 	/**
-	* @var array<int, class-string<DaftRoute>>
-	*/
+	 * @var array<int, class-string<DaftRoute>>
+	 */
 	private array $routes = [];
 
 	/**
-	* @var array<int, string>
-	*/
+	 * @var array<int, string>
+	 */
 	private array $middleware = [DaftRouteFilter::class];
 
 	private StaticMethodCollector $collector;
@@ -87,8 +87,8 @@ class Compiler
 	}
 
 	/**
-	* @param class-string<DaftSource>|class-string<DaftRoute>|class-string<DaftRouteFilter> ...$sources
-	*/
+	 * @param class-string<DaftSource>|class-string<DaftRoute>|class-string<DaftRouteFilter> ...$sources
+	 */
 	public function NudgeCompilerWithSources(string ...$sources) : void
 	{
 		$collector = $this->ObtainCollector();
@@ -111,8 +111,8 @@ class Compiler
 	}
 
 	/**
-	* @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
-	*/
+	 * @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
+	 */
 	final public function CompileDispatcherClosure(string ...$sources) : Closure
 	{
 		$this->NudgeCompilerWithSources(...$sources);
@@ -127,8 +127,8 @@ class Compiler
 	}
 
 	/**
-	* @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
-	*/
+	 * @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
+	 */
 	public static function ObtainDispatcher(array $options, string ...$sources) : Dispatcher
 	{
 		$compiler = new self();
@@ -161,8 +161,8 @@ class Compiler
 	}
 
 	/**
-	* @param mixed $out
-	*/
+	 * @param mixed $out
+	 */
 	final protected static function EnsureDispatcherIsCorrectlyTyped($out) : Dispatcher
 	{
 		if ( ! ($out instanceof Dispatcher)) {
@@ -177,8 +177,8 @@ class Compiler
 	}
 
 	/**
-	* @param class-string<DaftRouteFilter> $middleware
-	*/
+	 * @param class-string<DaftRouteFilter> $middleware
+	 */
 	private function DoesMiddlewareExcludeSelfFromUri(
 		string $middleware,
 		string $uri
@@ -198,8 +198,8 @@ class Compiler
 	{
 		return
 			/**
-			* @param class-string<DaftRouteFilter> $middleware
-			*/
+			 * @param class-string<DaftRouteFilter> $middleware
+			 */
 			function (string $middleware) use ($uri) : bool {
 				if ($this->DoesMiddlewareExcludeSelfFromUri($middleware, $uri)) {
 					return false;
@@ -218,23 +218,23 @@ class Compiler
 	}
 
 	/**
-	* @psalm-type RETURN = array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
-	*
-	* @return RETURN
-	*/
+	 * @psalm-type RETURN = array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
+	 *
+	 * @return RETURN
+	 */
 	private function MiddlewareNotExcludedFromUri(string $uri) : array
 	{
 		/**
-		* @var array<int, string>
-		*/
+		 * @var array<int, string>
+		 */
 		$middlewares = array_filter(
 			$this->ObtainMiddleware(),
 			$this->CreateFilterForMiddlewareThatMatchesAnUri($uri)
 		);
 
 		/**
-		* @var RETURN
-		*/
+		 * @var RETURN
+		 */
 		$out = [
 			DaftRequestInterceptor::class => [],
 			DaftResponseModifier::class => [],
@@ -254,19 +254,19 @@ class Compiler
 	}
 
 	/**
-	* @return array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
-	*/
+	 * @return array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
+	 */
 	private function CompileDispatcherArray() : array
 	{
 		/**
-		* @var array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
-		*/
+		 * @var array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
+		 */
 		$out = [];
 
 		foreach ($this->routes as $route) {
 			/**
-			* @var array<string, array<int, string>>
-			*/
+			 * @var array<string, array<int, string>>
+			 */
 			$routes = $route::DaftRouterRoutes();
 
 			foreach ($routes as $uri => $methods) {

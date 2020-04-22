@@ -31,15 +31,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
 /**
-* @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
-* @template T as array<string, scalar|DateTimeImmutable|null>
-* @template S as array<string, scalar|null>
-*/
+ * @template HTTP_METHOD as 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+ * @template T as array<string, scalar|DateTimeImmutable|null>
+ * @template S as array<string, scalar|null>
+ */
 class ImplementationTest extends Base
 {
 	/**
-	* @return Generator<int, array{0:class-string<DaftSource>}, mixed, void>
-	*/
+	 * @return Generator<int, array{0:class-string<DaftSource>}, mixed, void>
+	 */
 	public function DataProviderGoodSources() : Generator
 	{
 		yield from [
@@ -53,13 +53,13 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return Generator<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:HTTP_METHOD, 3:string, 4:class-string<DaftRoute>, 5:HTTP_METHOD, 6:string}, mixed, void>
-	*/
+	 * @return Generator<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:HTTP_METHOD, 3:string, 4:class-string<DaftRoute>, 5:HTTP_METHOD, 6:string}, mixed, void>
+	 */
 	public function DataProviderMiddlewareWithExceptions() : Generator
 	{
 		/**
-		* @var array<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:HTTP_METHOD, 3:string, 4:class-string<DaftRoute>, 5:HTTP_METHOD, 6:string}>
-		*/
+		 * @var array<int, array{0:class-string<DaftRouteFilter>, 1:class-string<DaftRoute>, 2:HTTP_METHOD, 3:string, 4:class-string<DaftRoute>, 5:HTTP_METHOD, 6:string}>
+		 */
 		$args = [
 			[
 				Fixtures\NotLoggedIn::class,
@@ -85,13 +85,13 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return Generator<int, array{0:class-string<DaftRoute>}, mixed, void>
-	*/
+	 * @return Generator<int, array{0:class-string<DaftRoute>}, mixed, void>
+	 */
 	public function DataProviderRoutes() : Generator
 	{
 		/**
-		* @var string[]|null
-		*/
+		 * @var string[]|null
+		 */
 		foreach ($this->DataProviderGoodSources() as $i => $args) {
 			if ( ! is_array($args)) {
 				throw new RuntimeException(sprintf(
@@ -124,8 +124,8 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return Generator<int, array{0:class-string<DaftRouteFilter>}, mixed, void>
-	*/
+	 * @return Generator<int, array{0:class-string<DaftRouteFilter>}, mixed, void>
+	 */
 	public function DataProviderMiddleware() : Generator
 	{
 		foreach ($this->DataProviderGoodSources() as $i => $args) {
@@ -148,13 +148,13 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return Generator<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:array<string, mixed>, 3:HTTP_METHOD, 4:string, 5?:class-string<Throwable>, 6?:string}, mixed, void>
-	*/
+	 * @return Generator<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:array<string, mixed>, 3:HTTP_METHOD, 4:string, 5?:class-string<Throwable>, 6?:string}, mixed, void>
+	 */
 	public function DataProviderRoutesWithKnownArgs() : Generator
 	{
 		/**
-		* @var array<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:array<string, mixed>, 3:HTTP_METHOD, 4:string, 5?:class-string<Throwable>, 6?:string}>
-		*/
+		 * @var array<int, array{0:class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>, 1:array<string, string>, 2:array<string, mixed>, 3:HTTP_METHOD, 4:string, 5?:class-string<Throwable>, 6?:string}>
+		 */
 		$args = [
 			[
 				Fixtures\Profile::class,
@@ -200,24 +200,24 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return Generator<int, array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
-	*/
+	 * @return Generator<int, array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
+	 */
 	public function DataProviderVerifyHandlerGood() : Generator
 	{
 		yield from $this->DataProviderVerifyHandler(true);
 	}
 
 	/**
-	* @return Generator<int, array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
-	*/
+	 * @return Generator<int, array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
+	 */
 	public function DataProviderVerifyHandlerBad() : Generator
 	{
 		yield from $this->DataProviderVerifyHandler(false);
 	}
 
 	/**
-	* @return array<int, array{0:string, 1:string, 2:string}>
-	*/
+	 * @return array<int, array{0:string, 1:string, 2:string}>
+	 */
 	public function DataProviderUriReplacement() : array
 	{
 		return [
@@ -240,9 +240,9 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return mixed[][]
-	* @return array<int, array{0:mixed}>
-	*/
+	 * @return mixed[][]
+	 * @return array<int, array{0:mixed}>
+	 */
 	public function DataProviderEnsureDispatcherIsCorrectlyTypedPublic() : array
 	{
 		return [
@@ -256,8 +256,8 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @dataProvider DataProviderUriReplacement
-	*/
+	 * @dataProvider DataProviderUriReplacement
+	 */
 	public function test_uri_replacement(
 		string $uri,
 		string $prefix,
@@ -278,10 +278,10 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @param class-string<DaftSource> $className
-	*
-	* @dataProvider DataProviderGoodSources
-	*/
+	 * @param class-string<DaftSource> $className
+	 *
+	 * @dataProvider DataProviderGoodSources
+	 */
 	public function test_sources(string $className) : void
 	{
 		if ( ! is_a($className, DaftSource::class, true)) {
@@ -296,8 +296,8 @@ class ImplementationTest extends Base
 		}
 
 		/**
-		* @var scalar|array|object|null
-		*/
+		 * @var scalar|array|object|null
+		 */
 		$sources = $className::DaftRouterRouteAndMiddlewareSources();
 
 		static::assertIsArray($sources);
@@ -308,8 +308,8 @@ class ImplementationTest extends Base
 			$initialCount = count($sources);
 
 			/**
-			* @var array<int, mixed>
-			*/
+			 * @var array<int, mixed>
+			 */
 			$sources = array_filter($sources, 'is_int', ARRAY_FILTER_USE_KEY);
 
 			static::assertCount(
@@ -327,13 +327,13 @@ class ImplementationTest extends Base
 			);
 
 			/**
-			* @var int
-			*/
+			 * @var int
+			 */
 			$prevKey = key($sources);
 
 			/**
-			* @var array<int, int>
-			*/
+			 * @var array<int, int>
+			 */
 			$sourceKeys = array_keys($sources);
 
 			foreach ($sourceKeys as $i => $k) {
@@ -351,8 +351,8 @@ class ImplementationTest extends Base
 				}
 
 				/**
-				* @var class-string
-				*/
+				 * @var class-string
+				 */
 				$source = $sources[$k];
 
 				static::assertTrue(
@@ -373,12 +373,12 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @param class-string<DaftRoute> $className
-	*
-	* @depends test_sources
-	*
-	* @dataProvider DataProviderRoutes
-	*/
+	 * @param class-string<DaftRoute> $className
+	 *
+	 * @depends test_sources
+	 *
+	 * @dataProvider DataProviderRoutes
+	 */
 	public function test_routes(string $className) : void
 	{
 		if ( ! is_a($className, DaftRoute::class, true)) {
@@ -397,8 +397,8 @@ class ImplementationTest extends Base
 		$initialCount = count($routes);
 
 		/**
-		* @var array<string, mixed>
-		*/
+		 * @var array<string, mixed>
+		 */
 		$routes = array_filter($routes, 'is_string', ARRAY_FILTER_USE_KEY);
 
 		static::assertCount(
@@ -461,14 +461,14 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $className
-	* @param array<string, string> $args
-	* @param HTTP_METHOD $method
-	*
-	* @depends test_routes
-	*
-	* @dataProvider DataProviderRoutesWithKnownArgs
-	*/
+	 * @param class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs> $className
+	 * @param array<string, string> $args
+	 * @param HTTP_METHOD $method
+	 *
+	 * @depends test_routes
+	 *
+	 * @dataProvider DataProviderRoutesWithKnownArgs
+	 */
 	public function test_routes_with_args(
 		string $className,
 		array $args,
@@ -602,10 +602,10 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends test_compiler_verify_add_route_throws_exception
-	*
-	* @dataProvider DataProviderGoodSources
-	*/
+	 * @depends test_compiler_verify_add_route_throws_exception
+	 *
+	 * @dataProvider DataProviderGoodSources
+	 */
 	public function test_compiler_verify_add_route_adds_routes(
 		string $className
 	) : void {
@@ -613,8 +613,8 @@ class ImplementationTest extends Base
 		$compiler = Fixtures\Compiler::ObtainCompiler();
 
 		/**
-		* @var string
-		*/
+		 * @var string
+		 */
 		foreach (static::YieldRoutesFromSource($className) as $route) {
 			$routes[] = $route;
 			$compiler->NudgeCompilerWithRouteOrRouteFilter($route);
@@ -639,10 +639,10 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @param mixed $maybe
-	*
-	* @dataProvider DataProviderEnsureDispatcherIsCorrectlyTypedPublic
-	*/
+	 * @param mixed $maybe
+	 *
+	 * @dataProvider DataProviderEnsureDispatcherIsCorrectlyTypedPublic
+	 */
 	public function test_compiler_verify_ensure_dispatcher_is_correctly_typed_throws_exception(
 		$maybe
 	) : void {
@@ -659,12 +659,12 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @param class-string<DaftRouteFilter> $className
-	*
-	* @depends test_sources
-	*
-	* @dataProvider DataProviderMiddleware
-	*/
+	 * @param class-string<DaftRouteFilter> $className
+	 *
+	 * @depends test_sources
+	 *
+	 * @dataProvider DataProviderMiddleware
+	 */
 	public function test_middlware(string $className) : void
 	{
 		if ( ! is_a($className, DaftRouteFilter::class, true)) {
@@ -700,18 +700,18 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $className
-	*
-	* @depends test_compiler_verify_add_middleware_throws_exception
-	*
-	* @dataProvider DataProviderGoodSources
-	*/
+	 * @param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $className
+	 *
+	 * @depends test_compiler_verify_add_middleware_throws_exception
+	 *
+	 * @dataProvider DataProviderGoodSources
+	 */
 	public function test_compiler_verify_add_middleware_adds_middlewares(
 		string $className
 	) : void {
 		/**
-		* @var string[]
-		*/
+		 * @var string[]
+		 */
 		$middlewares = [];
 		$compiler = Fixtures\Compiler::ObtainCompiler();
 
@@ -736,13 +736,13 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @param class-string<DaftSource> $className
-	*
-	* @depends test_compiler_verify_add_route_adds_routes
-	* @depends test_compiler_verify_add_middleware_adds_middlewares
-	*
-	* @dataProvider DataProviderGoodSources
-	*/
+	 * @param class-string<DaftSource> $className
+	 *
+	 * @depends test_compiler_verify_add_route_adds_routes
+	 * @depends test_compiler_verify_add_middleware_adds_middlewares
+	 *
+	 * @dataProvider DataProviderGoodSources
+	 */
 	public function test_compiler_does_not_duplicate_config_entries(
 		string $className
 	) : void {
@@ -751,14 +751,14 @@ class ImplementationTest extends Base
 		$middlewares = [];
 
 		/**
-		* @var string
-		*/
+		 * @var string
+		 */
 		foreach (static::YieldRoutesFromSource($className) as $route) {
 			$routes[] = $route;
 		}
 		/**
-		* @var string
-		*/
+		 * @var string
+		 */
 		foreach (
 			static::YieldMiddlewareFromSource($className) as $middleware
 		) {
@@ -783,17 +783,17 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @param class-string<DaftRouteFilter> $middleware
-	* @param class-string<DaftRoute> $presentWith
-	* @param HTTP_METHOD $presentWithMethod
-	* @param class-string<DaftRoute> $notPresentWith
-	* @param HTTP_METHOD $notPresentWithMethod
-	*
-	* @depends test_compiler_verify_add_route_adds_routes
-	* @depends test_compiler_verify_add_middleware_adds_middlewares
-	*
-	* @dataProvider DataProviderMiddlewareWithExceptions
-	*/
+	 * @param class-string<DaftRouteFilter> $middleware
+	 * @param class-string<DaftRoute> $presentWith
+	 * @param HTTP_METHOD $presentWithMethod
+	 * @param class-string<DaftRoute> $notPresentWith
+	 * @param HTTP_METHOD $notPresentWithMethod
+	 *
+	 * @depends test_compiler_verify_add_route_adds_routes
+	 * @depends test_compiler_verify_add_middleware_adds_middlewares
+	 *
+	 * @dataProvider DataProviderMiddlewareWithExceptions
+	 */
 	public function test_compiler_excludes_middleware(
 		string $middleware,
 		string $presentWith,
@@ -825,13 +825,13 @@ class ImplementationTest extends Base
 		static::assertTrue(Dispatcher::FOUND === $notPresent[0]);
 
 		/**
-		* @var string[]
-		*/
+		 * @var string[]
+		 */
 		$dispatchedPresent = $present[1];
 
 		/**
-		* @var string[]
-		*/
+		 * @var string[]
+		 */
 		$dispatchedNotPresent = $notPresent[1];
 
 		$expectedWithMiddleware = [
@@ -868,8 +868,8 @@ class ImplementationTest extends Base
 		$route = array_pop($dispatchedPresent);
 
 		/**
-		* @var array
-		*/
+		 * @var array
+		 */
 		$dispatchedPresent = $dispatchedPresent;
 
 		static::assertIsString(
@@ -906,8 +906,8 @@ class ImplementationTest extends Base
 		static::assertSame(array_values($interceptors), $interceptors);
 
 		/**
-		* @var array<int, string>
-		*/
+		 * @var array<int, string>
+		 */
 		$interceptors = array_values($interceptors);
 
 		$initialCount = count($modifiers);
@@ -918,8 +918,8 @@ class ImplementationTest extends Base
 		static::assertSame(array_values($modifiers), $modifiers);
 
 		/**
-		* @var array<int, string>
-		*/
+		 * @var array<int, string>
+		 */
 		$modifiers = array_values($modifiers);
 
 		foreach ($interceptors as $interceptor) {
@@ -952,15 +952,15 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends test_compiler_verify_add_route_adds_routes
-	* @depends test_compiler_verify_add_middleware_adds_middlewares
-	* @depends test_compiler_excludes_middleware
-	*
-	* @dataProvider DataProviderVerifyHandlerGood
-	*
-	* @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
-	* @param array<string, scalar|array|object|null> $expectedHeaders
-	*/
+	 * @depends test_compiler_verify_add_route_adds_routes
+	 * @depends test_compiler_verify_add_middleware_adds_middlewares
+	 * @depends test_compiler_excludes_middleware
+	 *
+	 * @dataProvider DataProviderVerifyHandlerGood
+	 *
+	 * @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
+	 * @param array<string, scalar|array|object|null> $expectedHeaders
+	 */
 	public function test_handler_good(
 		array $sources,
 		string $prefix,
@@ -991,13 +991,13 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends test_handler_good
-	*
-	* @dataProvider DataProviderVerifyHandlerGood
-	*
-	* @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
-	* @param array<string, scalar|array|object|null> $expectedHeaders
-	*/
+	 * @depends test_handler_good
+	 *
+	 * @dataProvider DataProviderVerifyHandlerGood
+	 *
+	 * @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
+	 * @param array<string, scalar|array|object|null> $expectedHeaders
+	 */
 	public function test_handler_good_with_fixtures_dispatcher(
 		array $sources,
 		string $prefix,
@@ -1029,15 +1029,15 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends test_handler_good_with_fixtures_dispatcher
-	*
-	* @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
-	*/
+	 * @depends test_handler_good_with_fixtures_dispatcher
+	 *
+	 * @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
+	 */
 	public function test_handler_untyped_request_handling_is_deprecated() : void
 	{
 		/**
-		* @var Fixtures\Dispatcher
-		*/
+		 * @var Fixtures\Dispatcher
+		 */
 		$dispatcher = Fixtures\CompilerWithFixturesDispatcher::ObtainCompiler(
 		)::ObtainDispatcher(
 			[
@@ -1062,14 +1062,14 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @depends test_compiler_verify_add_route_adds_routes
-	* @depends test_compiler_verify_add_middleware_adds_middlewares
-	* @depends test_compiler_excludes_middleware
-	*
-	* @dataProvider DataProviderVerifyHandlerBad
-	*
-	* @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
-	*/
+	 * @depends test_compiler_verify_add_route_adds_routes
+	 * @depends test_compiler_verify_add_middleware_adds_middlewares
+	 * @depends test_compiler_excludes_middleware
+	 *
+	 * @dataProvider DataProviderVerifyHandlerBad
+	 *
+	 * @param array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>> $sources
+	 */
 	public function test_handler_bad(
 		array $sources,
 		string $prefix,
@@ -1096,8 +1096,8 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return Generator<int, array{0:class-string<TypedArgs>|null, 1:array<string, scalar|null>|array<empty, empty>, 2:string, 3:array<string, scalar|null>}, mixed, void>
-	*/
+	 * @return Generator<int, array{0:class-string<TypedArgs>|null, 1:array<string, scalar|null>|array<empty, empty>, 2:string, 3:array<string, scalar|null>}, mixed, void>
+	 */
 	public function dataProviderJsonSerialize() : Generator
 	{
 		yield from [
@@ -1133,14 +1133,14 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @dataProvider dataProviderJsonSerialize
-	*
-	* @template K as key-of<T>
-	*
-	* @param class-string<TypedArgs>|null $type
-	* @param array<string, scalar|null> $args
-	* @param array<string, scalar|null> $expected_decoded
-	*/
+	 * @dataProvider dataProviderJsonSerialize
+	 *
+	 * @template K as key-of<T>
+	 *
+	 * @param class-string<TypedArgs>|null $type
+	 * @param array<string, scalar|null> $args
+	 * @param array<string, scalar|null> $expected_decoded
+	 */
 	public function test_json_serialize(
 		? string $type,
 		array $args,
@@ -1159,8 +1159,8 @@ class ImplementationTest extends Base
 		}
 
 		/**
-		* @var array<string, scalar|null>
-		*/
+		 * @var array<string, scalar|null>
+		 */
 		$decoded = json_decode($encoded, true);
 
 		static::assertCount(count($for_json), $decoded);
@@ -1181,8 +1181,8 @@ class ImplementationTest extends Base
 				);
 
 				/**
-				* @var T[K]
-				*/
+				 * @var T[K]
+				 */
 				$typed_value = $typed_args->$property;
 
 				static::assertSame(
@@ -1227,8 +1227,8 @@ class ImplementationTest extends Base
 			(is_string($requestArgs[6]) || is_resource($requestArgs[7]))
 		) {
 			/**
-			* @var string|resource
-			*/
+			 * @var string|resource
+			 */
 			$content = $requestArgs[6];
 		}
 
@@ -1244,14 +1244,14 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return Generator<int, array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
-	*/
+	 * @return Generator<int, array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}, mixed, void>
+	 */
 	protected function DataProviderVerifyHandler(bool $good = true) : Generator
 	{
 		$argsSource = $good ? $this->DataProviderGoodHandler() : $this->DataProviderBadHandler();
 		/**
-		* @var mixed[]
-		*/
+		 * @var mixed[]
+		 */
 		foreach ($argsSource as $args) {
 			[
 				$sources,
@@ -1263,8 +1263,8 @@ class ImplementationTest extends Base
 			] = $args;
 
 			/**
-			* @var array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}
-			*/
+			 * @var array{0:array<int, class-string<DaftRouteAcceptsEmptyArgs>|class-string<DaftRouteAcceptsTypedArgs>>, 1:string, 2:int, 3:string, 4:string[], 5:array<string, scalar|array|object|null>}
+			 */
 			$yield = [
 				$sources,
 				$prefix,
@@ -1448,8 +1448,8 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @return Generator<int, class-string<DaftRoute>, mixed, void>
-	*/
+	 * @return Generator<int, class-string<DaftRoute>, mixed, void>
+	 */
 	protected static function YieldRoutesFromSource(string $source) : Generator
 	{
 		if (is_a($source, DaftRoute::class, true)) {
@@ -1466,10 +1466,10 @@ class ImplementationTest extends Base
 	}
 
 	/**
-	* @param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $source
-	*
-	* @return Generator<int, class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>, mixed, void>
-	*/
+	 * @param class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>|class-string<DaftSource> $source
+	 *
+	 * @return Generator<int, class-string<DaftRequestInterceptor>|class-string<DaftResponseModifier>, mixed, void>
+	 */
 	protected static function YieldMiddlewareFromSource(
 		string $source
 	) : Generator {

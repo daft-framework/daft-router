@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @psalm-type THTTP = 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
-*/
+ * @psalm-type THTTP = 'GET'|'POST'|'CONNECT'|'DELETE'|'HEAD'|'OPTIONS'|'PATCH'|'PURGE'|'PUT'|'TRACE'
+ */
 interface DaftRouteAcceptsTypedArgs extends DaftRoute
 {
 	public static function DaftRouterHandleRequestWithTypedArgs(
@@ -21,10 +21,10 @@ interface DaftRouteAcceptsTypedArgs extends DaftRoute
 	) : Response;
 
 	/**
-	* @param THTTP|null $method
-	*
-	* @throws InvalidArgumentException if no uri could be found
-	*/
+	 * @param THTTP|null $method
+	 *
+	 * @throws InvalidArgumentException if no uri could be found
+	 */
 	public static function DaftRouterHttpRouteWithTypedArgs(
 		TypedArgs $args,
 		string $method = null

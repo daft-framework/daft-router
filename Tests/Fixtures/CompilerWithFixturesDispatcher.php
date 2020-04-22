@@ -18,8 +18,8 @@ use SignpostMarv\DaftRouter\Router\RouteCollector;
 class CompilerWithFixturesDispatcher extends Compiler
 {
 	/**
-	* @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
-	*/
+	 * @param class-string<DaftRoute>|class-string<DaftRouteFilter>|class-string<DaftSource> ...$sources
+	 */
 	public static function ObtainDispatcher(array $options, string ...$sources) : BaseDispatcher
 	{
 		$compiler = new self();

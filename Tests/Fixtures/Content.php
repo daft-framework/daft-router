@@ -14,10 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
-* @psalm-type T = array{locator:string}
-* @psalm-type TYPED = LocatorArgs
-* @psalm-type R = Response
-*/
+ * @psalm-type T = array{locator:string}
+ * @psalm-type TYPED = LocatorArgs
+ * @psalm-type R = Response
+ */
 class Content extends DaftRouteAcceptsOnlyTypedArgs
 {
 	use DaftRouterHttpRouteDefaultMethodGet;
@@ -27,8 +27,8 @@ class Content extends DaftRouteAcceptsOnlyTypedArgs
 	const MAX_EXPECTED_ARGS = 2;
 
 	/**
-	* @param TYPED $args
-	*/
+	 * @param TYPED $args
+	 */
 	public static function DaftRouterHandleRequestWithTypedArgs(
 		Request $request,
 		TypedArgs $args
@@ -44,8 +44,8 @@ class Content extends DaftRouteAcceptsOnlyTypedArgs
 	}
 
 	/**
-	* @param TYPED $args
-	*/
+	 * @param TYPED $args
+	 */
 	public static function DaftRouterHttpRouteWithTypedArgs(
 		TypedArgs $args,
 		string $method = null
@@ -54,11 +54,11 @@ class Content extends DaftRouteAcceptsOnlyTypedArgs
 	}
 
 	/**
-	* @param T $args
-	* @param 'GET'|null $method
-	*
-	* @return TYPED
-	*/
+	 * @param T $args
+	 * @param 'GET'|null $method
+	 *
+	 * @return TYPED
+	 */
 	public static function DaftRouterHttpRouteArgsTyped(
 		array $args,
 		string $method = null

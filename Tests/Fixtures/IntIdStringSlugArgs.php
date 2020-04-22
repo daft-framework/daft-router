@@ -9,11 +9,11 @@ namespace SignpostMarv\DaftRouter\Tests\Fixtures;
 use SignpostMarv\DaftRouter\TypedArgs;
 
 /**
-* @template T as array{id:int, slug:string}
-* @template S as array{id:string, slug:string}
-*
-* @template-extends IntIdArgs<T, S>
-*/
+ * @template T as array{id:int, slug:string}
+ * @template S as array{id:string, slug:string}
+ *
+ * @template-extends IntIdArgs<T, S>
+ */
 class IntIdStringSlugArgs extends IntIdArgs
 {
 	const TYPED_PROPERTIES = [
@@ -22,13 +22,13 @@ class IntIdStringSlugArgs extends IntIdArgs
 	];
 
 	/**
-	* @readonly
-	*/
+	 * @readonly
+	 */
 	public string $slug;
 
 	/**
-	* @param T $args
-	*/
+	 * @param T $args
+	 */
 	public function __construct(array $args)
 	{
 		parent::__construct($args);

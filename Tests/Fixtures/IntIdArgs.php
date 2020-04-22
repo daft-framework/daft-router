@@ -10,11 +10,11 @@ use InvalidArgumentException;
 use SignpostMarv\DaftRouter\TypedArgs;
 
 /**
-* @template T as array{id:int}
-* @template S as array{id:string}
-*
-* @template-extends TypedArgs<T, S>
-*/
+ * @template T as array{id:int}
+ * @template S as array{id:string}
+ *
+ * @template-extends TypedArgs<T, S>
+ */
 class IntIdArgs extends TypedArgs
 {
 	const TYPED_PROPERTIES = [
@@ -22,74 +22,74 @@ class IntIdArgs extends TypedArgs
 	];
 
 	/**
-	* @readonly
-	*/
+	 * @readonly
+	 */
 	public int $id;
 
 	/**
-	* @param T $args
-	*/
+	 * @param T $args
+	 */
 	public function __construct(array $args)
 	{
 		$this->id = $args['id'];
 	}
 
 	/**
-	* @template K as key-of<T>
-	*
-	* @param K $property
-	* @param T[K] $value
-	*
-	* @return S[K]
-	*/
+	 * @template K as key-of<T>
+	 *
+	 * @param K $property
+	 * @param T[K] $value
+	 *
+	 * @return S[K]
+	 */
 	public static function PropertyValueToScalarOrNull(
 		string $property,
 		$value
 	) {
 		/**
-		* @var string
-		*/
+		 * @var string
+		 */
 		$property = $property;
 
 		if ('id' === $property) {
 			/**
-			* @var int
-			*/
+			 * @var int
+			 */
 			$value = $value;
 
 			/**
-			* @var S[K]
-			*/
+			 * @var S[K]
+			 */
 			return (string) $value;
 		}
 
 		/**
-		* @var S[K]
-		*/
+		 * @var S[K]
+		 */
 		return parent::PropertyValueToScalarOrNull($property, $value);
 	}
 
 	/**
-	* @template K as key-of<T>
-	*
-	* @param K $property
-	* @param S[K] $value
-	*
-	* @return T[K]
-	*/
+	 * @template K as key-of<T>
+	 *
+	 * @param K $property
+	 * @param S[K] $value
+	 *
+	 * @return T[K]
+	 */
 	public static function PropertyScalarOrNullToValue(
 		string $property,
 		$value
 	) {
 		/**
-		* @var string
-		*/
+		 * @var string
+		 */
 		$property = $property;
 
 		if ('id' === $property) {
 			/**
-			* @var string
-			*/
+			 * @var string
+			 */
 			$value = $value;
 
 			if ( ! ctype_digit($value)) {
@@ -103,14 +103,14 @@ class IntIdArgs extends TypedArgs
 			}
 
 			/**
-			* @var T[K]
-			*/
+			 * @var T[K]
+			 */
 			return (int) $value;
 		}
 
 		/**
-		* @var T[K]
-		*/
+		 * @var T[K]
+		 */
 		return parent::PropertyScalarOrNullToValue($property, $value);
 	}
 }

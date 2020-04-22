@@ -23,8 +23,8 @@ class AppendHeader implements DaftResponseModifier
 	}
 
 	/**
-	* @return array<int, string> URI prefixes
-	*/
+	 * @return array<int, string> URI prefixes
+	 */
 	public static function DaftRouterRoutePrefixExceptions() : array
 	{
 		return [
@@ -33,8 +33,8 @@ class AppendHeader implements DaftResponseModifier
 	}
 
 	/**
-	* @return array<int, string> URI prefixes
-	*/
+	 * @return array<int, string> URI prefixes
+	 */
 	public static function DaftRouterRoutePrefixRequirements() : array
 	{
 		return [
