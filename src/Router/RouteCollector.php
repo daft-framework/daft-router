@@ -17,7 +17,17 @@ final class RouteCollector extends Base
 	 * @param string|string[] $httpMethod
 	 * @param string $route
 	 * @param mixed $handler
-	 * @param array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>} $handler
+	 * @param array{
+	 *	SignpostMarv\DaftRouter\DaftRequestInterceptor:array<
+	 *		int,
+	 *		class-string<DaftRequestInterceptor>
+	 *	>,
+	 *	SignpostMarv\DaftRouter\DaftResponseModifier:array<
+	 *		int,
+	 *		class-string<DaftResponseModifier>
+	 *	>,
+	 *	0:class-string<DaftRoute>
+	 * } $handler
 	 */
 	public function addRoute($httpMethod, $route, $handler) : void
 	{

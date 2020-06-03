@@ -218,7 +218,16 @@ class Compiler
 	}
 
 	/**
-	 * @psalm-type RETURN = array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>}
+	 * @psalm-type RETURN = array{
+	 *	SignpostMarv\DaftRouter\DaftRequestInterceptor:array<
+	 *		int,
+	 *		class-string<DaftRequestInterceptor>
+	 *	>,
+	 *	SignpostMarv\DaftRouter\DaftResponseModifier:array<
+	 *		int,
+	 *		class-string<DaftResponseModifier>
+	 *	>
+	 * }
 	 *
 	 * @return RETURN
 	 */
@@ -254,12 +263,44 @@ class Compiler
 	}
 
 	/**
-	 * @return array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
+	 * @return array<
+	 *	string,
+	 *	array<
+	 *		string,
+	 *		array{
+	 *			SignpostMarv\DaftRouter\DaftRequestInterceptor:array<
+	 *				int,
+	 *				class-string<DaftRequestInterceptor>
+	 *			>,
+	 *			SignpostMarv\DaftRouter\DaftResponseModifier:array<
+	 *				int,
+	 *				class-string<DaftResponseModifier>
+	 *			>,
+	 *			0:class-string<DaftRoute>
+	 *		}
+	 *	>
+	 * >
 	 */
 	private function CompileDispatcherArray() : array
 	{
 		/**
-		 * @var array<string, array<string, array{DaftRequestInterceptor::class:array<int, class-string<DaftRequestInterceptor>>, DaftResponseModifier::class:array<int, class-string<DaftResponseModifier>>, 0:class-string<DaftRoute>}>>
+		 * @var array<
+		 *	string,
+		 *	array<
+		 *		string,
+		 *		array{
+		 *			SignpostMarv\DaftRouter\DaftRequestInterceptor:array<
+		 *				int,
+		 *				class-string<DaftRequestInterceptor>
+		 *			>,
+		 *			SignpostMarv\DaftRouter\DaftResponseModifier:array<
+		 *				int,
+		 *				class-string<DaftResponseModifier>
+		 *			>,
+		 *			0:class-string<DaftRoute>
+		 *		}
+		 *	>
+		 * >
 		 */
 		$out = [];
 
