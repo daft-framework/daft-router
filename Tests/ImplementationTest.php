@@ -508,6 +508,12 @@ class ImplementationTest extends Base
 			true
 		));
 
+		static::assertTrue(in_array(
+			$className::DaftRouterHttpRouteDefaultMethod(),
+			array_merge([], ...array_values($className::DaftRouterRoutes())),
+			true
+		));
+
 		$check_auto_method_checking = (
 			in_array(
 				DaftRouterAutoMethodCheckingTrait::class,
